@@ -1,0 +1,17 @@
+# Private data - never commit
+whatsapp/
+analysis.json
+embed_data.json
+*.DS_Store
+.claude/
+
+# Build scripts (keep local)
+analyze.py
+build_html.py
+
+# Old dashboard
+whatsapp-eda-dashboard.html
+
+# Design docs (keep local)
+*.md
+!README.md
