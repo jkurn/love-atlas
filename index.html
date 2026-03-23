@@ -8,437 +8,194 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         :root {
-            --bg: #faf6f1;
-            --bg-warm: #f5efe8;
-            --card: #ffffff;
-            --border: #e8ddd0;
-            --text: #3d2c2c;
-            --muted: #8c7a6e;
-            --jonathan: #5b8a72;
-            --pricylia: #d4738a;
-            --gold: #c4956a;
-            --love: #c25b78;
-            --deep: #7b6b8a;
+            --bg: #faf6f1; --bg-warm: #f5efe8; --card: #ffffff; --border: #e8ddd0;
+            --text: #3d2c2c; --muted: #8c7a6e;
+            --jonathan: #5b8a72; --pricylia: #d4738a; --gold: #c4956a; --love: #c25b78; --deep: #7b6b8a;
         }
+        body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; }
+        .container { max-width: 920px; margin: 0 auto; padding: 0 24px; }
 
-        body {
-            font-family: 'Nunito', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-
-        .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
-
-        /* ═══ HERO ═══ */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            padding: 60px 24px;
-            background: linear-gradient(180deg, #fdf9f5 0%, var(--bg) 100%);
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 15%; left: 50%;
-            transform: translateX(-50%);
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(212,115,138,0.1) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .hero-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 4.5rem;
-            font-weight: 700;
-            font-style: italic;
-            color: var(--text);
-            margin-bottom: 12px;
-            line-height: 1.15;
-            letter-spacing: -1px;
-        }
-        .hero-sub {
-            color: var(--muted);
-            font-size: 1.05rem;
-            margin-bottom: 6px;
-            letter-spacing: 0.3px;
-        }
-        .hero-stat {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: 1.7rem;
-            color: var(--gold);
-            margin: 24px 0;
-            line-height: 1.35;
-        }
-        .hero-kpi {
-            display: flex;
-            gap: 40px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 32px 0;
-        }
+        /* HERO */
+        .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 60px 24px; background: linear-gradient(180deg, #fdf9f5 0%, var(--bg) 100%); position: relative; }
+        .hero::before { content: ''; position: absolute; top: 15%; left: 50%; transform: translateX(-50%); width: 500px; height: 500px; background: radial-gradient(circle, rgba(212,115,138,0.08) 0%, transparent 70%); pointer-events: none; }
+        .hero-photos { display: flex; gap: 12px; margin-bottom: 32px; }
+        .hero-photos img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid white; box-shadow: 0 4px 16px rgba(61,44,44,0.1); }
+        .hero-title { font-family: 'Playfair Display', serif; font-size: 4.2rem; font-weight: 700; font-style: italic; color: var(--text); margin-bottom: 12px; line-height: 1.15; letter-spacing: -1px; }
+        .hero-sub { color: var(--muted); font-size: 1.05rem; margin-bottom: 6px; }
+        .hero-stat { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.6rem; color: var(--gold); margin: 24px 0; line-height: 1.35; }
+        .hero-kpi { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; margin: 32px 0; }
         .hero-kpi-item { text-align: center; }
-        .hero-kpi-value {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            font-weight: 700;
-        }
-        .hero-kpi-label {
-            color: var(--muted);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 4px;
-        }
+        .hero-kpi-value { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; }
+        .hero-kpi-label { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
         .hero-kpi-item:nth-child(1) .hero-kpi-value { color: var(--jonathan); }
         .hero-kpi-item:nth-child(2) .hero-kpi-value { color: var(--pricylia); }
         .hero-kpi-item:nth-child(3) .hero-kpi-value { color: var(--gold); }
         .hero-kpi-item:nth-child(4) .hero-kpi-value { color: var(--love); }
 
-        /* ═══ NAV ═══ */
-        .nav {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            flex-wrap: wrap;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(250,246,241,0.92);
-            backdrop-filter: blur(16px);
-            padding: 14px 20px;
-            border-bottom: 1px solid var(--border);
-        }
-        .nav-btn {
-            padding: 10px 24px;
-            border-radius: 100px;
-            border: 1.5px solid var(--border);
-            background: transparent;
-            color: var(--muted);
-            font-family: 'Nunito', sans-serif;
-            font-size: 0.88rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+        /* NAV */
+        .nav { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; position: sticky; top: 0; z-index: 100; background: rgba(250,246,241,0.92); backdrop-filter: blur(16px); padding: 14px 20px; border-bottom: 1px solid var(--border); }
+        .nav-btn { padding: 10px 24px; border-radius: 100px; border: 1.5px solid var(--border); background: transparent; color: var(--muted); font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; }
         .nav-btn:hover { border-color: var(--pricylia); color: var(--text); background: rgba(212,115,138,0.06); }
-        .nav-btn.active {
-            background: var(--pricylia);
-            color: #fff;
-            border-color: var(--pricylia);
-            box-shadow: 0 2px 12px rgba(212,115,138,0.25);
-        }
+        .nav-btn.active { background: var(--pricylia); color: #fff; border-color: var(--pricylia); box-shadow: 0 2px 12px rgba(212,115,138,0.25); }
 
-        /* ═══ SECTIONS ═══ */
+        /* SECTIONS */
         .section { display: none; padding: 40px 0 80px; }
         .section.active { display: block; }
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.85rem;
-            font-weight: 600;
-            margin: 56px 0 20px;
-            padding-bottom: 16px;
-            border-bottom: 1.5px solid var(--border);
-            color: var(--text);
-        }
-        .section-intro {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: 1.4rem;
-            color: var(--gold);
-            margin-bottom: 28px;
-            line-height: 1.45;
-        }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 1.85rem; font-weight: 600; margin: 56px 0 20px; padding-bottom: 16px; border-bottom: 1.5px solid var(--border); }
+        .section-intro { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.35rem; color: var(--gold); margin-bottom: 28px; line-height: 1.45; }
 
-        /* ═══ CARDS & GRIDS ═══ */
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 28px;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 4px rgba(61,44,44,0.04);
-        }
+        /* CARDS */
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 20px; transition: all 0.3s ease; box-shadow: 0 1px 4px rgba(61,44,44,0.04); }
         .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(61,44,44,0.08); }
-        .card h3 { font-family: 'Nunito', sans-serif; font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin-bottom: 16px; }
-
+        .card h3 { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin-bottom: 16px; }
         .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; }
         .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
-        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
-
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
         .chart-wrap { position: relative; height: 340px; }
         .chart-wrap-sm { position: relative; height: 240px; }
 
-        /* ═══ CHAT BUBBLES ═══ */
+        /* CHAT */
         .chat-container { max-width: 580px; margin: 0 auto 32px; }
-        .chat-bubble {
-            padding: 14px 18px;
-            border-radius: 18px;
-            margin-bottom: 8px;
-            max-width: 82%;
-            position: relative;
-        }
-        .msg-j {
-            background: #eef6f2;
-            border: 1px solid #d4e8de;
-            border-radius: 18px 18px 18px 4px;
-            margin-right: auto;
-        }
-        .msg-p {
-            background: #fdf0f3;
-            border: 1px solid #f0d4dc;
-            border-radius: 18px 18px 4px 18px;
-            margin-left: auto;
-        }
-        .chat-sender { font-size: 0.72rem; font-weight: 700; margin-bottom: 4px; letter-spacing: 0.5px; text-transform: uppercase; }
+        .chat-bubble { padding: 14px 18px; border-radius: 18px; margin-bottom: 8px; max-width: 82%; }
+        .msg-j { background: #eef6f2; border: 1px solid #d4e8de; border-radius: 18px 18px 18px 4px; margin-right: auto; }
+        .msg-p { background: #fdf0f3; border: 1px solid #f0d4dc; border-radius: 18px 18px 4px 18px; margin-left: auto; }
+        .chat-sender { font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; letter-spacing: 0.5px; text-transform: uppercase; }
         .msg-j .chat-sender { color: var(--jonathan); }
         .msg-p .chat-sender { color: var(--pricylia); }
-        .chat-text { font-size: 0.92rem; line-height: 1.55; color: var(--text); }
+        .chat-text { font-size: 0.92rem; line-height: 1.55; }
         .chat-time { font-size: 0.68rem; color: var(--muted); text-align: right; margin-top: 4px; }
 
-        /* ═══ TIMELINE ═══ */
-        .tl-item {
-            display: flex;
-            gap: 16px;
-            padding: 18px 0;
-            border-bottom: 1px solid var(--border);
-        }
+        /* TIMELINE */
+        .tl-item { display: flex; gap: 16px; padding: 24px 0; border-bottom: 1px solid var(--border); }
         .tl-item:last-child { border-bottom: none; }
-        .tl-icon { font-size: 1.4rem; flex-shrink: 0; }
-        .tl-date { color: var(--pricylia); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.3px; }
+        .tl-icon { font-size: 1.4rem; flex-shrink: 0; padding-top: 2px; }
+        .tl-date { color: var(--pricylia); font-weight: 700; font-size: 0.82rem; letter-spacing: 0.3px; }
         .tl-title { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 1.05rem; margin: 4px 0; }
-        .tl-desc { color: var(--muted); font-size: 0.88rem; }
+        .tl-desc { color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
+        .tl-photo { width: 100%; max-width: 280px; border-radius: 12px; margin-top: 12px; box-shadow: 0 4px 16px rgba(61,44,44,0.1); }
 
-        /* ═══ QUOTES ═══ */
-        .love-quote {
-            border-left: 3px solid var(--pricylia);
-            padding: 18px 22px;
-            margin: 14px 0;
-            background: #fdf0f3;
-            border-radius: 0 12px 12px 0;
-        }
-        .love-quote.quote-j {
-            border-left-color: var(--jonathan);
-            background: #eef6f2;
-        }
-        .love-quote-text {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: 1.4rem;
-            line-height: 1.45;
-            color: var(--text);
-        }
-        .love-quote-attr {
-            color: var(--muted);
-            font-size: 0.78rem;
-            margin-top: 10px;
-            font-style: italic;
-        }
+        /* PROFILES */
+        .profile-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; }
+        .profile-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 4px; }
+        .profile-badge { font-size: 0.82rem; color: var(--pricylia); font-weight: 700; margin-bottom: 16px; }
+        .profile-row { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; line-height: 1.5; }
+        .profile-row:last-child { border-bottom: none; }
+        .profile-label { color: var(--muted); font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; min-width: 110px; flex-shrink: 0; padding-top: 2px; }
 
-        /* ═══ PET NAMES ═══ */
-        .pet-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 18px 14px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
+        /* MOMENTS */
+        .moment-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 20px; }
+        .moment-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
+        .moment-date { color: var(--pricylia); font-size: 0.8rem; font-weight: 700; margin-bottom: 14px; }
+        .moment-line { padding: 6px 14px; margin: 4px 0; border-radius: 12px; font-size: 0.9rem; }
+        .moment-line.msg-j { background: #eef6f2; }
+        .moment-line.msg-p { background: #fdf0f3; }
+        .moment-sender { font-weight: 700; font-size: 0.78rem; }
+        .moment-note { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: var(--gold); margin-top: 14px; line-height: 1.4; }
+
+        /* RITUALS */
+        .ritual-emoji { font-size: 2rem; margin-bottom: 8px; }
+        .ritual-count { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--text); }
+        .ritual-label { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
+        .ritual-detail { font-size: 0.78rem; color: var(--muted); margin-top: 6px; font-style: italic; }
+
+        /* GALLERY */
+        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin: 24px 0; }
+        .gallery-item img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; transition: transform 0.3s; }
+        .gallery-item img:hover { transform: scale(1.03); }
+
+        /* PET NAMES */
+        .pet-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 14px; text-align: center; transition: all 0.3s ease; }
         .pet-card:hover { border-color: var(--pricylia); background: #fdf0f3; }
-        .pet-name {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: 1.8rem;
-            color: var(--love);
-            margin-bottom: 4px;
-        }
+        .pet-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.8rem; color: var(--love); margin-bottom: 4px; }
         .pet-counts { font-size: 0.82rem; color: var(--muted); }
         .pet-first { font-size: 0.72rem; color: var(--muted); margin-top: 4px; }
 
-        /* ═══ EMOJI GRID ═══ */
+        /* EMOJIS */
         .emoji-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(62px, 1fr)); gap: 8px; }
-        .emoji-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px 6px;
-            background: var(--bg-warm);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-        }
+        .emoji-card { display: flex; flex-direction: column; align-items: center; padding: 10px 6px; background: var(--bg-warm); border: 1px solid var(--border); border-radius: 10px; }
         .emoji-big { font-size: 1.7rem; margin-bottom: 3px; }
         .emoji-ct { font-size: 0.78rem; color: var(--muted); font-weight: 700; }
 
-        /* ═══ QUESTION CARDS ═══ */
-        .q-category {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            font-style: italic;
-            color: var(--love);
-            margin: 36px 0 16px;
-        }
+        /* QUESTIONS */
+        .q-category { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-style: italic; color: var(--love); margin: 36px 0 16px; }
         .q-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
-        .q-card {
-            background: var(--card);
-            border: 1.5px solid var(--border);
-            border-radius: 14px;
-            padding: 22px;
-            cursor: pointer;
-            transition: all 0.35s ease;
-            min-height: 100px;
-            position: relative;
-            overflow: hidden;
-        }
+        .q-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 14px; padding: 22px; cursor: pointer; transition: all 0.35s ease; min-height: 100px; position: relative; overflow: hidden; }
         .q-card:hover { border-color: var(--pricylia); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212,115,138,0.1); }
-        .q-front {
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: opacity 0.3s;
-            color: var(--text);
-        }
-        .q-back {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            padding: 22px;
-            font-size: 0.88rem;
-            color: var(--text);
-            background: var(--card);
-            opacity: 0;
-            transition: opacity 0.4s;
-            overflow-y: auto;
-            line-height: 1.6;
-        }
+        .q-front { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 1rem; transition: opacity 0.3s; }
+        .q-back { position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 22px; font-size: 0.85rem; color: var(--text); background: var(--card); opacity: 0; transition: opacity 0.4s; overflow-y: auto; line-height: 1.6; }
         .q-card.revealed .q-front { opacity: 0; }
         .q-card.revealed .q-back { opacity: 1; }
         .q-card.revealed { border-color: var(--gold); background: #faf5ee; }
 
-        /* ═══ INSIGHT BOX ═══ */
-        .insight {
-            background: #faf5ee;
-            border: 1px solid #e8ddd0;
-            border-left: 3px solid var(--gold);
-            border-radius: 0 12px 12px 0;
-            padding: 18px 22px;
-            margin: 22px 0;
-            color: var(--muted);
-            font-size: 0.93rem;
-            line-height: 1.75;
-        }
+        /* INSIGHT */
+        .insight { background: #faf5ee; border: 1px solid #e8ddd0; border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0; padding: 18px 22px; margin: 22px 0; color: var(--muted); font-size: 0.93rem; line-height: 1.75; }
         .insight strong { color: var(--text); }
 
-        /* ═══ FRAMEWORK BADGE ═══ */
-        .framework-badge {
-            display: inline-block;
-            padding: 4px 14px;
-            border-radius: 100px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 14px;
-        }
+        /* BADGES */
+        .framework-badge { display: inline-block; padding: 4px 14px; border-radius: 100px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 14px; }
         .badge-sternberg { background: #fdf0f3; color: var(--love); border: 1px solid #f0d4dc; }
         .badge-gottman { background: #eef6f2; color: var(--jonathan); border: 1px solid #d4e8de; }
         .badge-love-lang { background: #faf5ee; color: var(--gold); border: 1px solid #e8ddd0; }
         .badge-brene { background: #f3eff6; color: var(--deep); border: 1px solid #ddd6e4; }
 
-        /* ═══ HEATMAP ═══ */
-        .heatmap { display: grid; grid-template-columns: auto repeat(24, 1fr); gap: 2px; margin: 20px 0; }
-        .heatmap-label { font-size: 0.7rem; color: var(--muted); display: flex; align-items: center; padding-right: 8px; }
-        .heatmap-cell { aspect-ratio: 1; border-radius: 3px; min-width: 12px; }
-
-        /* ═══ LEGEND ═══ */
-        .legend {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 16px;
-            flex-wrap: wrap;
-        }
+        /* LEGEND */
+        .legend { display: flex; gap: 20px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
         .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.83rem; color: var(--muted); }
         .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
 
-        /* ═══ RESPONSIVE ═══ */
+        /* RESPONSIVE */
         @media (max-width: 768px) {
             .hero-title { font-size: 2.8rem; }
             .grid-2, .grid-3 { grid-template-columns: 1fr; }
             .hero-kpi { gap: 20px; }
             .chart-wrap { height: 260px; }
             .nav { gap: 6px; }
-            .nav-btn { padding: 8px 16px; font-size: 0.8rem; }
+            .nav-btn { padding: 8px 16px; font-size: 0.78rem; }
             .q-grid { grid-template-columns: 1fr; }
-            .container { padding: 0 16px; }
+            .hero-photos img { width: 70px; height: 70px; }
+            .profile-row { flex-direction: column; gap: 2px; }
+            .profile-label { min-width: auto; }
         }
-
-        /* ═══ SCROLL ANIMATION ═══ */
         @media (prefers-reduced-motion: no-preference) {
-            .fade-in {
-                opacity: 0;
-                transform: translateY(16px);
-                transition: opacity 0.5s ease, transform 0.5s ease;
-            }
-            .fade-in.visible {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+            .fade-in.visible { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-    <!-- ═══════════ HERO ═══════════ -->
+    <!-- HERO -->
     <div class="hero">
+        <div class="hero-photos">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczMiwPXi0EZTBMcFAtsiOc91WWnVN1rOniRD3mYIe_gh_oDalYhcie2sEXLttMnAIbg5oeDis08eCYFswBiaxKr2-5lwHVyxnE5plhFEIWmqRb0J54R51RATP7_mlJ7Nyq0drdOcHPh9fXuDVCiigdvN0vb2wm-yG6MWfVWGBaLvX8puGbeksfojXU1A7plzLW0wRMRwUJXTMYcvFty13Qq0w5LYVEr74EMdK1vJnl_ZfY-Jqpd4RvE_upL_YwS8qgV3d9Hj29zNKRf7zZKHhyQa0o_8C0zO5xf1Qnu1fPApcVHeciUDocnwDd4y9j1pVQZB-G6ZXu4n7gffDTXlx-R2RtJ1ivq3txuXejBNAVQgWz8fsl9G25Q6lIeHADKyvEToyjrZo6L2BljtyVMH5QXM6i8GTSD6i3N_f30_WVGKJHFOvzd0BMLwpgFdiovPXqC0xQfaDfgvU63kS72baWWluYs3y52fFXTbcrUjb6Z3-htY-2YvoGO2ILRBe44Wau4tIv_9i1B7Swy53LmsFnWyBFWrXBETboHPxUaqTWEOb2xm-53BejLejJp0bCfT3sPIhW_HJsObLbjcbvZIBqWCS_hQwCzYaeSRMHkhlFT5h5xzSrh8AVrNeQ0VTt4Bc2bGix8v3hGeK5VkdfL-lDBgsTZuBTmDGwKMTKcsKJdNmkTLNWsDL7FKfAGE7wmN-kIWD-FTg3LJ1Kv9mjrWiOv8TvCPKIRhqxh9h51LI3tGA21ccLekOej7o0FSSwRp55JF0IIEFgUm8b8uVNbSWWEenFchzdjq6qSTyLkKSLs0hXJFdvqzFg-G1VMcd_WoGDigJ_KHyuX8bbKj8GQGempou3r79rfDG8vjuKpCJFDj8Z0OyuTPl7DGJdjj-3lKAseooA6R1-crOnvp9OVn-7pqXZNOvI6gLsRNC4_Ty5zgL9GQdKgss3C-5oU_YjyiVXLLE-bhEWfl=w200" alt="Jonathan">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczOxDTRBftEVzwVhux_cou0noe6GvaDrWeyf8kh7pfG3VxFcymY-2dvpEWc3RH-HlRVTVTp9WPFyT-JH1a8W3zMtax2ZQ7Vtiex4bZBchIJjh3NNzMXG2pJJI7e-ml7jJdV0Z-OoOxA5on2bYxkmE1p_Wae94O_dE93VPsyohAWgMlhoAFMPBPZfyz-9_sY9SnJyDYQarpI0dtlGHaE_qkBCnc4Ka2sIO8MajuMYIcw__y0FlFvh16-JkxP9D8u61gi51cc71Zp-RyWfoU2F9c6XixVUi80eBUUZl-4ub60Zmf7MXRmFm8ra8DwAHxPCG7hoZqTezo8lBFFUgSNoekWD4BqIIZiENcJrH6a7AfcgyH_yXkHVTQRBXntJeTPdrg-1fbFG_50nqj6qhF8KjpItlMVNN2kzJqjGMuVzbvCFm3LqlA83-WV5kJTAdCboF2xUU2RKQfw2oBRNypjHPF9L4ExJj9OqMNEuE0gJGJR0_WjcwLjeB2UyTVAcxZRXIQ4TL2o99nOnqZtVC014yMEBOGkwgKmHYuAoBpVCqHvReMNR82gRNUoi0MW601UIDJC4qHSSWhEfBAfB7SUFs70tdKntOj5mOEQmziRGp8XX2SG7k9B-J6O11Bj1VJB_IayTrY1FLvQ6vAQKX-h1nvb_21YP5FCFJWI9WBe0MwarZCJWSME-0hXrKTenql4f_88QZjJ4p5uAfllyuN9aM_Hi0iad809VGh4oWclCaaJQNZSGJdKXfmSYXgREcFAjPVwmFE5E1wZSx1NGuB7VoQKmLmP5_Vv5im_aWM-y99zH-n7-6dMyp-i2q8EzqUVYar7CJymPSzaUDHVCVd005lqMctfn9jKSYGfUKCL4Aq-SShW_QGNxGLqnGWcpp3MiSq-kUr2JjzH6dOgMADZqcldkhFLmy12JuIbqBIX-KObwoUzoM0OzpxoKuDwtG6gKKLZdG7mTI2mb=w200" alt="Pricylia">
+        </div>
         <div class="hero-title">Jonathan & Pricylia</div>
         <div class="hero-sub">A love story in 125,070 messages</div>
-        <div class="hero-sub">May 31, 2025 — March 24, 2026 | 297 days</div>
-        <div class="hero-stat">"518,863 words written to each other — that's 6.5 novels worth of love"</div>
-
+        <div class="hero-sub">May 31, 2025 — March 24, 2026 · 297 days</div>
+        <div class="hero-stat">"518,863 words — that's 6.5 novels, 11.0 Great Gatsbys, or one very real love story"</div>
         <div class="hero-kpi">
-            <div class="hero-kpi-item">
-                <div class="hero-kpi-value">59,780</div>
-                <div class="hero-kpi-label">Jonathan's messages</div>
-            </div>
-            <div class="hero-kpi-item">
-                <div class="hero-kpi-value">65,290</div>
-                <div class="hero-kpi-label">Pricylia's messages</div>
-            </div>
-            <div class="hero-kpi-item">
-                <div class="hero-kpi-value">422.5</div>
-                <div class="hero-kpi-label">Messages / day</div>
-            </div>
-            <div class="hero-kpi-item">
-                <div class="hero-kpi-value">1,683</div>
-                <div class="hero-kpi-label">Conversations</div>
-            </div>
+            <div class="hero-kpi-item"><div class="hero-kpi-value">59,780</div><div class="hero-kpi-label">His messages</div></div>
+            <div class="hero-kpi-item"><div class="hero-kpi-value">65,290</div><div class="hero-kpi-label">Her messages</div></div>
+            <div class="hero-kpi-item"><div class="hero-kpi-value">422</div><div class="hero-kpi-label">Messages / day</div></div>
+            <div class="hero-kpi-item"><div class="hero-kpi-value">1,683</div><div class="hero-kpi-label">Conversations</div></div>
         </div>
     </div>
 
-    <!-- ═══════════ NAVIGATION ═══════════ -->
+    <!-- NAV -->
     <div class="nav">
         <button class="nav-btn active" onclick="showSection('love-letter')">The Love Letter</button>
         <button class="nav-btn" onclick="showSection('love-atlas')">The Love Atlas</button>
         <button class="nav-btn" onclick="showSection('interrogation')">The Girlfriend Interrogation</button>
     </div>
 
-    <!-- ═══════════ SECTION 1: THE LOVE LETTER ═══════════ -->
+    <!-- ═══ SECTION 1: THE LOVE LETTER ═══ -->
     <div id="love-letter" class="section active">
         <div class="container">
 
-            <!-- Chapter 1: How It Started -->
-            <h2 class="section-title">Chapter 1: "Hi Pricylia, this is Jonathan 👋"</h2>
+            <h2 class="section-title">Chapter 1: How It Started</h2>
             <p class="section-intro">May 31, 2025. Introduced by Kevin Phang and Katherine. Two strangers. One about AI, one about fashion. Neither knew what was coming.</p>
-
             <div class="chat-container">
-                
         <div class="chat-bubble msg-j">
             <div class="chat-sender">Jonathan</div>
             <div class="chat-text">Hi Pricylia, this is Jonathan 👋</div>
@@ -513,730 +270,492 @@
             <div class="chat-sender">Pricylia</div>
             <div class="chat-text">HAHA yep. Tp AI sangat helpful sih emg. Byk dpt ideas, i mean by chatgpt 🙂🙂</div>
             <div class="chat-time">12:52</div>
-        </div>
-            </div>
+        </div></div>
+            <div class="insight"><strong>The very first conversation:</strong> Coto Makassar, Whoosh trains, and badminton. He thought "coto" was just a cute way of saying "soto." She hadn't ridden the LRT. They discovered each other's worlds through food and travel — a pattern that would define the next 297 days.</div>
 
-            <div class="insight">
-                <strong>The very first conversation:</strong> Coto Makassar, Whoosh trains, and badminton. You discovered each other's worlds through food and travel — a pattern that would define your relationship.
-            </div>
-
-            <!-- Chapter 2: The Slow Burn -->
             <h2 class="section-title">Chapter 2: The Slow Burn</h2>
-            <p class="section-intro">From strangers to something more. Watch the message count climb.</p>
+            <p class="section-intro">From 337 messages in May to 23,043 in November. Watch the numbers tell the story.</p>
+            <div class="card"><h3>Monthly Message Volume</h3><div class="chart-wrap"><canvas id="monthlyChart"></canvas></div>
+                <div class="legend"><div class="legend-item"><div class="legend-dot" style="background:var(--jonathan)"></div>Jonathan</div><div class="legend-item"><div class="legend-dot" style="background:var(--pricylia)"></div>Pricylia</div></div></div>
+            <div class="insight"><strong>The trajectory is the story.</strong> Volume doubled from Sep to Oct (he was in Dubai — distance made them text more, not less). Then doubled again in November — the month they became official. By Dec they didn't need to prove anything anymore. The settled rhythm of Feb isn't less love — it's more secure love.</div>
 
-            <div class="card">
-                <h3>Monthly Message Volume</h3>
-                <div class="chart-wrap">
-                    <canvas id="monthlyChart"></canvas>
-                </div>
-                <div class="legend">
-                    <div class="legend-item"><div class="legend-dot" style="background:var(--jonathan)"></div>Jonathan</div>
-                    <div class="legend-item"><div class="legend-dot" style="background:var(--pricylia)"></div>Pricylia</div>
-                </div>
-            </div>
+            <h2 class="section-title">Chapter 3: Our Rituals</h2>
+            <p class="section-intro">The liturgy of a love story. The small things you do every single day.</p>
+            
+    <div class="grid-3">
+        <div class="card" style="text-align:center;">
+            <div class="ritual-emoji">☀️</div>
+            <div class="ritual-count">610</div>
+            <div class="ritual-label">Good Morning messages</div>
+            <div class="ritual-detail">Pricylia says it first 133 days</div>
+        </div>
+        <div class="card" style="text-align:center;">
+            <div class="ritual-emoji">🌙</div>
+            <div class="ritual-count">605</div>
+            <div class="ritual-label">Good Night messages</div>
+            <div class="ritual-detail">Jonathan closes more conversations</div>
+        </div>
+        <div class="card" style="text-align:center;">
+            <div class="ritual-emoji">🍚</div>
+            <div class="ritual-count">64</div>
+            <div class="ritual-label">"Udah makan?" check-ins</div>
+            <div class="ritual-detail">Almost perfectly balanced (J:35 P:29)</div>
+        </div>
+        <div class="card" style="text-align:center;">
+            <div class="ritual-emoji">💗</div>
+            <div class="ritual-count">1,354</div>
+            <div class="ritual-label">"Sayang" spoken</div>
+            <div class="ritual-detail">Pricylia uses it 63% more (834 vs 511)</div>
+        </div>
+        <div class="card" style="text-align:center;">
+            <div class="ritual-emoji">🥺</div>
+            <div class="ritual-count">365</div>
+            <div class="ritual-label">"Kangen" / "Miss you"</div>
+            <div class="ritual-detail">Pricylia expresses it 53% more often</div>
+        </div>
+        <div class="card" style="text-align:center;">
+            <div class="ritual-emoji">🚗</div>
+            <div class="ritual-count">Every time</div>
+            <div class="ritual-label">"Hati2 di jln!!"</div>
+            <div class="ritual-detail">Pricylia says it after every single date</div>
+        </div>
+    </div>
+            <div class="insight"><strong>The "hati2 di jln" ritual</strong> might be the most beautiful one. Every single time Jonathan drives home after a date, Pricylia says it. It's never acknowledged as special. It's never skipped. It's the Indonesian love language that transcends words — "I can't protect you on the road, but I can put my care into these four words."</div>
 
-            <div class="insight">
-                <strong>The trajectory tells the story:</strong> May (337 messages) → June (1,469) → July (5,552) → October (16,958) → November (23,040). By the time you became official on November 15, you were already inseparable.
-            </div>
-
-            <!-- Chapter 3: November 15 -->
-            <h2 class="section-title">Chapter 3: November 15, 2025</h2>
-            <p class="section-intro">The day it became official. Together since November 15, 2025.</p>
-
-            <div class="card" style="text-align:center; padding: 40px;">
-                <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:3rem; color:var(--love); margin-bottom:10px;">Together</div>
-                <div style="font-size:1.2rem; color:var(--muted);">since November 15, 2025</div>
-                <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.5rem; color:var(--gold); margin-top:15px;">4 months and counting</div>
-            </div>
-
-            <!-- Chapter 4: How We Talk -->
-            <h2 class="section-title">Chapter 4: How We Talk</h2>
-            <p class="section-intro">The unique texture of your communication. Part English, part Indonesian, entirely yours.</p>
-
-            <div class="grid-3">
-                <div class="card" style="text-align:center;">
-                    <h3>Jonathan's Language</h3>
-                    <div style="font-size:2rem; font-weight:700;">76%</div>
-                    <div style="color:var(--muted);">Indonesian</div>
-                </div>
-                <div class="card" style="text-align:center;">
-                    <h3>Pricylia's Language</h3>
-                    <div style="font-size:2rem; font-weight:700;">91%</div>
-                    <div style="color:var(--muted);">Indonesian</div>
-                </div>
-                <div class="card" style="text-align:center;">
-                    <h3>Code-Switching</h3>
-                    <div style="font-size:2rem; font-weight:700;">2,164</div>
-                    <div style="color:var(--muted);">Mixed messages</div>
-                </div>
-            </div>
-
-            <h3 style="margin: 30px 0 15px; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.5rem; color:var(--gold);">Your Pet Names</h3>
+            <h2 class="section-title">Chapter 4: Our Words</h2>
+            <p class="section-intro">Part English, part Indonesian, entirely ours.</p>
+            <h3 style="margin: 24px 0 14px; font-family:'Playfair Display',serif; font-size:1.2rem;">Your Pet Names</h3>
             <div class="grid-4">
-                
         <div class="pet-card">
             <div class="pet-name">sayang</div>
             <div class="pet-counts">J: 448 | P: 735</div>
-            <div class="pet-first">First by pricylia on 2025-06-05</div>
+            <div class="pet-first">First by pricylia · 2025-06-05</div>
         </div>
         <div class="pet-card">
             <div class="pet-name">lucu</div>
             <div class="pet-counts">J: 269 | P: 530</div>
-            <div class="pet-first">First by pricylia on 2025-05-31</div>
+            <div class="pet-first">First by pricylia · 2025-05-31</div>
         </div>
         <div class="pet-card">
             <div class="pet-name">cute</div>
             <div class="pet-counts">J: 59 | P: 283</div>
-            <div class="pet-first">First by jonathan on 2025-05-31</div>
+            <div class="pet-first">First by jonathan · 2025-05-31</div>
         </div>
         <div class="pet-card">
             <div class="pet-name">cantik</div>
             <div class="pet-counts">J: 93 | P: 33</div>
-            <div class="pet-first">First by jonathan on 2025-05-31</div>
+            <div class="pet-first">First by jonathan · 2025-05-31</div>
         </div>
         <div class="pet-card">
             <div class="pet-name">say</div>
             <div class="pet-counts">J: 91 | P: 26</div>
-            <div class="pet-first">First by jonathan on 2025-06-30</div>
+            <div class="pet-first">First by jonathan · 2025-06-30</div>
         </div>
         <div class="pet-card">
             <div class="pet-name">syg</div>
             <div class="pet-counts">J: 3 | P: 111</div>
-            <div class="pet-first">First by pricylia on 2025-08-23</div>
+            <div class="pet-first">First by pricylia · 2025-08-23</div>
         </div>
         <div class="pet-card">
             <div class="pet-name">cutie</div>
             <div class="pet-counts">J: 32 | P: 54</div>
-            <div class="pet-first">First by jonathan on 2025-07-02</div>
+            <div class="pet-first">First by jonathan · 2025-07-02</div>
         </div>
         <div class="pet-card">
             <div class="pet-name">ganteng</div>
             <div class="pet-counts">J: 17 | P: 68</div>
-            <div class="pet-first">First by jonathan on 2025-07-06</div>
+            <div class="pet-first">First by jonathan · 2025-07-06</div>
         </div>
         <div class="pet-card">
             <div class="pet-name">manis</div>
             <div class="pet-counts">J: 21 | P: 41</div>
-            <div class="pet-first">First by jonathan on 2025-06-12</div>
+            <div class="pet-first">First by jonathan · 2025-06-12</div>
         </div>
         <div class="pet-card">
             <div class="pet-name">baby</div>
             <div class="pet-counts">J: 21 | P: 31</div>
-            <div class="pet-first">First by pricylia on 2025-06-02</div>
+            <div class="pet-first">First by pricylia · 2025-06-02</div>
         </div>
         <div class="pet-card">
             <div class="pet-name">queen</div>
             <div class="pet-counts">J: 21 | P: 15</div>
-            <div class="pet-first">First by jonathan on 2025-07-04</div>
+            <div class="pet-first">First by jonathan · 2025-07-04</div>
         </div>
         <div class="pet-card">
             <div class="pet-name">princess</div>
             <div class="pet-counts">J: 19 | P: 8</div>
-            <div class="pet-first">First by jonathan on 2025-07-04</div>
-        </div>
+            <div class="pet-first">First by jonathan · 2025-07-04</div>
+        </div></div>
+
+            <h2 class="section-title">Chapter 5: December 10, 4:56 AM</h2>
+            <p class="section-intro">She said it first.</p>
+            <div class="card" style="text-align:center; padding:36px;">
+                <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:2.2rem; color:var(--pricylia);">"Love you❤️"</div>
+                <div style="color:var(--muted); margin:8px 0; font-size:0.9rem;">— Pricylia, December 10, 2025, 4:56 AM</div>
+                <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.6rem; color:var(--jonathan); margin-top:16px;">"Love you too sweetie pricy"</div>
+                <div style="color:var(--muted); font-size:0.9rem;">— Jonathan, immediately after</div>
             </div>
-
-            <!-- Chapter 5: How We Love -->
-            <h2 class="section-title">Chapter 5: How We Love</h2>
-            <p class="section-intro">Pricylia said "I love you" first. December 10, 2025, 4:56 AM.</p>
-
-            <div class="card" style="text-align:center; padding:30px;">
-                <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:2rem; color:var(--pricylia);">"Love you❤️"</div>
-                <div style="color:var(--muted); margin:8px 0;">— Pricylia, December 10, 2025, 4:56 AM</div>
-                <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.5rem; color:var(--jonathan); margin-top:12px;">"Love you too sweetie pricy"</div>
-                <div style="color:var(--muted);">— Jonathan, immediately after</div>
-            </div>
-
             <div class="grid-2">
-                <div class="card">
-                    <h3>Love Words Over Time</h3>
-                    <div class="chart-wrap-sm"><canvas id="loveChart"></canvas></div>
-                    <div class="legend">
-                        <div class="legend-item"><div class="legend-dot" style="background:var(--jonathan)"></div>Jonathan (919)</div>
-                        <div class="legend-item"><div class="legend-dot" style="background:var(--pricylia)"></div>Pricylia (1,187)</div>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3>Laughter Over Time</h3>
-                    <div class="chart-wrap-sm"><canvas id="laughChart"></canvas></div>
-                    <div class="legend">
-                        <div class="legend-item"><div class="legend-dot" style="background:var(--jonathan)"></div>Jonathan (4,400)</div>
-                        <div class="legend-item"><div class="legend-dot" style="background:var(--pricylia)"></div>Pricylia (16,195)</div>
-                    </div>
-                </div>
+                <div class="card"><h3>Love Words Over Time</h3><div class="chart-wrap-sm"><canvas id="loveChart"></canvas></div>
+                    <div class="legend"><div class="legend-item"><div class="legend-dot" style="background:var(--jonathan)"></div>Jonathan (919)</div><div class="legend-item"><div class="legend-dot" style="background:var(--pricylia)"></div>Pricylia (1,187)</div></div></div>
+                <div class="card"><h3>Laughter Over Time</h3><div class="chart-wrap-sm"><canvas id="laughChart"></canvas></div>
+                    <div class="legend"><div class="legend-item"><div class="legend-dot" style="background:var(--jonathan)"></div>Jonathan (4,400)</div><div class="legend-item"><div class="legend-dot" style="background:var(--pricylia)"></div>Pricylia (16,195)</div></div></div>
             </div>
 
-            <div class="insight">
-                <strong>Pricylia is 3.7x more generous with laughter</strong> — 16,195 haha/wkwk messages vs Jonathan's 4,400. She brings the joy. He brings the jokes that spark it.
-            </div>
-
+            <h2 class="section-title">Chapter 6: "That's So Us"</h2>
+            <p class="section-intro">The moments that no one else would understand.</p>
             
-        <div class="love-quote quote-p">
-            <div class="love-quote-text">"Eden udah bangun. Oncle kapan hihi 😘😘 ontinya eden miss you &lt;This message was edited&gt;"</div>
-            <div class="love-quote-attr">— Pricylia, 2025-12-17</div>
+        <div class="moment-card">
+            <div class="moment-title">The Coto Confession</div>
+            <div class="moment-date">Day 1, May 31</div>
+            <div class="moment-line msg-j"><span class="moment-sender">Jonathan</span> &quot;Dulu wktu kecil kirain coto itu cara org ngomong soto dengan cara unyu&quot;</div><div class="moment-line msg-p"><span class="moment-sender">Pricylia</span> &quot;Hahahah!! Byk yg kirain sama.&quot;</div><div class="moment-line msg-p"><span class="moment-sender">Pricylia</span> &quot;Lama bgt ga baca kata unyu hahahahah&quot;</div>
+            <div class="moment-note">Their first shared laugh — set the tone for the whole relationship.</div>
         </div>
-        <div class="love-quote quote-p">
-            <div class="love-quote-text">"'Cause you know, you've got the keys to my heart"</div>
-            <div class="love-quote-attr">— Pricylia, 2026-03-06</div>
+        <div class="moment-card">
+            <div class="moment-title">The Galaxy Declaration</div>
+            <div class="moment-date">Dec 30</div>
+            <div class="moment-line msg-p"><span class="moment-sender">Pricylia</span> &quot;Km di galaxy pun aku sayang bgt&quot;</div><div class="moment-line msg-j"><span class="moment-sender">Jonathan</span> &quot;Kalo aku di bulan, km ttp sayang ga&quot;</div><div class="moment-line msg-p"><span class="moment-sender">Pricylia</span> &quot;Di bintang di gurun sahara pun sayang&quot;</div><div class="moment-line msg-p"><span class="moment-sender">Pricylia</span> &quot;Sayang dong. Di semua tempat sayang&quot;</div><div class="moment-line msg-j"><span class="moment-sender">Jonathan</span> &quot;I love you too and more Pricylia Viliavirta Sutanto&quot;</div><div class="moment-line msg-p"><span class="moment-sender">Pricylia</span> &quot;I love you more and more Jonathan Leslie Kurniawan!&quot;</div>
+            <div class="moment-note">Their most romantic exchange. Full names as love declarations.</div>
         </div>
-        <div class="love-quote quote-j">
-            <div class="love-quote-text">"Sayang kayanya kita udah sering bgt bgt bgt"</div>
-            <div class="love-quote-attr">— Jonathan, 2026-02-18</div>
+        <div class="moment-card">
+            <div class="moment-title">The Timestamp</div>
+            <div class="moment-date">Nov 16, 5:07 AM</div>
+            <div class="moment-line msg-j"><span class="moment-sender">Jonathan</span> &quot;Cie yg baru jadian&quot;</div><div class="moment-line msg-p"><span class="moment-sender">Pricylia</span> &quot;U know i catet tgl dan jam nya when u ask lol&quot;</div><div class="moment-line msg-p"><span class="moment-sender">Pricylia</span> &quot;15 nov, 23.34&quot;</div>
+            <div class="moment-note">She documented the exact second. He noticed 4 red cars in her parking lot as a lucky sign.</div>
         </div>
-        <div class="love-quote quote-p">
-            <div class="love-quote-text">"Trus pas foto, trnyta dia belakang aku. Emg ya jonathan ini suka nempel 🤏 miss you!! See you soon"</div>
-            <div class="love-quote-attr">— Pricylia, 2025-12-13</div>
+        <div class="moment-card">
+            <div class="moment-title">The Full-Name Scolding</div>
+            <div class="moment-date">Sep 20</div>
+            <div class="moment-line msg-p"><span class="moment-sender">Pricylia</span> &quot;Udah ya jonathan leslie kurniawan mending kamu istirahat drpd cari bahan buat meme lagi&quot;</div>
+            <div class="moment-note">The full-name deploy — Indonesian girlfriends' ultimate weapon.</div>
         </div>
-        <div class="love-quote quote-j">
-            <div class="love-quote-text">"3) rereading the quotes and the love that we sprinkle around this relationship"</div>
-            <div class="love-quote-attr">— Jonathan, 2026-01-17</div>
-        </div>
-        <div class="love-quote quote-p">
-            <div class="love-quote-text">"Ini bagus bgt cute bgt personal bgt 😭😭😭😭😭 feel so loved!!!! Thank you so much❤️ so sooooo sooooo much!"</div>
-            <div class="love-quote-attr">— Pricylia, 2025-12-31</div>
-        </div>
-        <div class="love-quote quote-p">
-            <div class="love-quote-text">"Sayang….. hahahahahahaaa. Km pickup jam 9.30 aku bgun jam brp ya 🥹 lol!! Hrus jam 7an brrti."</div>
-            <div class="love-quote-attr">— Pricylia, 2026-01-03</div>
-        </div>
-        <div class="love-quote quote-p">
-            <div class="love-quote-text">"Huhu okay. Mgkn coba ke dokter ya sayang?"</div>
-            <div class="love-quote-attr">— Pricylia, 2026-01-14</div>
+        <div class="moment-card">
+            <div class="moment-title">The 4-Month Butterflies</div>
+            <div class="moment-date">Mar 15, 2026</div>
+            <div class="moment-line msg-p"><span class="moment-sender">Pricylia</span> &quot;4 months with you, and I still feel butterflies!!!&quot;</div><div class="moment-line msg-p"><span class="moment-sender">Pricylia</span> &quot;To more 40000000 months with u ❤️&quot;</div><div class="moment-line msg-j"><span class="moment-sender">Jonathan</span> &quot;Happy 4months sayangggggggggggkuuu&quot;</div>
+            <div class="moment-note">40 million months. That's 3.3 million years. She's committed.</div>
         </div>
 
-            <!-- Chapter 6: How We Fight & Repair -->
-            <h2 class="section-title">Chapter 6: How We Fight & Repair</h2>
-            <p class="section-intro">Bren&eacute; Brown says vulnerability is not weakness — it's the birthplace of connection. Here's how you two show up.</p>
-
+            <h2 class="section-title">Chapter 7: How We Grow</h2>
+            <p class="section-intro">Vulnerability is not weakness — it's the birthplace of connection.</p>
             <div class="grid-3">
-                <div class="card" style="text-align:center;">
-                    <span class="framework-badge badge-brene">Bren&eacute; Brown</span>
-                    <div style="font-size:2.5rem; font-weight:700; color:var(--deep);">952</div>
-                    <div style="color:var(--muted);">Vulnerability moments</div>
-                    <div style="font-size:0.85rem; color:var(--muted); margin-top:8px;">J: 491 | P: 461</div>
-                </div>
-                <div class="card" style="text-align:center;">
-                    <span class="framework-badge badge-gottman">Gottman</span>
-                    <div style="font-size:2.5rem; font-weight:700; color:var(--jonathan);">139.6:1</div>
-                    <div style="color:var(--muted);">Positive-to-negative ratio</div>
-                    <div style="font-size:0.85rem; color:var(--muted); margin-top:8px;">Healthy threshold: 5:1</div>
-                </div>
-                <div class="card" style="text-align:center;">
-                    <span class="framework-badge badge-gottman">Repair</span>
-                    <div style="font-size:2.5rem; font-weight:700; color:var(--gold);">277</div>
-                    <div style="color:var(--muted);">Repair moments</div>
-                    <div style="font-size:0.85rem; color:var(--muted); margin-top:8px;">"Same team. Always."</div>
-                </div>
+                <div class="card" style="text-align:center;"><span class="framework-badge badge-brene">Bren&eacute; Brown</span><div style="font-family:'Playfair Display',serif; font-size:2.5rem; font-weight:700; color:var(--deep);">952</div><div style="color:var(--muted);">Vulnerability moments</div><div style="font-size:0.82rem; color:var(--muted); margin-top:8px;">J: 491 | P: 461</div></div>
+                <div class="card" style="text-align:center;"><span class="framework-badge badge-gottman">Gottman</span><div style="font-family:'Playfair Display',serif; font-size:2.5rem; font-weight:700; color:var(--jonathan);">139.6:1</div><div style="color:var(--muted);">Positive-to-negative</div><div style="font-size:0.82rem; color:var(--muted); margin-top:8px;">Healthy threshold: 5:1</div></div>
+                <div class="card" style="text-align:center;"><span class="framework-badge badge-gottman">Repair</span><div style="font-family:'Playfair Display',serif; font-size:2.5rem; font-weight:700; color:var(--gold);">277</div><div style="color:var(--muted);">Repair moments</div><div style="font-size:0.82rem; color:var(--muted); margin-top:8px;">"Same team. Always."</div></div>
             </div>
+            <div class="insight"><strong>Gottman's Four Horsemen — virtually absent.</strong> In 125,070 messages, there are near-zero instances of criticism, contempt, defensiveness, or stonewalling. Your bid-and-response rate is ~95% (turning toward each other). Gottman's research says 86% is the threshold for happy marriages. You're operating well above it.</div>
 
-            <div class="insight">
-                <strong>Your Gottman ratio is 139.6:1.</strong> Dr. John Gottman's research shows couples need at least 5 positive interactions for every negative one. You're at 28x that threshold. This isn't just healthy — it's remarkable.
-            </div>
-
-            
-            <div class="love-quote quote-p">
-                <div class="love-quote-text">"Btw, just want u to know thay u have built so much, achieved so much, grown so much. I just hope you allow yourself to feel that ya and relax into it sometimes💓
-Also i think part of loving you is reminding you that you’re already doing enough! Mgkn k"</div>
-                <div class="love-quote-attr">— Pricylia, 2026-03-04</div>
-            </div>
-            <div class="love-quote quote-p">
-                <div class="love-quote-text">"Letssee besok pas bgun bgian mana lg yang sakit 🤣"</div>
-                <div class="love-quote-attr">— Pricylia, 2025-07-28</div>
-            </div>
-            <div class="love-quote quote-p">
-                <div class="love-quote-text">"Iyaaa bangun2 snyum2 tp abis itu nangis lama bgt"</div>
-                <div class="love-quote-attr">— Pricylia, 2025-07-02</div>
-            </div>
-            <div class="love-quote quote-j">
-                <div class="love-quote-text">"Soalnya aku rasa aku consistent, tp aku tuh complex, mungkin km tau aku kaya gmna tp dari situation beda2 jd tau gmna gitu"</div>
-                <div class="love-quote-attr">— Jonathan, 2026-02-26</div>
-            </div>
-            <div class="love-quote quote-p">
-                <div class="love-quote-text">"Tp ada beberapa match nya yg aku rasa aku pst bisa hahaha"</div>
-                <div class="love-quote-attr">— Pricylia, 2025-08-25</div>
-            </div>
-            <div class="love-quote quote-p">
-                <div class="love-quote-text">"Skg lg baal soalnya abis anestesi, nnt abis ilang, mgkn bakal sakit lg. Skg udah lmyan sakit sih 😂 katanya 2-3 hr bakal sakit lg omG"</div>
-                <div class="love-quote-attr">— Pricylia, 2025-12-23</div>
-            </div>
-
-            <!-- Chapter 7: The Midnight Hours -->
-            <h2 class="section-title">Chapter 7: The Midnight Hours</h2>
-            <p class="section-intro">Your peak hours: 11pm to 3am. Night owls who come alive after dark.</p>
-
+            <h2 class="section-title">Chapter 8: Our Timeline</h2>
+            <p class="section-intro">Every milestone. Every turning point. The story in dates.</p>
             <div class="card">
-                <h3>When You Talk — Hour by Hour</h3>
-                <div class="chart-wrap"><canvas id="hourlyChart"></canvas></div>
-                <div class="legend">
-                    <div class="legend-item"><div class="legend-dot" style="background:var(--jonathan)"></div>Jonathan</div>
-                    <div class="legend-item"><div class="legend-dot" style="background:var(--pricylia)"></div>Pricylia</div>
-                </div>
-            </div>
-
-            <div class="grid-2">
-                <div class="card" style="text-align:center;">
-                    <h3>Good Morning</h3>
-                    <div style="font-size:1.5rem; font-weight:700;">
-                        <span style="color:var(--jonathan);">J: 177</span> |
-                        <span style="color:var(--pricylia);">P: 311</span>
-                    </div>
-                    <div style="color:var(--muted); font-size:0.9rem; margin-top:8px;">Pricylia says it first 133 days</div>
-                </div>
-                <div class="card" style="text-align:center;">
-                    <h3>Good Night</h3>
-                    <div style="font-size:1.5rem; font-weight:700;">
-                        <span style="color:var(--jonathan);">J: 389</span> |
-                        <span style="color:var(--pricylia);">P: 587</span>
-                    </div>
-                    <div style="color:var(--muted); font-size:0.9rem; margin-top:8px;">Making sure the other sleeps well</div>
-                </div>
-            </div>
-
-            <!-- Chapter 8: Milestones -->
-            <h2 class="section-title">Chapter 8: Our Milestones</h2>
-            <p class="section-intro">The moments that defined us.</p>
-
-            <div class="card">
-                
         <div class="tl-item">
             <div class="tl-icon">💬</div>
             <div class="tl-content">
-                <div class="tl-date">2025-05-31</div>
+                <div class="tl-date">May 31, 2025</div>
                 <div class="tl-title">First Message</div>
-                <div class="tl-desc">&quot;Hi Pricylia, this is Jonathan 👋&quot;</div>
+                <div class="tl-desc">&quot;Hi Pricylia, this is Jonathan 👋&quot; — introduced by Kevin Phang and Katherine</div>
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczMiwPXi0EZTBMcFAtsiOc91WWnVN1rOniRD3mYIe_gh_oDalYhcie2sEXLttMnAIbg5oeDis08eCYFswBiaxKr2-5lwHVyxnE5plhFEIWmqRb0J54R51RATP7_mlJ7Nyq0drdOcHPh9fXuDVCiigdvN0vb2wm-yG6MWfVWGBaLvX8puGbeksfojXU1A7plzLW0wRMRwUJXTMYcvFty13Qq0w5LYVEr74EMdK1vJnl_ZfY-Jqpd4RvE_upL_YwS8qgV3d9Hj29zNKRf7zZKHhyQa0o_8C0zO5xf1Qnu1fPApcVHeciUDocnwDd4y9j1pVQZB-G6ZXu4n7gffDTXlx-R2RtJ1ivq3txuXejBNAVQgWz8fsl9G25Q6lIeHADKyvEToyjrZo6L2BljtyVMH5QXM6i8GTSD6i3N_f30_WVGKJHFOvzd0BMLwpgFdiovPXqC0xQfaDfgvU63kS72baWWluYs3y52fFXTbcrUjb6Z3-htY-2YvoGO2ILRBe44Wau4tIv_9i1B7Swy53LmsFnWyBFWrXBETboHPxUaqTWEOb2xm-53BejLejJp0bCfT3sPIhW_HJsObLbjcbvZIBqWCS_hQwCzYaeSRMHkhlFT5h5xzSrh8AVrNeQ0VTt4Bc2bGix8v3hGeK5VkdfL-lDBgsTZuBTmDGwKMTKcsKJdNmkTLNWsDL7FKfAGE7wmN-kIWD-FTg3LJ1Kv9mjrWiOv8TvCPKIRhqxh9h51LI3tGA21ccLekOej7o0FSSwRp55JF0IIEFgUm8b8uVNbSWWEenFchzdjq6qSTyLkKSLs0hXJFdvqzFg-G1VMcd_WoGDigJ_KHyuX8bbKj8GQGempou3r79rfDG8vjuKpCJFDj8Z0OyuTPl7DGJdjj-3lKAseooA6R1-crOnvp9OVn-7pqXZNOvI6gLsRNC4_Ty5zgL9GQdKgss3C-5oU_YjyiVXLLE-bhEWfl=w300" alt="" class="tl-photo" loading="lazy">
             </div>
         </div>
         <div class="tl-item">
-            <div class="tl-icon">🥰</div>
+            <div class="tl-icon">🍽</div>
             <div class="tl-content">
-                <div class="tl-date">2025-06-05</div>
-                <div class="tl-title">First &quot;Sayang&quot;</div>
-                <div class="tl-desc">Pricylia: &quot;Mgkn krn aku deket banget sm cc, jadinya sayang banget sm anaknya juga.&quot;</div>
+                <div class="tl-date">Jun 11, 2025</div>
+                <div class="tl-title">First Meeting</div>
+                <div class="tl-desc">Dinner at Chadol restaurant, Jakarta Barat. Jonathan offered to pick her up.</div>
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczMcr0KkIzhQKVx6CwDgANeCF04xBfJusQtRIY_PRh6AyP4PMplfOEKOry55aS9xyJM3XWBjROOeLVGCdIHL96DX6T4VDPV7D5VrDcVd9TywVd4IyWOWTZIRXW3b69gfTfqdW6XDjNFv6rYHu4TerX4hMIwqdb6GB6oqzZgsHA7X5PsqDhY7ncBcO6jtgu6xZ3VAlHCA-JPW0UgnUXafMwAbg-Os4cgv4pW7jFaoYY0IqvF_OsJg51f_OdmBIp1pzYWl5Gb41yQfLtatSGUryBbSCHyh26wGhhLT7BNAH6UlYLD-YFRfT3RlFXVVT2hhusywTebWZZO1AViVTCGL1pC1GgfR18Jsvi2ZYUilaNDseKNVFTmhfmyBquedvmLy8T59wBpRBAL9HahOIGsMMd07aeULu2j2Niy-SeaH3ndGm52Oq7RW5BTYINVXh6K34n0N9XUjRKpMWCiyUDF16seBYklTaIU4eYDypid0EEjVGBlasFzEt7VKnLz1bzBk_ERYrTNR9lz6zKzyVBlR9Du9_kjVjsWV3fXX2IRYkqFiV0lkdzmHXiYLyvQ-u0dqr7jTXveLmqbZDKUOhXtG1OA_r9WO4zD-1UjZW56HgfQHPc79-IY__f3UtqtNXJwOJ72lsx37a5p0294PcAUyLXuyWLt8EyUP2SlyXcUctQOXfxPMAF2YkV-j1VGWdheOYKIqoxRAlQid1_aq19_Lj6x5lNxgnEfLrfmomXrx5bnKqUm2v-DOccZEhC4FdJvMBMZ-fhn7CtjmkGszF2TtWbf99JST0snVp5vNDrIvj0nGSwqk-y6Xotgtddhzc5LwjploqcxVKkCMoXQy81B1ekGs1NO8_Tu1PXVmW2vy-8IRIOnJ89wrwfxdt-y5IOu4aZ6El-fg7gIOAE3e1emTtQIvSH3viJ5sdGwDe8QPEkWPCjpxODFxh9H80BDJoyU9xWMCsLuI8vjL=w300" alt="" class="tl-photo" loading="lazy">
+            </div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-icon">💭</div>
+            <div class="tl-content">
+                <div class="tl-date">Jul 4, 2025</div>
+                <div class="tl-title">First Deep Conversation</div>
+                <div class="tl-desc">3 Facts game leads to sharing about past relationships, dreams, and fears.</div>
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczPe_W9AcSzgsCosyWzUwnp0221xl6_sD3CSBienBc7sJwIKFLS_Pmid86pX8L94cHMx1nk25Dr2Ic7qvBoWlsvehIYjYlaW_cqsJcy5GnzRKjxtiZI-Sdukq28gxWMr7vOXqTE2qrAs6bTVxrLg9cfzjn94nDrhHXAej-TlletEn1PIB2EPXV0V-k-VPfuBWg5UA7MNR8k7uoqAfkNwqDeFSxAAbziQORG4csGFcz3Am4Ulbb4c5kNOB4m9MK6HIK5fsN03tG2YphgttRqClnUo4yLwjnSt3fnRP9AbFGzCHp0IfehfCZp9yHNAsnMFdlq0Sin_8MlKq8iDXOddtTqIb-rwy4eaU9tcsVdINXsxhk_b4bVJbMVLpp-gJE7Rxguq4sGMx7xkXDxCqrwh8TkAY4SmDRWEyFaRuvpPyXNAIrsmhWMmpsB1SfLiWFycjFtQQRxDqG-ZgV0HsktT2dJFdp88sz1kGEvzkD6QdpnoXj29oKYU5ojJNzHxZMaPMpOGH-UknNoOTX4kzz-7TkKy8a4vaWlEmqxE0RwTdiVnkEYFbuj0Qo1MWutYI8Q_SlxAB54GchEZZn2cVxwsromlSUsGRuBsiSOoBcuJXOm9kmUBdBzbuAiXabF1m3ffO6wW_qwZ55NJhyFr1_Bz7CuFIBuauesRZQ1JHG-feogb7T9KOm3MgkajGVzEimmRzuogBNUYYZGHfbESM8k7SMPN-1d49CogjACE7V6TAwOFDXoa5jwL-z77UHNUus7AzIRNR5xucdngEU6tw5mBQguHc7716jIRxNMk9IWt5kKBSqqaPtUFNpAol_zlt11fhJT6o6l3MNd5y2zf9eyuEYcXWsqZdGFho5zgXgXCaqxxFkUP0YUTc73khsglqdbmyQ5fug2XvfnGJ8Y7fTZwl6tDhK7Y0d2Lhn_RiRWZe9cSPMAGxam7UnoTdfAJq7Ah3SC2dnzsAj07=w300" alt="" class="tl-photo" loading="lazy">
+            </div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-icon">🎲</div>
+            <div class="tl-content">
+                <div class="tl-date">Oct 2025</div>
+                <div class="tl-title">The Message Explosion</div>
+                <div class="tl-desc">16,958 messages — double the previous month. The dice game, Dubai calls, and &quot;missing the peacock.&quot;</div>
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczMHH65O32vZC48jAz4ZxNAyBAvFgZr3QRV2pahCX_dgfMx3XvBpUqDOO3UXKA122jJ71MZ_JPcHUf_jllMaPGKu0EFzYiLCwl0vzTgaZwUewi_iDdjfXFzucNa-3VuaYx68yYC71kIQQkhVuGOQlgEZRD_ae-wRaLtMe038TfP-YKD5wDWakB4RhQT4YwcDaFEac4ke48e544PPTDs91WKveqYNgQOyqEb2qIhNGiUX0YepB6wypok4YY8KqAg2I-VFWaJifJdfqUx0jXf3VVZ9vvvlKadS_GIAV3wY2w5ppsPgarMyHAjAbGaTxmuv-vgYGnelrAoR9saMr7EjUkeKOuMjQmN7B9i81df3LYH6tXWjqB_C6S_p7Otlf0TITys__uKPOQMYDz40YuhahXZ54WeHhOkSfaXUy9Xfsrao0bPJeXCqpSVkC1s47dnXElQcGdIg87jL16P1O-w-BiRCWbz3F42X3DQwzzuTVqBERsuylV5Rrnr3WiP07VofpwOY2Ca8rbgPvx_eLSOh7QryQJyrBDaD3h0-FeEYJyVrC-jKuW9XwSHw2zO7qWBhqB-s3VlX9eH-MB6P7rp9VuZlQRVeRzqjhAf9M0HZxe0Gd2028go_yK1Lt4K-49dPTwCTdLj5OA48L9d3suzdxV4d4F4DD2UesigFWiCk7CoN5pMAH6pPM0Yadi6la9qCPZSeqKoSkAoLTgd4GcKQlYASormZjiddbawzxPnszt_BdU1SSP5lXHQ-CWBKno8V4VHyR56-qbZuMjLd3wcfAbngTC9AUNYY06yMz0i_VHfCUkd5DSOmj8-EYkab1UK3tH7cLQPmm8LO1bOqOONKLvrmDT7F1LQNKaFCM-zFQ4ZPksU4b98I2_kCstU1hyz66Y66UC4Rg_Yk7WKINSFBPUp2lYYDgjwBqDbYuEIu91QrE9lwBXZ6hKb5lzBc5Z9Ts29XDsyJeaig=w300" alt="" class="tl-photo" loading="lazy">
             </div>
         </div>
         <div class="tl-item">
             <div class="tl-icon">💕</div>
             <div class="tl-content">
-                <div class="tl-date">2025-11-15</div>
+                <div class="tl-date">Nov 15, 2025</div>
                 <div class="tl-title">Officially Together</div>
-                <div class="tl-desc">Together since November 15, 2025</div>
+                <div class="tl-desc">11:34 PM. She recorded the exact timestamp: &quot;15 nov, 23.34&quot;</div>
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczOxDTRBftEVzwVhux_cou0noe6GvaDrWeyf8kh7pfG3VxFcymY-2dvpEWc3RH-HlRVTVTp9WPFyT-JH1a8W3zMtax2ZQ7Vtiex4bZBchIJjh3NNzMXG2pJJI7e-ml7jJdV0Z-OoOxA5on2bYxkmE1p_Wae94O_dE93VPsyohAWgMlhoAFMPBPZfyz-9_sY9SnJyDYQarpI0dtlGHaE_qkBCnc4Ka2sIO8MajuMYIcw__y0FlFvh16-JkxP9D8u61gi51cc71Zp-RyWfoU2F9c6XixVUi80eBUUZl-4ub60Zmf7MXRmFm8ra8DwAHxPCG7hoZqTezo8lBFFUgSNoekWD4BqIIZiENcJrH6a7AfcgyH_yXkHVTQRBXntJeTPdrg-1fbFG_50nqj6qhF8KjpItlMVNN2kzJqjGMuVzbvCFm3LqlA83-WV5kJTAdCboF2xUU2RKQfw2oBRNypjHPF9L4ExJj9OqMNEuE0gJGJR0_WjcwLjeB2UyTVAcxZRXIQ4TL2o99nOnqZtVC014yMEBOGkwgKmHYuAoBpVCqHvReMNR82gRNUoi0MW601UIDJC4qHSSWhEfBAfB7SUFs70tdKntOj5mOEQmziRGp8XX2SG7k9B-J6O11Bj1VJB_IayTrY1FLvQ6vAQKX-h1nvb_21YP5FCFJWI9WBe0MwarZCJWSME-0hXrKTenql4f_88QZjJ4p5uAfllyuN9aM_Hi0iad809VGh4oWclCaaJQNZSGJdKXfmSYXgREcFAjPVwmFE5E1wZSx1NGuB7VoQKmLmP5_Vv5im_aWM-y99zH-n7-6dMyp-i2q8EzqUVYar7CJymPSzaUDHVCVd005lqMctfn9jKSYGfUKCL4Aq-SShW_QGNxGLqnGWcpp3MiSq-kUr2JjzH6dOgMADZqcldkhFLmy12JuIbqBIX-KObwoUzoM0OzpxoKuDwtG6gKKLZdG7mTI2mb=w300" alt="" class="tl-photo" loading="lazy">
+            </div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-icon">🥰</div>
+            <div class="tl-content">
+                <div class="tl-date">Nov 18, 2025</div>
+                <div class="tl-title">First &quot;Sayang&quot;</div>
+                <div class="tl-desc">&quot;Kamu suka dipanggil nak sayang?&quot; — &quot;Sukaa&quot; — from this day, sayang became their word.</div>
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczOmfZRYqOahtX-Vuo4ljv9nSr53taQs8kGRtW7ek0Y23yQ79R8FMzqqKawkCnqBZyHh4pBdXHyrZ6tWWAEcfpUsxBFzPcGWcUURdqWPX-x66TrdGMJ8MOwmEdR5cZEoJtr3CvBC2SINd04md7Vcon7hAxXIWEliXv7EQsaykzLW0iJ0KJp3X_uO4qvhcSAbGKdRPE4ySNVTpHFVPlY7FN6KtyFuH0zuQTCfEbEM-fNrKrcrxwa8Aj7Mney8xsxsIRRe72q-KGpuGaWJbsab3qLkSLpmFleQG61XhPlUYuinF7o1_6TmJkl8igjd8MTgtAvHUrbvvxeJ4rEX7oUDfGDqfugSk-6YJxpqEXgtugBkgQQodj-tJ11cCSXWqHbc5zNNh1UYf9z1IiALmQS37M7xkWc4_YzCS3LfnS_nku5Ng1WOm8QvO4ulbhz5vgw2URCAPxDv_UWdUT753EqvCfwv8LQfhI3EsYHMurA6VCi4thvtlwBSBWEU9LM3lGqlSE68GPAiugkd9ZfaKh3LJEx0LZpgZU2tzvS792lvwUmB0uiyxZjAXJpjKtTH9AQF5O737O2sn0G9tsFD9XDIy6SEFEn3dQ7keyvBrse5HBo79Yw7qVt_j7n-gl1GzNemrcNJ_Kz-OXp2sxQd-nVP0X9QW72nkjzwu4VmJzCPMX4xYBmVYX_G5TJyvmn28PuvC5a1ihRQCs-MdILytzwbq4Hj04xpf7KmBqReg7pJnv7BqK4mM-7vPUVhhemjoefVjAhFQzIbgNKUl3tbTE_s2Foer3pX1Uwc81R_V5FR3Bi0zt--DUQypXqJEa9dvImedkd_LpwEdivzjohQU9W3KpnVKw4kEh1wI1cuAN2_PhwVS3LFiG2neZjqnktzq3Nrxcec61YeYzhBwbxHFhhEb7XFFRWgQ7n5GSUtDkUIwyQLM8mZQzAdn-fslm-xRIzjD9Qxwm2AbWRd=w300" alt="" class="tl-photo" loading="lazy">
             </div>
         </div>
         <div class="tl-item">
             <div class="tl-icon">❤️</div>
             <div class="tl-content">
-                <div class="tl-date">2025-12-10</div>
+                <div class="tl-date">Dec 10, 2025</div>
                 <div class="tl-title">First &quot;I Love You&quot;</div>
-                <div class="tl-desc">Pricylia: &quot;Love you❤️&quot;</div>
+                <div class="tl-desc">Pricylia: &quot;Love you❤️&quot; — Jonathan: &quot;Love you too sweetie pricy&quot; — 4:56 AM</div>
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczP1mRIaIpCBCO-qQumZ5CnppXJSULdSQQlHURPXQ3ltfo0rGv3dbftgE3V8TJJXHmsHegUuwuLLH93p7wXccRgK6VrGluDgSGN45m0v3FFyCGZJ-RFRuvRmQa_5-Um1hvBzkQNCkEtqxSzaigDiHShUw1D5Oipkc03swjq5_ao9gflf3eEXDF2XVqoiLYHwlzyq8spMJ-3nvRPAZd2vga9jCqn5-ZocUyYBff8_2mjhklnZpjX0eNGlREDQeq0QOgOd-dQFVrzdSAGHExFwHiZ1SZn9RG4Kv169MeaexhnABkfEIxNuNeZCOJ4JP83yL7URIaV63xMO_ECB444lujjDQoWXHk8yDVbu_T0JY1nIZLbYBa_HU2YJCEJ8ezHoXR3m6oiABcuvjaInif70cLa9pA9yF2IfwP5AjMiAB55ygFSCMF2iu4QXwOqX0PLN_fMZ8ntNJeuYg9qqED1ul8A4MO6vzAcPE6yJRyqDcXErl-zbIrpiyWyr4CvRUFJAmYcsDNqYGUJNtsisghQBh4nTqbOa-bTy6YUnf6eVMJYgs5NDEP2U67Kej3HmPf64mKHYl-RYs5rVml6he-KRYK5BUfdPdF9mTUV-5rwewiYtMBPzRuCWuWTW5TrRX0Scvo1Dn6o5eU39LrrzQ8GwKMvd2ZqEMX7zHA69543lTi7k9UkWCfoqBtlKzLCFkTbQTrlMUHyM92cwKMsTCgkYmdNmHyjFILHyefDj_k_5GqRAyfjILEHW_y8ne2KmsbqXbTcGEiqiMseNapF0FRPY6am6ymY8emHF5bS7iEyoQV0lZNGekYU0gEK_KElneBTbrRbpbGWchvh7UeFf1VHY72wodg7TUneM7H9ZTE83RetBPO5eZYgWxS43Znt9LuaeXTUUpYM5wabhjLYfHBqeNBTlwNcXExsuM3_yh7BVMsSQlYAOUgMOXDsn0jhctb_oesoLUwaO8IDN=w300" alt="" class="tl-photo" loading="lazy">
             </div>
         </div>
         <div class="tl-item">
-            <div class="tl-icon">💝</div>
+            <div class="tl-icon">🌌</div>
             <div class="tl-content">
-                <div class="tl-date">2025-12-10</div>
-                <div class="tl-title">First &quot;I Love You&quot; from Jonathan</div>
-                <div class="tl-desc">Jonathan: &quot;Love you too sweetie pricy&quot;</div>
+                <div class="tl-date">Dec 30, 2025</div>
+                <div class="tl-title">The Galaxy Declaration</div>
+                <div class="tl-desc">&quot;Di galaxy, di bulan, di bintang, di gurun sahara — sayang dong. Di semua tempat sayang.&quot;</div>
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczM3_j-blVyTbn8RM8cfIFRup_qvk0lcAhmVT2uumYuUF20rEqvJuMvgrj_hIRKWllniJ6V5W5kQhM0rIoHK3POYQKg2vZKKR2j1BHX90OIMzNnYzXVU2t-tRAG8AlXEDZfrsJwI1hlk-xhe4OyqcYvr5qH1qHDsuDFbh1D4OtlL1nl4QXHed15FZEz7YDoT1FG_4cAc36sGpibzwk5WPf9OW7OD55g6fbv9IhAjAj9w96TSmUdn70ohYb7gx9RIPsJyfDhSvLtwLauDDd8EjpT_Gso9i7DDAFN5pIMuuOC5WpUSMNFXWi2bulN9kePEy0hC-rdPun-i_eDGhmoQO0vEP3TLWCb7EVPgmylWBkr5UTWd2CwdBt8tLDayK_r7Xt2GI2KsHI7ZaJG8s78pQSWNTsSVpRY9DZpH-168JH7w0eGjqcH5S8sXwUdJFRiBm0LvQxS4ry6WDGEK6yB73-kpW_waWb_GbeNrn3zj-Gi3Q8UTo_OOLjrgFuLFhX1QUf5VI8e1mDJzeAYhMYXrtkAQeZRXZiVnld3PMllmOPMJmzFPsca7I1SEDnHPhiu3AaxWCciYDTRdRfHNbk_B757r_x1eqbIlVR912o6m3hbzVLB2D1nr1hreltv61xluAFUlMNfQ4fLcBxt86vHdqLm-gkDPmQSgBcJtP6NS5IsWYjQLQra_fwTc94oQwvp1oYD10qGiRzNXQGgAW7o-tpPBTue7oaiqjg5-V39tQfMdNyjorpYaoqr-NjzcKB3stz7AyRgk62vQ1tXPdz92Hd9yVdONCRdUAzk3kxsUyxeZPSAxUiP5S-aJvdYrMDWLM9DNUA56DIlXEGzvP4SQEOTnWr84LAvEYPemoq05SjBfuT926_Puc9FQvG3ZUFc5Vvo3KAND-q3Hxpll1FdTEKEuTrLhKP_MYLoIc0tNKQtInOX4AfOWjrBfdVJLnNqyhsxbBZluMIeS=w300" alt="" class="tl-photo" loading="lazy">
+            </div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-icon">✨</div>
+            <div class="tl-content">
+                <div class="tl-date">Jan 6, 2026</div>
+                <div class="tl-title">First Official Date</div>
+                <div class="tl-desc">&quot;Our very first date as a couple!!!!!&quot;</div>
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczN3ET3q-TVTiKLZcwDo-3jkEDIgVNF6RA5d9udURLSqN7jVsD20EY1KOTYS3jsahKtIahuWbykhgbNab1e6YuoQhXMvr1eAZ5zgMFMYYWb8XwbesyJpy0-wbC_FexA14FBtxpyGGED8cYtAaWkzysy3B7rRwtrWef2mswKH3XaFQ3Xx8wL9AklfiO4swiNvIr7qyCaD2bA6ChdiAjMUTh23IUs_ZxLkLQWqHiRPH-v_XnMAwaYiEKy8nNtg_7fs8MbvYmyPlavGjkAPo6whCQmq65qLNd2yXIOK-z5YGSdInXJI8FnCn7HHlkiQB6oEBwLkm52V4_YD-5jGqoUuL0q9idqyqLDmiSD0hCZX86HiyThZqnBR1WyuH_l-JucH2jOnAH6f6U7LFXRXSTAXmpuxVYIzaKr7BAzrkeoWCVCLQ4MhfnUvcvsR5HYKkfuiNJxIZ-EOFhJ8G6fNgfPBEZd1Khe4VPIEWz08m2wANNAa7gpR3xRdiV2H99HAPXVpzvHra4r1ndPqwLm-yATUEhue-ytMU4xxtSUfUEPbgDoIOIoRHAY5EwMX6Ka7rCkawB1lJbyPhiPi0GXb8nuUGETg-s5UpCM6QeGa9cxuNu1tLkpuaOg46U9szqPO9NLHvTFRh_PGhJqvBN07jFmgZ7m7Ak6K6dTITNiTmdxjop0_n_fFKp9c_a6iZQ1DJZDxeNK_QM6f_2DCVSgJUPaSUS06Ykv0c_flCyil_299TLbvVA1d59XEAByzMtGe-9BiSxGOpnE0RkkJ7XUPrwrH40PoVOsBNK_hBKI-cHz3MVGjcel6QCkoE0kWoI7K2OKZuJuIY5DgYYzwIqn8e6FR3uLtKBTEM56IZec_dn4AkS-wHj_iZec3051Q_TPw844gH9IhDWcyYfCFSVEk3CkY65gjrGkRobNSfhvL9VHkdXcyaQFc8yL1eplKtLlW9Nw7BsiHbAdU6-Rw=w300" alt="" class="tl-photo" loading="lazy">
             </div>
         </div>
         <div class="tl-item">
             <div class="tl-icon">🔥</div>
             <div class="tl-content">
-                <div class="tl-date">2026-01-17</div>
-                <div class="tl-title">Record Day: 2033 Messages</div>
-                <div class="tl-desc">The most messages in a single day</div>
+                <div class="tl-date">Jan 17, 2026</div>
+                <div class="tl-title">Record Day</div>
+                <div class="tl-desc">2,033 messages in a single day — their most intense conversation ever.</div>
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczPB0GAtCLvz6ef2RemcEpNG2p6uUkIsuGS4rGb3hiZewNmGSN12PeVDPQCDyiuWdd6C0nhGL6xnPl1Y9_sj3Aq-DJ4d7qeV6Ejg8xUtq9J1hYoRPTfrHP2Va-_e8u6ergTaia1ifcjgGsdxxDNgQAcOFnXqf8Zh30YXOwPJ-Qli0b9QbPJ5-7-ga-J6VGx4zYpOguW1NmEeCegvCzdypUMH-DqRoeacT7FdIu6IOhaHsd4ejDaJn50GpJYTpPddpXY0kFQOme6hX6B9v2TmO32lWRVgqite1Sr0pkf5JmxsM51wPZQc5hk5WmNKmpEeLQXr9bhlyorK47C8QFO1Ws_Ostw7Qa9DL9YEHD4vbOiXwjt8tMH7U07PyMtHrC5P_FnbpuiXxJJppNMhR_eQxBSzxqTSN9rvTt64yHkaOEYx8zR_vFCdZ0eZl9BHK6ipA9eCxpyfGf_NrHqb3lpmwbupwiLwS_MWs49bcbZuxzacVOg_D6X6U7bSqQRiWFR5leHUx1l4yghy3xVFfRvXV6LBA_WHLjj4IPzS3WADeWx1B0JH1LTAPU3Q6vKwwT9atjCrFxu90TFlIwDi9KcxH0YFfqu310UaJh9RorAZ0lPIzLruI94kvImKgRudrEShXXlc4G8LkC4VgQPfeUBgPPCcQm4-LmXVnKQqcQzxRioR-GjwvIhONYTncWQWGm5S89Z82R3rvpZ-6zCU-keMGV-3Fz3PyQ7Wa2T6vFrDaQBjLXmG9P95KypSR20kT8uZOWKHwLIH9KZLfaNCJXFHL5SvTWh_p2BmoL3S0WJvRtj_kxbOWatKeOzTrYzR3xBNAfuTpsvwhWm5e3Yuyy94_UnVwssOMHLuyH5xTbUirL_n0XBsHd_kztLzpMBdbHXNctOpIwXUeJ_o4mpvXLGD4_UILOuJHsDFIW-FL3Fm3hbzAUm471xqyUel8jkOl3bJJLzHbClye4fa=w300" alt="" class="tl-photo" loading="lazy">
             </div>
         </div>
+        <div class="tl-item">
+            <div class="tl-icon">🦋</div>
+            <div class="tl-content">
+                <div class="tl-date">Mar 15, 2026</div>
+                <div class="tl-title">4 Months Together</div>
+                <div class="tl-desc">&quot;4 months with you, and I still feel butterflies!!!&quot; — &quot;To more 40000000 months with u ❤️&quot;</div>
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczNCoi0AzvcmqjD4L6bSMYyKGyujcbcBpdJnLNG2E96cvcONEH7C4YCMBPmU9xTzAU0hFprYlMyKJ88TwrzG8kkeaK7mMQ6_5pnnI3bsqBjFD9n38qg92Ap-LYatQxL-dAQrSjwKPhdEZXjNnFysSV99lFDd7W9M-4ASmEKhf0rIL_wibznUEbIOOaW1dcEMRQyzxeTfrhMLpmtxrJKjeHDQWfhhSTl2F1VJGX3mQx3ZJfCrcaWNxTiWlgZ7R8pH39jIjXHzclmtFKHF1eBr47hJ5OuuoPAwIkUdZX7_ghl8aO_y5D9Bpc8lQoaZrzo63nAtKbsYSb6Z5Tkyfa2Tb2NPLlZiiTiwe6Gu2NosjehoTVSh3yNKp4J9eHnG6Nxi42dlYpTjUTCF7vVdjOyePCFDLZPDz9XtRl0IXo_UPk2UH7N6uo4BuELoJ_eIj_e6n4Vpm8hqxZV7ckzbUNkchE044_NqQ2KTRwhUw-Iot8ZmJZ_xzE7pdGd1YyJPaNPp5VS99YxYwTmUZOOncd5kClyfnE_YGVnFpaPt5kBatMlP7IGjBdFpny-s8NyHbIbZDC_k7pUiTpwXTHH-R9AOXg2lIWnysA2EI-SvcJkoX7qklIXIWgu7wkBHxnSTyafue4YR7aFSJdwxzHWZRYqo0B8jWgsvePPLPqvQNt7wv5aB48uUyRpWPcm6kcJRX-x20lmjldv9R9u1G7X62yxcWLJ7neQ1mBhrRM3iWIT88QMJGUHptYAK9b_CdYhEW6S-3sLEKk3amVTYmfQ0KS_u_A6m-wnrPoTofzeL2DrZiBpVBV_f3oiVD1z5OOZClN167-IaIGwnj11zUj4u6z6MUM9UDnEt0bRVuCCnggaqCgES_5ULM8yfMMGo6UYneVluXzA2dAJ53BYiCUvMbSwpYzU_mDy-792_fh-ib4I5tLl87Y0sWYDTOm60-CGhMiqZ-xhWWBDYetRK=w300" alt="" class="tl-photo" loading="lazy">
             </div>
+        </div></div>
+
+            <!-- PHOTO GALLERY -->
+            <h2 class="section-title">Our Memories</h2>
+            <div class="gallery"><div class="gallery-item"><img src="https://lh3.googleusercontent.com/pw/AP1GczMiwPXi0EZTBMcFAtsiOc91WWnVN1rOniRD3mYIe_gh_oDalYhcie2sEXLttMnAIbg5oeDis08eCYFswBiaxKr2-5lwHVyxnE5plhFEIWmqRb0J54R51RATP7_mlJ7Nyq0drdOcHPh9fXuDVCiigdvN0vb2wm-yG6MWfVWGBaLvX8puGbeksfojXU1A7plzLW0wRMRwUJXTMYcvFty13Qq0w5LYVEr74EMdK1vJnl_ZfY-Jqpd4RvE_upL_YwS8qgV3d9Hj29zNKRf7zZKHhyQa0o_8C0zO5xf1Qnu1fPApcVHeciUDocnwDd4y9j1pVQZB-G6ZXu4n7gffDTXlx-R2RtJ1ivq3txuXejBNAVQgWz8fsl9G25Q6lIeHADKyvEToyjrZo6L2BljtyVMH5QXM6i8GTSD6i3N_f30_WVGKJHFOvzd0BMLwpgFdiovPXqC0xQfaDfgvU63kS72baWWluYs3y52fFXTbcrUjb6Z3-htY-2YvoGO2ILRBe44Wau4tIv_9i1B7Swy53LmsFnWyBFWrXBETboHPxUaqTWEOb2xm-53BejLejJp0bCfT3sPIhW_HJsObLbjcbvZIBqWCS_hQwCzYaeSRMHkhlFT5h5xzSrh8AVrNeQ0VTt4Bc2bGix8v3hGeK5VkdfL-lDBgsTZuBTmDGwKMTKcsKJdNmkTLNWsDL7FKfAGE7wmN-kIWD-FTg3LJ1Kv9mjrWiOv8TvCPKIRhqxh9h51LI3tGA21ccLekOej7o0FSSwRp55JF0IIEFgUm8b8uVNbSWWEenFchzdjq6qSTyLkKSLs0hXJFdvqzFg-G1VMcd_WoGDigJ_KHyuX8bbKj8GQGempou3r79rfDG8vjuKpCJFDj8Z0OyuTPl7DGJdjj-3lKAseooA6R1-crOnvp9OVn-7pqXZNOvI6gLsRNC4_Ty5zgL9GQdKgss3C-5oU_YjyiVXLLE-bhEWfl=w400" alt="Our memory" loading="lazy"></div><div class="gallery-item"><img src="https://lh3.googleusercontent.com/pw/AP1GczMcr0KkIzhQKVx6CwDgANeCF04xBfJusQtRIY_PRh6AyP4PMplfOEKOry55aS9xyJM3XWBjROOeLVGCdIHL96DX6T4VDPV7D5VrDcVd9TywVd4IyWOWTZIRXW3b69gfTfqdW6XDjNFv6rYHu4TerX4hMIwqdb6GB6oqzZgsHA7X5PsqDhY7ncBcO6jtgu6xZ3VAlHCA-JPW0UgnUXafMwAbg-Os4cgv4pW7jFaoYY0IqvF_OsJg51f_OdmBIp1pzYWl5Gb41yQfLtatSGUryBbSCHyh26wGhhLT7BNAH6UlYLD-YFRfT3RlFXVVT2hhusywTebWZZO1AViVTCGL1pC1GgfR18Jsvi2ZYUilaNDseKNVFTmhfmyBquedvmLy8T59wBpRBAL9HahOIGsMMd07aeULu2j2Niy-SeaH3ndGm52Oq7RW5BTYINVXh6K34n0N9XUjRKpMWCiyUDF16seBYklTaIU4eYDypid0EEjVGBlasFzEt7VKnLz1bzBk_ERYrTNR9lz6zKzyVBlR9Du9_kjVjsWV3fXX2IRYkqFiV0lkdzmHXiYLyvQ-u0dqr7jTXveLmqbZDKUOhXtG1OA_r9WO4zD-1UjZW56HgfQHPc79-IY__f3UtqtNXJwOJ72lsx37a5p0294PcAUyLXuyWLt8EyUP2SlyXcUctQOXfxPMAF2YkV-j1VGWdheOYKIqoxRAlQid1_aq19_Lj6x5lNxgnEfLrfmomXrx5bnKqUm2v-DOccZEhC4FdJvMBMZ-fhn7CtjmkGszF2TtWbf99JST0snVp5vNDrIvj0nGSwqk-y6Xotgtddhzc5LwjploqcxVKkCMoXQy81B1ekGs1NO8_Tu1PXVmW2vy-8IRIOnJ89wrwfxdt-y5IOu4aZ6El-fg7gIOAE3e1emTtQIvSH3viJ5sdGwDe8QPEkWPCjpxODFxh9H80BDJoyU9xWMCsLuI8vjL=w400" alt="Our memory" loading="lazy"></div><div class="gallery-item"><img src="https://lh3.googleusercontent.com/pw/AP1GczPe_W9AcSzgsCosyWzUwnp0221xl6_sD3CSBienBc7sJwIKFLS_Pmid86pX8L94cHMx1nk25Dr2Ic7qvBoWlsvehIYjYlaW_cqsJcy5GnzRKjxtiZI-Sdukq28gxWMr7vOXqTE2qrAs6bTVxrLg9cfzjn94nDrhHXAej-TlletEn1PIB2EPXV0V-k-VPfuBWg5UA7MNR8k7uoqAfkNwqDeFSxAAbziQORG4csGFcz3Am4Ulbb4c5kNOB4m9MK6HIK5fsN03tG2YphgttRqClnUo4yLwjnSt3fnRP9AbFGzCHp0IfehfCZp9yHNAsnMFdlq0Sin_8MlKq8iDXOddtTqIb-rwy4eaU9tcsVdINXsxhk_b4bVJbMVLpp-gJE7Rxguq4sGMx7xkXDxCqrwh8TkAY4SmDRWEyFaRuvpPyXNAIrsmhWMmpsB1SfLiWFycjFtQQRxDqG-ZgV0HsktT2dJFdp88sz1kGEvzkD6QdpnoXj29oKYU5ojJNzHxZMaPMpOGH-UknNoOTX4kzz-7TkKy8a4vaWlEmqxE0RwTdiVnkEYFbuj0Qo1MWutYI8Q_SlxAB54GchEZZn2cVxwsromlSUsGRuBsiSOoBcuJXOm9kmUBdBzbuAiXabF1m3ffO6wW_qwZ55NJhyFr1_Bz7CuFIBuauesRZQ1JHG-feogb7T9KOm3MgkajGVzEimmRzuogBNUYYZGHfbESM8k7SMPN-1d49CogjACE7V6TAwOFDXoa5jwL-z77UHNUus7AzIRNR5xucdngEU6tw5mBQguHc7716jIRxNMk9IWt5kKBSqqaPtUFNpAol_zlt11fhJT6o6l3MNd5y2zf9eyuEYcXWsqZdGFho5zgXgXCaqxxFkUP0YUTc73khsglqdbmyQ5fug2XvfnGJ8Y7fTZwl6tDhK7Y0d2Lhn_RiRWZe9cSPMAGxam7UnoTdfAJq7Ah3SC2dnzsAj07=w400" alt="Our memory" loading="lazy"></div><div class="gallery-item"><img src="https://lh3.googleusercontent.com/pw/AP1GczMHH65O32vZC48jAz4ZxNAyBAvFgZr3QRV2pahCX_dgfMx3XvBpUqDOO3UXKA122jJ71MZ_JPcHUf_jllMaPGKu0EFzYiLCwl0vzTgaZwUewi_iDdjfXFzucNa-3VuaYx68yYC71kIQQkhVuGOQlgEZRD_ae-wRaLtMe038TfP-YKD5wDWakB4RhQT4YwcDaFEac4ke48e544PPTDs91WKveqYNgQOyqEb2qIhNGiUX0YepB6wypok4YY8KqAg2I-VFWaJifJdfqUx0jXf3VVZ9vvvlKadS_GIAV3wY2w5ppsPgarMyHAjAbGaTxmuv-vgYGnelrAoR9saMr7EjUkeKOuMjQmN7B9i81df3LYH6tXWjqB_C6S_p7Otlf0TITys__uKPOQMYDz40YuhahXZ54WeHhOkSfaXUy9Xfsrao0bPJeXCqpSVkC1s47dnXElQcGdIg87jL16P1O-w-BiRCWbz3F42X3DQwzzuTVqBERsuylV5Rrnr3WiP07VofpwOY2Ca8rbgPvx_eLSOh7QryQJyrBDaD3h0-FeEYJyVrC-jKuW9XwSHw2zO7qWBhqB-s3VlX9eH-MB6P7rp9VuZlQRVeRzqjhAf9M0HZxe0Gd2028go_yK1Lt4K-49dPTwCTdLj5OA48L9d3suzdxV4d4F4DD2UesigFWiCk7CoN5pMAH6pPM0Yadi6la9qCPZSeqKoSkAoLTgd4GcKQlYASormZjiddbawzxPnszt_BdU1SSP5lXHQ-CWBKno8V4VHyR56-qbZuMjLd3wcfAbngTC9AUNYY06yMz0i_VHfCUkd5DSOmj8-EYkab1UK3tH7cLQPmm8LO1bOqOONKLvrmDT7F1LQNKaFCM-zFQ4ZPksU4b98I2_kCstU1hyz66Y66UC4Rg_Yk7WKINSFBPUp2lYYDgjwBqDbYuEIu91QrE9lwBXZ6hKb5lzBc5Z9Ts29XDsyJeaig=w400" alt="Our memory" loading="lazy"></div><div class="gallery-item"><img src="https://lh3.googleusercontent.com/pw/AP1GczMg5LT6bvayJzVhF9vKGnkWLNPx7SMO0xJtkcU6wBiR77jZJA7ULwV_voy1SqrUipV7hmCbVEHkWeu56ULu4CCL0nx_C6BIxgt42c8HZqGwYZqezI4y2MpQPY2GoGy5VBB7XpoBDf4HViolGfiGKNK0LXcFjBu8p_Ck271ZehXQINUG_kJujo1ZQXE3oCUsb6GiB7VEvyfgZqePx3m-p5bdfnK2Ap-j8SFtPkvaMCDJ6dMvVw1s5_e4rMGjFdM4Bh2hQLYUFK_nzROqbgvC3EWaCDLowM1dXEXojsKxoOirLdDZLqtoX-a9q8uq3cpNJJaIY7LhYWBVDM4Fos6amU6UX6NR8Tck8DJNBJ3sy0R_TndTltsqv71GteF2bo44NzsF863rWqHVNLiwd40cEsgfvmC11mQ_07cJgnCL1mlM-ZXzwVdWpIjP2ZWW9OMw3mj_DHkJoth2ytdsWsYJyDLI7nLBvjpNocAoKebdrvR1u3LNJczRaFbTFPhCHQGMbMEIpPUPJNSu2xWuEqGKWtxuTNjVN90b7A8TCTLGnGZjqd2ty1Dl-JCNC8PhEgYIyOa2AlCqAJpm90mQiCDxPcHvSnUNaSaERXHzqIG52ZCIPdnHmI_Jy9Z7eQVO1TTHmEDiz2udpuSxNW8xa3Hg79QubJrsyzzJZ8XekkwycizZBovc3rWBWL39_9abiU-JQa_LXcfrUdxWVNxZrM0tcb8oURiISzIz2ZFh5w0VpWPuxt4lh20sgEetxoo0bLdmKYTaSoTZxzlKzvBXNp7bXaQ0umhXJ1OWa-ebklTGHcQcglW_iSDW4JOo76BPJocJoXbQRPs6SoVdwgvMXso5KWN0Q57mhQorj77lJ7Nvqf-3ON0MJHkukaCwcFmsxCLecwU-kXMl78xxXdUL-oGFJQOc6MnZcnLWKueqptOZH-grU5o7eCB-DsvReJjm6d6twEGJ9kbBax9Z=w400" alt="Our memory" loading="lazy"></div><div class="gallery-item"><img src="https://lh3.googleusercontent.com/pw/AP1GczOxDTRBftEVzwVhux_cou0noe6GvaDrWeyf8kh7pfG3VxFcymY-2dvpEWc3RH-HlRVTVTp9WPFyT-JH1a8W3zMtax2ZQ7Vtiex4bZBchIJjh3NNzMXG2pJJI7e-ml7jJdV0Z-OoOxA5on2bYxkmE1p_Wae94O_dE93VPsyohAWgMlhoAFMPBPZfyz-9_sY9SnJyDYQarpI0dtlGHaE_qkBCnc4Ka2sIO8MajuMYIcw__y0FlFvh16-JkxP9D8u61gi51cc71Zp-RyWfoU2F9c6XixVUi80eBUUZl-4ub60Zmf7MXRmFm8ra8DwAHxPCG7hoZqTezo8lBFFUgSNoekWD4BqIIZiENcJrH6a7AfcgyH_yXkHVTQRBXntJeTPdrg-1fbFG_50nqj6qhF8KjpItlMVNN2kzJqjGMuVzbvCFm3LqlA83-WV5kJTAdCboF2xUU2RKQfw2oBRNypjHPF9L4ExJj9OqMNEuE0gJGJR0_WjcwLjeB2UyTVAcxZRXIQ4TL2o99nOnqZtVC014yMEBOGkwgKmHYuAoBpVCqHvReMNR82gRNUoi0MW601UIDJC4qHSSWhEfBAfB7SUFs70tdKntOj5mOEQmziRGp8XX2SG7k9B-J6O11Bj1VJB_IayTrY1FLvQ6vAQKX-h1nvb_21YP5FCFJWI9WBe0MwarZCJWSME-0hXrKTenql4f_88QZjJ4p5uAfllyuN9aM_Hi0iad809VGh4oWclCaaJQNZSGJdKXfmSYXgREcFAjPVwmFE5E1wZSx1NGuB7VoQKmLmP5_Vv5im_aWM-y99zH-n7-6dMyp-i2q8EzqUVYar7CJymPSzaUDHVCVd005lqMctfn9jKSYGfUKCL4Aq-SShW_QGNxGLqnGWcpp3MiSq-kUr2JjzH6dOgMADZqcldkhFLmy12JuIbqBIX-KObwoUzoM0OzpxoKuDwtG6gKKLZdG7mTI2mb=w400" alt="Our memory" loading="lazy"></div><div class="gallery-item"><img src="https://lh3.googleusercontent.com/pw/AP1GczOmfZRYqOahtX-Vuo4ljv9nSr53taQs8kGRtW7ek0Y23yQ79R8FMzqqKawkCnqBZyHh4pBdXHyrZ6tWWAEcfpUsxBFzPcGWcUURdqWPX-x66TrdGMJ8MOwmEdR5cZEoJtr3CvBC2SINd04md7Vcon7hAxXIWEliXv7EQsaykzLW0iJ0KJp3X_uO4qvhcSAbGKdRPE4ySNVTpHFVPlY7FN6KtyFuH0zuQTCfEbEM-fNrKrcrxwa8Aj7Mney8xsxsIRRe72q-KGpuGaWJbsab3qLkSLpmFleQG61XhPlUYuinF7o1_6TmJkl8igjd8MTgtAvHUrbvvxeJ4rEX7oUDfGDqfugSk-6YJxpqEXgtugBkgQQodj-tJ11cCSXWqHbc5zNNh1UYf9z1IiALmQS37M7xkWc4_YzCS3LfnS_nku5Ng1WOm8QvO4ulbhz5vgw2URCAPxDv_UWdUT753EqvCfwv8LQfhI3EsYHMurA6VCi4thvtlwBSBWEU9LM3lGqlSE68GPAiugkd9ZfaKh3LJEx0LZpgZU2tzvS792lvwUmB0uiyxZjAXJpjKtTH9AQF5O737O2sn0G9tsFD9XDIy6SEFEn3dQ7keyvBrse5HBo79Yw7qVt_j7n-gl1GzNemrcNJ_Kz-OXp2sxQd-nVP0X9QW72nkjzwu4VmJzCPMX4xYBmVYX_G5TJyvmn28PuvC5a1ihRQCs-MdILytzwbq4Hj04xpf7KmBqReg7pJnv7BqK4mM-7vPUVhhemjoefVjAhFQzIbgNKUl3tbTE_s2Foer3pX1Uwc81R_V5FR3Bi0zt--DUQypXqJEa9dvImedkd_LpwEdivzjohQU9W3KpnVKw4kEh1wI1cuAN2_PhwVS3LFiG2neZjqnktzq3Nrxcec61YeYzhBwbxHFhhEb7XFFRWgQ7n5GSUtDkUIwyQLM8mZQzAdn-fslm-xRIzjD9Qxwm2AbWRd=w400" alt="Our memory" loading="lazy"></div><div class="gallery-item"><img src="https://lh3.googleusercontent.com/pw/AP1GczMRgagXvyED3iEtZNReeKJ78BqPc1p5IDQgMaM3abrTYSYm8Tf63bygv5RyP4e0Y76C24yZg7jC3Z-13mLE49WsNgK3nBknrpBIjgaEtU7M2kMy9kxVF4ftURVYMIkYzQA6emXSSUH0H4tCXI1MuZgSybdhNZKd801u2eKJNokF9JEfwCwx0tL6VXS4X71tfWHOWBE1F36O4h8rcjcI3oE2fvTAH073Lw9JAFTEwt1kabfSnm1Dlpq4z5KiVtZPo4rbctd9oAtQL0Vftu4vwlVpcAoBmwOWMHomITLlwXvLpaLU_fIJ6xJFHeEx97cBbd3gsMCWZdOP-VVzkRPCLU-ZLcq0kbXt41ir4egJ-w8xm_8kDu-55UpR-zEiN2J9o3H-UeM77v1ZKrL2h_wDhAaTGKpyaSUn6TKSWVQJ62v9LV1x-4BkahsKZxKiSGh5fH9X_iVAIq7HGmqLQaRbRwtc0y0eOQQJYQHwEQFVjgDgqGGvlklj8WqKBVxOnjDXGSKT5z0HrJ1zfg8g0YN6wr8Q4XIPnQiKr3xlZuYEmH6Vzg8ohdH3MUJk3xcMrArK625NiBErRs-Bd4sxSNm5O1mkzog415FA-lJO80f4evtpbJS6bbl8KxBDCxmawjugHDnOGSptLpKPjr8-qYbDyEZR3FBNlqfEN1h9YdObWveZcDwq2D5iKnC9xd9Pn-s3vOSJTntY_ZJq2ZTiU5XjLJokRpiyKTj4qdi8pIXaTmftMjULPp0JqAfJMj1G3i69-jDpN0uoApTyh_nzS25ShkJpzQRBia_6B_b8zQeGZnlrhnXjo8vfPwU8QlUMBYGO4LAXgnD943bWyAV0xnhdK7H6K1YgX6kX_MGZrIvR1BscuFa83CVqP-te1GKWFXsIxFnqW-S3GmIc956n-FLDwjY0YMbHQIVd8K_jTrRlNsRlt__LBFR2TKuuOJTuqfi-sEU2EkYPOOBh=w400" alt="Our memory" loading="lazy"></div><div class="gallery-item"><img src="https://lh3.googleusercontent.com/pw/AP1GczP1mRIaIpCBCO-qQumZ5CnppXJSULdSQQlHURPXQ3ltfo0rGv3dbftgE3V8TJJXHmsHegUuwuLLH93p7wXccRgK6VrGluDgSGN45m0v3FFyCGZJ-RFRuvRmQa_5-Um1hvBzkQNCkEtqxSzaigDiHShUw1D5Oipkc03swjq5_ao9gflf3eEXDF2XVqoiLYHwlzyq8spMJ-3nvRPAZd2vga9jCqn5-ZocUyYBff8_2mjhklnZpjX0eNGlREDQeq0QOgOd-dQFVrzdSAGHExFwHiZ1SZn9RG4Kv169MeaexhnABkfEIxNuNeZCOJ4JP83yL7URIaV63xMO_ECB444lujjDQoWXHk8yDVbu_T0JY1nIZLbYBa_HU2YJCEJ8ezHoXR3m6oiABcuvjaInif70cLa9pA9yF2IfwP5AjMiAB55ygFSCMF2iu4QXwOqX0PLN_fMZ8ntNJeuYg9qqED1ul8A4MO6vzAcPE6yJRyqDcXErl-zbIrpiyWyr4CvRUFJAmYcsDNqYGUJNtsisghQBh4nTqbOa-bTy6YUnf6eVMJYgs5NDEP2U67Kej3HmPf64mKHYl-RYs5rVml6he-KRYK5BUfdPdF9mTUV-5rwewiYtMBPzRuCWuWTW5TrRX0Scvo1Dn6o5eU39LrrzQ8GwKMvd2ZqEMX7zHA69543lTi7k9UkWCfoqBtlKzLCFkTbQTrlMUHyM92cwKMsTCgkYmdNmHyjFILHyefDj_k_5GqRAyfjILEHW_y8ne2KmsbqXbTcGEiqiMseNapF0FRPY6am6ymY8emHF5bS7iEyoQV0lZNGekYU0gEK_KElneBTbrRbpbGWchvh7UeFf1VHY72wodg7TUneM7H9ZTE83RetBPO5eZYgWxS43Znt9LuaeXTUUpYM5wabhjLYfHBqeNBTlwNcXExsuM3_yh7BVMsSQlYAOUgMOXDsn0jhctb_oesoLUwaO8IDN=w400" alt="Our memory" loading="lazy"></div><div class="gallery-item"><img src="https://lh3.googleusercontent.com/pw/AP1GczNoah61CtYAqXo3CnQ3YGKUeJQkbQm0gZSWt67qQBXQ32TQ0-trPOc5YCrXXg478eMRndKCOjI0YimJCyY2WsLou_aQ7QkQ02q9nOqasfMtNBdAbYPiyMurQo3HiW4DvjRZs97vXQPVik09DdU7NqjUo84gowQ8ixB7SpIimc6yjGLVvJB97f40YCRo3laoR_btG-QtQr_ntKPDcs_fCABQx7t3NfvO3YGMJYkGW_3irfcL-iPlXrkQRPED7pS80Zs6kW6LcdmAQWezqi2M6WgqUzmITcWCyJg17W9fRiWqfGmeLd8EbZ7Zk1JNbX3NXq1qqp9TmjBMa_mfyJkX20eblrxdy_vqXzpFjkzjL2O16Kd5oEHshO8Xp0Uiy5fVYhoOgaubaJlvR4VWgRTKTIfmmvwmjY2WePrqlNjWxSnzLO6DOZCChDNfGa5cwmg60X3m8aFZMkcX2IhHOK50an1ibIoUZbx_KAo9AVw3O1UjVcuzL5T3GJ6uiccqwlhKjpx6plSCuZxaTso_pgBmUBWC1vZg6c1JOghwWJv5WPvNtmlGFF4vYkgrX8TGpwAfm7iTAhmNerb6c3uk2ZvN_wwp118rpHxnIGjLjVqhfyULILgyJXw2IH4FL-jEiHMLvpvQULcs_nrahJHab6hCqhfWsR8CaxavN-_VpzRNVK10D229VZP_r66i3ew03bvFRa2jS1uCU3lrc_zyuWzgw7rOAWNU_LD1jWoNVl72_ijbl6zkO2xq1jnbFdKS6nbWDzuufEOEfI-uLIFy7RMuKzgF1xG06cwnK-hQ_oasH1pDhqL30Wf0Si1YE4bsRLF0UTu0_HsByryiljXexBPINbw2uJra78oYHw5LNUKABL-acy63Wi2ZOJ07arzlVZ9aPRX2rPsnXjFlupb_oSAYrmaDcef6SLeNg4zqEKss_baDZ4NTuLOjiERcSciuCUoBm4CoWE4PrqPj=w400" alt="Our memory" loading="lazy"></div><div class="gallery-item"><img src="https://lh3.googleusercontent.com/pw/AP1GczM3_j-blVyTbn8RM8cfIFRup_qvk0lcAhmVT2uumYuUF20rEqvJuMvgrj_hIRKWllniJ6V5W5kQhM0rIoHK3POYQKg2vZKKR2j1BHX90OIMzNnYzXVU2t-tRAG8AlXEDZfrsJwI1hlk-xhe4OyqcYvr5qH1qHDsuDFbh1D4OtlL1nl4QXHed15FZEz7YDoT1FG_4cAc36sGpibzwk5WPf9OW7OD55g6fbv9IhAjAj9w96TSmUdn70ohYb7gx9RIPsJyfDhSvLtwLauDDd8EjpT_Gso9i7DDAFN5pIMuuOC5WpUSMNFXWi2bulN9kePEy0hC-rdPun-i_eDGhmoQO0vEP3TLWCb7EVPgmylWBkr5UTWd2CwdBt8tLDayK_r7Xt2GI2KsHI7ZaJG8s78pQSWNTsSVpRY9DZpH-168JH7w0eGjqcH5S8sXwUdJFRiBm0LvQxS4ry6WDGEK6yB73-kpW_waWb_GbeNrn3zj-Gi3Q8UTo_OOLjrgFuLFhX1QUf5VI8e1mDJzeAYhMYXrtkAQeZRXZiVnld3PMllmOPMJmzFPsca7I1SEDnHPhiu3AaxWCciYDTRdRfHNbk_B757r_x1eqbIlVR912o6m3hbzVLB2D1nr1hreltv61xluAFUlMNfQ4fLcBxt86vHdqLm-gkDPmQSgBcJtP6NS5IsWYjQLQra_fwTc94oQwvp1oYD10qGiRzNXQGgAW7o-tpPBTue7oaiqjg5-V39tQfMdNyjorpYaoqr-NjzcKB3stz7AyRgk62vQ1tXPdz92Hd9yVdONCRdUAzk3kxsUyxeZPSAxUiP5S-aJvdYrMDWLM9DNUA56DIlXEGzvP4SQEOTnWr84LAvEYPemoq05SjBfuT926_Puc9FQvG3ZUFc5Vvo3KAND-q3Hxpll1FdTEKEuTrLhKP_MYLoIc0tNKQtInOX4AfOWjrBfdVJLnNqyhsxbBZluMIeS=w400" alt="Our memory" loading="lazy"></div><div class="gallery-item"><img src="https://lh3.googleusercontent.com/pw/AP1GczPGALxbhvK2ivRA_JJlHcR1kHnbvMKW3XELOXlHjsm3Lur2yAIVHdJjtyUwheOSg8E8eA0ZjfKTbQWlTHm6kLiTf42urDmCXNooe0xPzjrrC-ec_3WzT2tR_HJeZ3j6a8PRHb6nGphcHPCZQw9dIp43XgrvehGmWlUPxTVKjY7ILFME4S42OgSQK1amAzq06mstWra4va9_291pnXls4W-ezn-9VTDfq-84awd0lklM0WIWmTqYk8euyp4w44A9ERGBqvUMAJUgEsaT9BpwlIXCdfbwdboUwdKW33t2gZF-zLiLfFX4jtt2NNCybjJI_wqLiKfO7VamevVWu6bpS94oPdgUkG4A0K0C2v8mRXgh64_hYCUhIA7Vs6DkKUNhEgYeqtQTTcQgz0P_VGwKZJZbDlxgySlRF5nImeKCFDp5_CE4-zQWv6yhqvkOXlRoESg0NEv050W2bf4OfFdP0ak-aRJinhjUJyac6-acbziwKcwvzZirKAdldEgyrJVH1OMXHEmHDDCpY9U9n4VNkgX0I8_NhTKz9OQ5qwnFbmSQe3ki-b0sbM_z0o9w-bQZxVm4dHtVCxfpqB64Id2GBPqRuT_rDP7P_kdMCBH2TT7bH_Ctr5sIPBWnYCSdigfp3F7qa26sb18sBRG4oqz3kp-np9pBKD57CnGsg5llOKXiY9yeLp3K13AQEYiHstldUgHoFRWWxX54ylzlvXAfAQXcJ3jV4STxBZ76OMkZRbwhcGSoEqY2ndfm8i-frNUnAz36E56pzbK_E4doxW-iC8ACrm0YnQuZr_5YujhwxyC7rBkL91uMt3AWNAdlKreH8qvhBWsb-M2SwKMAbX8Ofr5x373kATsRWPuCnBp1EWaFyrx1sVUeopDRaG0vI5XXkHk_LxVOk3K6tJeUi5EOYgzCarigJqWW2fU9jKcjuYaf5d7oZKj0y97N5XvuCbe4MFlw3etwLChT=w400" alt="Our memory" loading="lazy"></div></div>
         </div>
     </div>
 
-    <!-- ═══════════ SECTION 2: THE LOVE ATLAS ═══════════ -->
+    <!-- ═══ SECTION 2: THE LOVE ATLAS ═══ -->
     <div id="love-atlas" class="section">
         <div class="container">
+            <h2 class="section-title">Who We Are</h2>
+            <p class="section-intro">ENTP meets INFJ. The Architect and The Guardian. Steel: iron and zinc.</p>
+            <div class="grid-2">
+                
+        <div class="profile-card">
+            <div class="profile-name">Jonathan Leslie Kurniawan</div>
+            <div class="profile-badge">ENTP · From Jakarta (Ancol)</div>
+            <div class="profile-row"><span class="profile-label">Passion</span><span>AI &amp; Technology</span></div>
+            <div class="profile-row"><span class="profile-label">Comfort Food</span><span>Hokben (phone number: 500505, seared into his brain)</span></div>
+            <div class="profile-row"><span class="profile-label">Spice Level</span><span>Samyang 2x spicy before a flight — then reviewing life choices at 30,000 feet</span></div>
+            <div class="profile-row"><span class="profile-label">Superpower</span><span>Turning everything into a framework, alliteration poems, and making introverts come out of their shell</span></div>
+            <div class="profile-row"><span class="profile-label">Quirk</span><span>Sees red cars as lucky omens, notices 11:11 everywhere, competed in Pokemon tournaments</span></div>
+            <div class="profile-row"><span class="profile-label">Love Style</span><span>The Architect — builds dice games, trivia nights, AI agents named after her, and structured date plans</span></div>
+            <div class="profile-row"><span class="profile-label">Emotional Register</span><span>&quot;Hehehe&quot;, &quot;Wahh&quot;, &quot;Duhh&quot; (76x), philosophical paragraphs at 3am</span></div>
+        </div>
+                
+        <div class="profile-card">
+            <div class="profile-name">Pricylia Viliavirta Sutanto</div>
+            <div class="profile-badge">INFJ (&quot;aku tetep J soalnya Jonathan&quot;) · From Makassar, Sulawesi</div>
+            <div class="profile-row"><span class="profile-label">Passion</span><span>Fashion Design</span></div>
+            <div class="profile-row"><span class="profile-label">Comfort Food</span><span>Sushi Tei (birthday tradition — besties give sushi platters instead of cake)</span></div>
+            <div class="profile-row"><span class="profile-label">Spice Level</span><span>Level 0.5 — upgraded from &quot;anak 5 tahun&quot; to &quot;anak 8 tahun&quot;</span></div>
+            <div class="profile-row"><span class="profile-label">Superpower</span><span>Making everyone feel safe, winning Othello championships, watching dramas at 1.5x speed</span></div>
+            <div class="profile-row"><span class="profile-label">Quirk</span><span>Gets lost easily, goes to KFC for nasi uduk not chicken, almost burned down kitchen forgetting boiling water</span></div>
+            <div class="profile-row"><span class="profile-label">Love Style</span><span>The Guardian — &quot;jangan lupa minum air&quot;, &quot;hati2 di jln!!&quot;, records the exact timestamp he asked her out</span></div>
+            <div class="profile-row"><span class="profile-label">Emotional Register</span><span>&quot;HAHAHAHA&quot; (9,680x), 🤏 (949x), &quot;LOL&quot; at the end of serious statements</span></div>
+        </div>
+            </div>
+            <div class="insight"><strong>The golden pair.</strong> ENTP + INFJ is considered the most compatible MBTI match. He analyzes everything and builds frameworks. She feels everything and creates safety. Their own words for it: "Mixnya terlalu bnyk opposite ama common nya yg blendnya bikin ideal blend. Kaya steel. Iron and zinc."</div>
 
             <h2 class="section-title">The Numbers</h2>
-            <p class="section-intro">Every chart. Every pattern. The full picture.</p>
+            <div class="card"><h3>Daily Message Volume</h3><div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
+                <div class="legend"><div class="legend-item"><div class="legend-dot" style="background:var(--jonathan)"></div>Jonathan</div><div class="legend-item"><div class="legend-dot" style="background:var(--pricylia)"></div>Pricylia</div></div></div>
+            <div class="card"><h3>When You Talk — Hour by Hour</h3><div class="chart-wrap"><canvas id="hourlyChart"></canvas></div>
+                <div class="legend"><div class="legend-item"><div class="legend-dot" style="background:var(--jonathan)"></div>Jonathan</div><div class="legend-item"><div class="legend-dot" style="background:var(--pricylia)"></div>Pricylia</div></div></div>
 
-            <div class="card">
-                <h3>Daily Message Volume</h3>
-                <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
-                <div class="legend">
-                    <div class="legend-item"><div class="legend-dot" style="background:var(--jonathan)"></div>Jonathan</div>
-                    <div class="legend-item"><div class="legend-dot" style="background:var(--pricylia)"></div>Pricylia</div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3>Day of Week</h3>
-                <div class="chart-wrap-sm"><canvas id="weekdayChart"></canvas></div>
-                <div class="legend">
-                    <div class="legend-item"><div class="legend-dot" style="background:var(--jonathan)"></div>Jonathan</div>
-                    <div class="legend-item"><div class="legend-dot" style="background:var(--pricylia)"></div>Pricylia</div>
-                </div>
-            </div>
-
-            <!-- Sternberg's Triangle -->
             <h2 class="section-title">Sternberg's Triangle of Love</h2>
-            <p class="section-intro">Robert Sternberg's theory says love has three components: Intimacy, Passion, and Commitment. Here's yours over time.</p>
+            <p class="section-intro">Intimacy, Passion, and Commitment — the three dimensions of love, tracked over time.</p>
+            <div class="card"><span class="framework-badge badge-sternberg">Sternberg's Theory</span><div class="chart-wrap"><canvas id="sternbergChart"></canvas></div>
+                <div class="legend"><div class="legend-item"><div class="legend-dot" style="background:var(--deep)"></div>Intimacy</div><div class="legend-item"><div class="legend-dot" style="background:var(--love)"></div>Passion</div><div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div>Commitment</div></div></div>
+            <div class="insight"><strong>The story the triangle tells:</strong> May-October you were getting to know each other — intimacy grew quietly. Then November 15 hit, and commitment spiked. Passion has been climbing ever since, peaking in March 2026. All three dimensions at their highest point right now. That's what Sternberg calls "consummate love" — the complete triangle.</div>
 
-            <div class="card">
-                <span class="framework-badge badge-sternberg">Sternberg's Theory</span>
-                <div class="chart-wrap"><canvas id="sternbergChart"></canvas></div>
-                <div class="legend">
-                    <div class="legend-item"><div class="legend-dot" style="background:var(--deep)"></div>Intimacy</div>
-                    <div class="legend-item"><div class="legend-dot" style="background:var(--love)"></div>Passion</div>
-                    <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div>Commitment</div>
-                </div>
-            </div>
-
-            <div class="insight">
-                <strong>The story the triangle tells:</strong> May-October you were getting to know each other — intimacy grew quietly through deep conversations. Then November 15 hit, and commitment spiked — you were official. Passion has been climbing ever since, peaking in March 2026. All three dimensions at their highest point right now. That's what Sternberg calls "consummate love" — the complete triangle.
-            </div>
-
-            <!-- Love Languages -->
             <h2 class="section-title">Your Love Languages</h2>
-            <p class="section-intro">Gary Chapman's five languages of love, measured from how you actually talk to each other.</p>
+            <div class="card"><span class="framework-badge badge-love-lang">Chapman's Framework</span><div class="chart-wrap"><canvas id="loveLangChart"></canvas></div>
+                <div class="legend"><div class="legend-item"><div class="legend-dot" style="background:var(--jonathan)"></div>Jonathan</div><div class="legend-item"><div class="legend-dot" style="background:var(--pricylia)"></div>Pricylia</div></div></div>
 
-            <div class="card">
-                <span class="framework-badge badge-love-lang">Chapman's Framework</span>
-                <div class="chart-wrap"><canvas id="loveLangChart"></canvas></div>
-                <div class="legend">
-                    <div class="legend-item"><div class="legend-dot" style="background:var(--jonathan)"></div>Jonathan</div>
-                    <div class="legend-item"><div class="legend-dot" style="background:var(--pricylia)"></div>Pricylia</div>
-                </div>
-            </div>
-
-            <div class="insight">
-                <strong>You complement each other.</strong> Jonathan leads with Quality Time (705 signals), Pricylia leads with Words of Affirmation (698 signals). He wants to be with her. She wants to tell him how amazing he is. Both of you score high on Acts of Service — you take care of each other.
-            </div>
-
-            <!-- Emojis Deep Dive -->
             <h2 class="section-title">Emoji DNA</h2>
             <div class="grid-2">
-                <div class="card">
-                    <h3>Jonathan's Emojis (1,212 total)</h3>
-                    <div class="emoji-grid"><div class="emoji-card"><span class="emoji-big">😁</span><span class="emoji-ct">69</span></div><div class="emoji-card"><span class="emoji-big">🫠</span><span class="emoji-ct">61</span></div><div class="emoji-card"><span class="emoji-big">❤</span><span class="emoji-ct">51</span></div><div class="emoji-card"><span class="emoji-big">🤣</span><span class="emoji-ct">50</span></div><div class="emoji-card"><span class="emoji-big">😱</span><span class="emoji-ct">36</span></div><div class="emoji-card"><span class="emoji-big">🍉</span><span class="emoji-ct">31</span></div><div class="emoji-card"><span class="emoji-big">🫥</span><span class="emoji-ct">31</span></div><div class="emoji-card"><span class="emoji-big">😏</span><span class="emoji-ct">30</span></div><div class="emoji-card"><span class="emoji-big">😭</span><span class="emoji-ct">29</span></div><div class="emoji-card"><span class="emoji-big">🙈</span><span class="emoji-ct">26</span></div><div class="emoji-card"><span class="emoji-big">🤏</span><span class="emoji-ct">25</span></div><div class="emoji-card"><span class="emoji-big">✨</span><span class="emoji-ct">24</span></div></div>
-                </div>
-                <div class="card">
-                    <h3>Pricylia's Emojis (18,651 total)</h3>
-                    <div class="emoji-grid"><div class="emoji-card"><span class="emoji-big">🤣</span><span class="emoji-ct">3,062</span></div><div class="emoji-card"><span class="emoji-big">😂</span><span class="emoji-ct">2,238</span></div><div class="emoji-card"><span class="emoji-big">❤</span><span class="emoji-ct">2,210</span></div><div class="emoji-card"><span class="emoji-big">🤏</span><span class="emoji-ct">1,876</span></div><div class="emoji-card"><span class="emoji-big">😭</span><span class="emoji-ct">856</span></div><div class="emoji-card"><span class="emoji-big">🥹</span><span class="emoji-ct">802</span></div><div class="emoji-card"><span class="emoji-big">🤪</span><span class="emoji-ct">649</span></div><div class="emoji-card"><span class="emoji-big">🙂</span><span class="emoji-ct">636</span></div><div class="emoji-card"><span class="emoji-big">😊</span><span class="emoji-ct">349</span></div><div class="emoji-card"><span class="emoji-big">☺</span><span class="emoji-ct">342</span></div><div class="emoji-card"><span class="emoji-big">🥰</span><span class="emoji-ct">334</span></div><div class="emoji-card"><span class="emoji-big">🤗</span><span class="emoji-ct">327</span></div></div>
-                </div>
+                <div class="card"><h3>Jonathan (1,212 total)</h3><div class="emoji-grid"><div class="emoji-card"><span class="emoji-big">😁</span><span class="emoji-ct">69</span></div><div class="emoji-card"><span class="emoji-big">🫠</span><span class="emoji-ct">61</span></div><div class="emoji-card"><span class="emoji-big">❤</span><span class="emoji-ct">51</span></div><div class="emoji-card"><span class="emoji-big">🤣</span><span class="emoji-ct">50</span></div><div class="emoji-card"><span class="emoji-big">😱</span><span class="emoji-ct">36</span></div><div class="emoji-card"><span class="emoji-big">🍉</span><span class="emoji-ct">31</span></div><div class="emoji-card"><span class="emoji-big">🫥</span><span class="emoji-ct">31</span></div><div class="emoji-card"><span class="emoji-big">😏</span><span class="emoji-ct">30</span></div><div class="emoji-card"><span class="emoji-big">😭</span><span class="emoji-ct">29</span></div><div class="emoji-card"><span class="emoji-big">🙈</span><span class="emoji-ct">26</span></div><div class="emoji-card"><span class="emoji-big">🤏</span><span class="emoji-ct">25</span></div><div class="emoji-card"><span class="emoji-big">✨</span><span class="emoji-ct">24</span></div></div></div>
+                <div class="card"><h3>Pricylia (18,651 total)</h3><div class="emoji-grid"><div class="emoji-card"><span class="emoji-big">🤣</span><span class="emoji-ct">3,062</span></div><div class="emoji-card"><span class="emoji-big">😂</span><span class="emoji-ct">2,238</span></div><div class="emoji-card"><span class="emoji-big">❤</span><span class="emoji-ct">2,210</span></div><div class="emoji-card"><span class="emoji-big">🤏</span><span class="emoji-ct">1,876</span></div><div class="emoji-card"><span class="emoji-big">😭</span><span class="emoji-ct">856</span></div><div class="emoji-card"><span class="emoji-big">🥹</span><span class="emoji-ct">802</span></div><div class="emoji-card"><span class="emoji-big">🤪</span><span class="emoji-ct">649</span></div><div class="emoji-card"><span class="emoji-big">🙂</span><span class="emoji-ct">636</span></div><div class="emoji-card"><span class="emoji-big">😊</span><span class="emoji-ct">349</span></div><div class="emoji-card"><span class="emoji-big">☺</span><span class="emoji-ct">342</span></div><div class="emoji-card"><span class="emoji-big">🥰</span><span class="emoji-ct">334</span></div><div class="emoji-card"><span class="emoji-big">🤗</span><span class="emoji-ct">327</span></div></div></div>
             </div>
+            <div class="insight"><strong>Pricylia uses 15.4x more emojis.</strong> Her signature: 🤏 (1,876 times — vs Jonathan's 13). She's literally laughing through this entire relationship.</div>
 
-            <div class="insight">
-                <strong>Pricylia uses 15.4x more emojis than Jonathan.</strong> Her top emoji is 🤣 (3,062 times!) — she's literally laughing through this entire relationship.
-                Jonathan's top emoji is 😁 — very on-brand.
-            </div>
-
-            <!-- Shared Phrases -->
             <h2 class="section-title">Your Shared Language</h2>
-            <p class="section-intro">Phrases you both use. The vocabulary of your relationship.</p>
-
-            <div class="grid-3">
-                <div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--gold);">"lucu bgt"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 316 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--gold);">"bgt bgt"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 151 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--gold);">"suka bgt"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 150 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--gold);">"enak bgt"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 133 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--gold);">"iya bener"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 126 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--gold);">"let me"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 123 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--gold);">"btr lg"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 107 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--gold);">"ko den"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 99 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--gold);">"kalo gitu"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 94 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--gold);">"dont think"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 84 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--gold);">"so much"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 79 times</div></div>
-            </div>
+            <div class="grid-3"><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--love);">"lucu bgt"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 316 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--love);">"bgt bgt"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 151 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--love);">"suka bgt"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 150 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--love);">"enak bgt"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 133 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--love);">"iya bener"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 126 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--love);">"let me"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 123 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--love);">"btr lg"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 107 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--love);">"ko den"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 99 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--love);">"kalo gitu"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 94 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--love);">"dont think"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 84 times</div></div><div class="card" style="text-align:center;"><div style="font-family:Cormorant Garamond,serif; font-style:italic; font-size:1.5rem; color:var(--love);">"so much"</div><div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">used 79 times</div></div></div>
         </div>
     </div>
 
-    <!-- ═══════════ SECTION 3: THE GIRLFRIEND INTERROGATION ═══════════ -->
+    <!-- ═══ SECTION 3: THE GIRLFRIEND INTERROGATION ═══ -->
     <div id="interrogation" class="section">
         <div class="container">
             <h2 class="section-title" style="text-align:center;">The Girlfriend Interrogation</h2>
             <p class="section-intro" style="text-align:center;">Tap any card to reveal the answer. Go ahead — ask us anything.</p>
-
             <h3 class="q-category">The Firsts</h3><div class="q-grid">
             <div class="q-card" onclick="this.classList.toggle('revealed')">
                 <div class="q-front">Who texted first?</div>
-                <div class="q-back">Jonathan! On May 31, 2025 at 12:28 PM: &quot;Hi Pricylia, this is Jonathan 👋&quot;</div>
+                <div class="q-back">Jonathan! May 31, 2025 at 12:28 PM: &quot;Hi Pricylia, this is Jonathan 👋&quot;</div>
             </div>
             <div class="q-card" onclick="this.classList.toggle('revealed')">
                 <div class="q-front">Who said &quot;I love you&quot; first?</div>
-                <div class="q-back">Pricylia! On December 10, 2025 at 4:56 AM: &quot;Love you❤️&quot; — Jonathan replied immediately: &quot;Love you too sweetie pricy&quot;</div>
+                <div class="q-back">Pricylia! Dec 10, 2025 at 4:56 AM: &quot;Love you❤️&quot; — Jonathan replied immediately: &quot;Love you too sweetie pricy&quot;</div>
             </div>
             <div class="q-card" onclick="this.classList.toggle('revealed')">
-                <div class="q-front">What was the first pet name?</div>
-                <div class="q-back">&quot;sayang&quot; — first used by pricylia on 2025-06-05</div>
+                <div class="q-front">Where was the first date?</div>
+                <div class="q-back">Chadol restaurant, Jakarta Barat — Jun 11, 2025. He offered to pick her up.</div>
+            </div>
+            <div class="q-card" onclick="this.classList.toggle('revealed')">
+                <div class="q-front">When did &quot;sayang&quot; start?</div>
+                <div class="q-back">Nov 18, 2025. Jonathan: &quot;Kamu suka dipanggil nak sayang?&quot; — Pricylia: &quot;Sukaa&quot;</div>
             </div>
             <div class="q-card" onclick="this.classList.toggle('revealed')">
                 <div class="q-front">When was the most intense day?</div>
-                <div class="q-back">2026-01-17 — you sent 2,033 messages in a single day!</div>
-            </div></div><h3 class="q-category">The &quot;Who&quot; Questions</h3><div class="q-grid">
+                <div class="q-back">Jan 17, 2026 — 2,033 messages. Their longest conversation marathon ever.</div>
+            </div></div><h3 class="q-category">Who Is Who?</h3><div class="q-grid">
             <div class="q-card" onclick="this.classList.toggle('revealed')">
-                <div class="q-front">Who texts more?</div>
-                <div class="q-back">Pricylia sends 65,290 messages (52.2%) vs Jonathan's 59,780 (47.8%)</div>
+                <div class="q-front">What are their MBTIs?</div>
+                <div class="q-back">Jonathan is ENTP (The Debater). Pricylia is INFJ (The Advocate). The &quot;golden pair&quot; — considered the most compatible MBTI match.</div>
             </div>
             <div class="q-card" onclick="this.classList.toggle('revealed')">
-                <div class="q-front">Who uses more emojis?</div>
-                <div class="q-back">Pricylia by a landslide! 18,651 emojis vs Jonathan's 1,212 — that's 15.4x more expressive!</div>
+                <div class="q-front">Who is the planner?</div>
+                <div class="q-back">Jonathan — creates structured activities, trivia games, dice-based dinner selection, researches restaurants. Pricylia: &quot;Tipe yg ikut aja, ga bakal bkin itinerary.&quot;</div>
             </div>
             <div class="q-card" onclick="this.classList.toggle('revealed')">
-                <div class="q-front">Who writes longer messages?</div>
-                <div class="q-back">Jonathan averages 4.0 words/message, Pricylia averages 4.3 words/message</div>
+                <div class="q-front">Who is the overthinker?</div>
+                <div class="q-back">Jonathan, by a mile. Self-described &quot;pro overthinker.&quot; Pricylia's antidote: &quot;for overthinker, when ur head's too loud, try to trust your heart?&quot;</div>
             </div>
             <div class="q-card" onclick="this.classList.toggle('revealed')">
-                <div class="q-front">Who starts conversations?</div>
-                <div class="q-back">Pretty even! Jonathan initiates 859 sessions, Pricylia initiates 824</div>
+                <div class="q-front">Who laughs more?</div>
+                <div class="q-back">Pricylia — 16,195 laugh messages vs Jonathan's 4,400. She's 3.7x more generous with laughter.</div>
             </div>
             <div class="q-card" onclick="this.classList.toggle('revealed')">
-                <div class="q-front">Who texts first in the morning?</div>
-                <div class="q-back">Pricylia says good morning more (311 times vs 177) and is first 133 days vs Jonathan's 65</div>
+                <div class="q-front">Who is the morning person?</div>
+                <div class="q-back">Pricylia wakes at 5-7am. Jonathan once &quot;kebangun pagi, trs tdr lg, trs kebangun jam 1pm.&quot;</div>
             </div>
             <div class="q-card" onclick="this.classList.toggle('revealed')">
-                <div class="q-front">Who is funnier?</div>
-                <div class="q-back">Pricylia laughs way more — 16,195 haha/wkwk messages vs Jonathan's 4,400. She's 3.7x more generous with laughter!</div>
+                <div class="q-front">Who is the cook?</div>
+                <div class="q-back">Pricylia cooks daily but says &quot;level masaknya masih bintang 0.&quot; Jonathan is more experimental (carbonara, lentil soup with turmeric) but cooks less.</div>
             </div>
             <div class="q-card" onclick="this.classList.toggle('revealed')">
-                <div class="q-front">Who is more romantic?</div>
-                <div class="q-back">Pricylia uses love words 1,187 times vs Jonathan's 919 — but Jonathan leads with &quot;cantik&quot; (93 times!)</div>
+                <div class="q-front">Who handles spice?</div>
+                <div class="q-back">Jonathan eats Samyang 2x spicy. Pricylia is &quot;level 0.5&quot; — upgraded from &quot;anak 5 tahun&quot; to &quot;anak 8 tahun.&quot;</div>
+            </div></div><h3 class="q-category">The Deep Stuff</h3><div class="q-grid">
+            <div class="q-card" onclick="this.classList.toggle('revealed')">
+                <div class="q-front">How healthy is their communication?</div>
+                <div class="q-back">Gottman ratio: 139.6:1 positive-to-negative. The &quot;magic ratio&quot; for healthy relationships is 5:1. They're at 28x that threshold. Gottman's Four Horsemen (criticism, contempt, defensiveness, stonewalling) are virtually ABSENT from 125K messages.</div>
             </div>
             <div class="q-card" onclick="this.classList.toggle('revealed')">
-                <div class="q-front">Who says goodnight last?</div>
-                <div class="q-back">Pricylia says goodnight 587 times, Jonathan 389 times. She likes to make sure you're tucked in 🥰</div>
-            </div></div><h3 class="q-category">The Deep Questions</h3><div class="q-grid">
-            <div class="q-card" onclick="this.classList.toggle('revealed')">
-                <div class="q-front">What are our love languages?</div>
-                <div class="q-back">Jonathan: Quality Time (705) then Words of Affirmation (427). Pricylia: Words of Affirmation (698) then Quality Time (626). You complement each other perfectly!</div>
+                <div class="q-front">How do they handle conflict?</div>
+                <div class="q-back">The Nov 28 test: Jonathan shared something that clashed with Pricylia's values. He sent 5 apology messages at 5:20 AM. She responded with the most emotionally mature message: &quot;Deal breaker is meant to protect me from future pain, not punish someone for his past life before he met me.&quot; Resolved in 36 hours.</div>
             </div>
             <div class="q-card" onclick="this.classList.toggle('revealed')">
-                <div class="q-front">How healthy is our communication?</div>
-                <div class="q-back">Gottman ratio: 139.6:1 positive-to-negative. The &quot;magic ratio&quot; for healthy relationships is 5:1. You're at 28.0x that. Very healthy!</div>
+                <div class="q-front">What are their love languages?</div>
+                <div class="q-back">Jonathan: Quality Time (705) then Words of Affirmation (427). Pricylia: Words of Affirmation (698) then Quality Time (626). They complement perfectly.</div>
             </div>
             <div class="q-card" onclick="this.classList.toggle('revealed')">
-                <div class="q-front">How vulnerable are we with each other?</div>
-                <div class="q-back">952 moments of emotional openness detected. Jonathan: 491, Pricylia: 461. You both show up with your real feelings.</div>
+                <div class="q-front">How vulnerable are they?</div>
+                <div class="q-back">952 moments of emotional openness. Jonathan shares through philosophical frameworks. Pricylia shares through stories and feelings. She told him: &quot;Sbgai org yg jarang omongin apa yg aku pikirin, I feel safe to tell you anything that bothers me.&quot;</div>
             </div>
             <div class="q-card" onclick="this.classList.toggle('revealed')">
-                <div class="q-front">What language do we speak in?</div>
-                <div class="q-back">Mostly Indonesian! Jonathan: 15627 Indo / 3676 English / 1262 mixed. Pricylia: 21423 Indo / 1154 English. But the code-switching is uniquely yours.</div>
+                <div class="q-front">Who does the emotional labor?</div>
+                <div class="q-back">Specialized: Jonathan does logistics/planning (70/30). Pricylia does health monitoring — &quot;jangan lupa minum air&quot;, &quot;jangan begadang&quot;, &quot;hati2 di jln!!&quot; She explicitly claimed the role: &quot;Let me bawel for this ya jgn bosen or bete!&quot;</div>
+            </div>
+            <div class="q-card" onclick="this.classList.toggle('revealed')">
+                <div class="q-front">How do they describe their match?</div>
+                <div class="q-back">&quot;Mixnya terlalu bnyk opposite ama common nya yg blendnya bikin ideal blend. Kaya steel. Iron and zinc.&quot; They named it themselves.</div>
             </div></div><h3 class="q-category">The Fun Ones</h3><div class="q-grid">
             <div class="q-card" onclick="this.classList.toggle('revealed')">
-                <div class="q-front">What's our most overused phrase?</div>
-                <div class="q-back">&quot;lucu bgt&quot; (so funny) — used 316 times between you two. Because apparently everything is hilarious!</div>
+                <div class="q-front">What's their top shared phrase?</div>
+                <div class="q-back">&quot;lucu bgt&quot; (so funny) — used 316 times. Because apparently everything is hilarious.</div>
             </div>
             <div class="q-card" onclick="this.classList.toggle('revealed')">
-                <div class="q-front">What time are we most active?</div>
-                <div class="q-back">Peak hours: 11PM to 3AM. You two are certified night owls who come alive after dark.</div>
+                <div class="q-front">What's their peak texting hour?</div>
+                <div class="q-back">11pm to 3am. Certified night owls. Every date ends with messages until 5 AM.</div>
             </div>
             <div class="q-card" onclick="this.classList.toggle('revealed')">
-                <div class="q-front">How many words have we written?</div>
-                <div class="q-back">518,863 total words. That's about 6.5 novels worth of conversation!</div>
+                <div class="q-front">What are their inside jokes?</div>
+                <div class="q-back">&quot;Kiasu&quot; (her competitive label), &quot;Bolang&quot; (his travel nickname), the dice game, &quot;Level 0.5&quot; spice tolerance, &quot;Pricyl AI&quot; (his name for thinking about her instead of actual AI), red cars as lucky signs, 11:11 moments.</div>
             </div>
             <div class="q-card" onclick="this.classList.toggle('revealed')">
-                <div class="q-front">What's our favorite pet name?</div>
-                <div class="q-back">&quot;sayang&quot; — used 1,183 times total (J: 448, P: 735)</div>
+                <div class="q-front">Who sends more emojis?</div>
+                <div class="q-back">Pricylia: 18,651 emojis vs Jonathan's 1,212. That's 15.4x more. Her signature: 🤏 (949 times, vs his 13).</div>
             </div>
             <div class="q-card" onclick="this.classList.toggle('revealed')">
-                <div class="q-front">How many conversation sessions?</div>
-                <div class="q-back">1,683 separate conversations, averaging 41.1 minutes each. That's 6.4 conversations per day!</div>
+                <div class="q-front">How many words have they written?</div>
+                <div class="q-back">518,863 words. That's 6.5 novels. Or 11.0 copies of The Great Gatsby.</div>
+            </div>
+            <div class="q-card" onclick="this.classList.toggle('revealed')">
+                <div class="q-front">How have they changed each other?</div>
+                <div class="q-back">Jonathan now drinks more water (Pricylia's nagging worked). Pricylia now understands AI and calls his projects &quot;ur baby.&quot; He introduced her to kayaking and cycling. She introduced him to Makassar food culture. He adopted &quot;sayang&quot; after she said she liked being called that.</div>
+            </div>
+            <div class="q-card" onclick="this.classList.toggle('revealed')">
+                <div class="q-front">What's the most romantic thing said?</div>
+                <div class="q-back">Pricylia on NYE: &quot;You are the best thing 2025 gave me, and I'm endlessly grateful for youuu!!!&quot; Jonathan on their 2-month: &quot;Happy 2 months my dearest Pricylia, my muse, my attention snatcher, my lucky charm, my happy magnet and my lovely hug buddy.&quot;</div>
             </div></div>
         </div>
     </div>
 
-    <!-- ═══════════ FOOTER ═══════════ -->
+    <!-- FOOTER -->
     <div style="text-align:center; padding: 60px 20px; color:var(--muted); font-size:0.85rem;">
-        <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:2rem; color:var(--pricylia); margin-bottom:12px;">Made with love & data</div>
+        <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.8rem; color:var(--pricylia); margin-bottom:12px;">Made with love & data</div>
         <div>Powered by 125,070 messages, 518,863 words, and one very real relationship.</div>
         <div style="margin-top:8px;">Jonathan & Pricylia | 2025-2026</div>
     </div>
 
     <script>
-        // ═══ NAVIGATION ═══
         function showSection(id) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             event.target.classList.add('active');
             window.scrollTo({ top: document.querySelector('.nav').offsetTop, behavior: 'smooth' });
-
-            // Initialize charts when section becomes visible
             setTimeout(initCharts, 100);
         }
-
-        // ═══ CHART CONFIG ═══
-        const baseConfig = {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false }, filler: { propagate: true } },
-            scales: {
-                x: { grid: { display: false }, ticks: { color: '#8c7a6e', font: { family: 'Nunito', size: 10, weight: '600' } } },
-                y: { grid: { color: '#e8ddd0' }, ticks: { color: '#8c7a6e', font: { family: 'Nunito', size: 10 } } }
-            }
-        };
-
-        const TEAL = '#5b8a72';
-        const PINK = '#d4738a';
-        const GOLD = '#c4956a';
-        const LOVE = '#c25b78';
-        const DEEP = '#7b6b8a';
-
-        // ═══ DATA ═══
-        const monthlyData = [{"month": "2025-05", "jonathan": 197, "pricylia": 140}, {"month": "2025-06", "jonathan": 720, "pricylia": 749}, {"month": "2025-07", "jonathan": 2799, "pricylia": 2753}, {"month": "2025-08", "jonathan": 2988, "pricylia": 3163}, {"month": "2025-09", "jonathan": 3636, "pricylia": 4377}, {"month": "2025-10", "jonathan": 8054, "pricylia": 8904}, {"month": "2025-11", "jonathan": 11261, "pricylia": 11779}, {"month": "2025-12", "jonathan": 10056, "pricylia": 10420}, {"month": "2026-01", "jonathan": 8529, "pricylia": 9589}, {"month": "2026-02", "jonathan": 4532, "pricylia": 5146}, {"month": "2026-03", "jonathan": 7008, "pricylia": 8270}];
-        const dailyData = [{"date": "2025-05-31", "jonathan": 197, "pricylia": 140}, {"date": "2025-06-01", "jonathan": 119, "pricylia": 127}, {"date": "2025-06-02", "jonathan": 134, "pricylia": 130}, {"date": "2025-06-04", "jonathan": 26, "pricylia": 24}, {"date": "2025-06-05", "jonathan": 122, "pricylia": 137}, {"date": "2025-06-06", "jonathan": 5, "pricylia": 6}, {"date": "2025-06-07", "jonathan": 46, "pricylia": 41}, {"date": "2025-06-11", "jonathan": 37, "pricylia": 28}, {"date": "2025-06-12", "jonathan": 49, "pricylia": 53}, {"date": "2025-06-13", "jonathan": 127, "pricylia": 144}, {"date": "2025-06-30", "jonathan": 55, "pricylia": 59}, {"date": "2025-07-01", "jonathan": 20, "pricylia": 10}, {"date": "2025-07-02", "jonathan": 85, "pricylia": 90}, {"date": "2025-07-03", "jonathan": 185, "pricylia": 195}, {"date": "2025-07-04", "jonathan": 350, "pricylia": 354}, {"date": "2025-07-06", "jonathan": 296, "pricylia": 266}, {"date": "2025-07-07", "jonathan": 146, "pricylia": 164}, {"date": "2025-07-12", "jonathan": 9, "pricylia": 6}, {"date": "2025-07-13", "jonathan": 98, "pricylia": 116}, {"date": "2025-07-14", "jonathan": 29, "pricylia": 35}, {"date": "2025-07-15", "jonathan": 27, "pricylia": 19}, {"date": "2025-07-16", "jonathan": 68, "pricylia": 44}, {"date": "2025-07-17", "jonathan": 87, "pricylia": 91}, {"date": "2025-07-18", "jonathan": 107, "pricylia": 126}, {"date": "2025-07-19", "jonathan": 20, "pricylia": 21}, {"date": "2025-07-21", "jonathan": 95, "pricylia": 106}, {"date": "2025-07-22", "jonathan": 167, "pricylia": 200}, {"date": "2025-07-23", "jonathan": 171, "pricylia": 191}, {"date": "2025-07-24", "jonathan": 174, "pricylia": 157}, {"date": "2025-07-25", "jonathan": 82, "pricylia": 80}, {"date": "2025-07-26", "jonathan": 3, "pricylia": 3}, {"date": "2025-07-27", "jonathan": 283, "pricylia": 254}, {"date": "2025-07-28", "jonathan": 194, "pricylia": 144}, {"date": "2025-07-29", "jonathan": 14, "pricylia": 19}, {"date": "2025-07-31", "jonathan": 89, "pricylia": 62}, {"date": "2025-08-01", "jonathan": 6, "pricylia": 7}, {"date": "2025-08-02", "jonathan": 139, "pricylia": 124}, {"date": "2025-08-03", "jonathan": 220, "pricylia": 206}, {"date": "2025-08-06", "jonathan": 7, "pricylia": 5}, {"date": "2025-08-07", "jonathan": 19, "pricylia": 12}, {"date": "2025-08-08", "jonathan": 15, "pricylia": 14}, {"date": "2025-08-09", "jonathan": 6, "pricylia": 4}, {"date": "2025-08-10", "jonathan": 49, "pricylia": 52}, {"date": "2025-08-11", "jonathan": 111, "pricylia": 76}, {"date": "2025-08-12", "jonathan": 63, "pricylia": 69}, {"date": "2025-08-13", "jonathan": 134, "pricylia": 177}, {"date": "2025-08-14", "jonathan": 64, "pricylia": 72}, {"date": "2025-08-15", "jonathan": 1, "pricylia": 1}, {"date": "2025-08-16", "jonathan": 20, "pricylia": 23}, {"date": "2025-08-17", "jonathan": 70, "pricylia": 83}, {"date": "2025-08-18", "jonathan": 126, "pricylia": 190}, {"date": "2025-08-20", "jonathan": 67, "pricylia": 76}, {"date": "2025-08-21", "jonathan": 369, "pricylia": 404}, {"date": "2025-08-22", "jonathan": 8, "pricylia": 12}, {"date": "2025-08-23", "jonathan": 402, "pricylia": 375}, {"date": "2025-08-24", "jonathan": 32, "pricylia": 19}, {"date": "2025-08-25", "jonathan": 208, "pricylia": 193}, {"date": "2025-08-26", "jonathan": 266, "pricylia": 367}, {"date": "2025-08-27", "jonathan": 95, "pricylia": 125}, {"date": "2025-08-28", "jonathan": 174, "pricylia": 125}, {"date": "2025-08-29", "jonathan": 66, "pricylia": 58}, {"date": "2025-08-30", "jonathan": 251, "pricylia": 294}, {"date": "2025-09-01", "jonathan": 164, "pricylia": 188}, {"date": "2025-09-02", "jonathan": 15, "pricylia": 9}, {"date": "2025-09-03", "jonathan": 47, "pricylia": 69}, {"date": "2025-09-04", "jonathan": 72, "pricylia": 78}, {"date": "2025-09-05", "jonathan": 23, "pricylia": 28}, {"date": "2025-09-06", "jonathan": 295, "pricylia": 333}, {"date": "2025-09-07", "jonathan": 43, "pricylia": 41}, {"date": "2025-09-08", "jonathan": 95, "pricylia": 81}, {"date": "2025-09-09", "jonathan": 138, "pricylia": 173}, {"date": "2025-09-10", "jonathan": 6, "pricylia": 5}, {"date": "2025-09-11", "jonathan": 104, "pricylia": 103}, {"date": "2025-09-12", "jonathan": 119, "pricylia": 132}, {"date": "2025-09-13", "jonathan": 181, "pricylia": 227}, {"date": "2025-09-14", "jonathan": 39, "pricylia": 32}, {"date": "2025-09-15", "jonathan": 123, "pricylia": 163}, {"date": "2025-09-16", "jonathan": 161, "pricylia": 187}, {"date": "2025-09-17", "jonathan": 0, "pricylia": 1}, {"date": "2025-09-18", "jonathan": 223, "pricylia": 302}, {"date": "2025-09-19", "jonathan": 521, "pricylia": 714}, {"date": "2025-09-20", "jonathan": 360, "pricylia": 471}, {"date": "2025-09-21", "jonathan": 175, "pricylia": 183}, {"date": "2025-09-22", "jonathan": 119, "pricylia": 149}, {"date": "2025-09-23", "jonathan": 40, "pricylia": 64}, {"date": "2025-09-24", "jonathan": 99, "pricylia": 121}, {"date": "2025-09-26", "jonathan": 82, "pricylia": 91}, {"date": "2025-09-27", "jonathan": 5, "pricylia": 5}, {"date": "2025-09-28", "jonathan": 224, "pricylia": 233}, {"date": "2025-09-29", "jonathan": 163, "pricylia": 194}, {"date": "2025-10-02", "jonathan": 57, "pricylia": 72}, {"date": "2025-10-03", "jonathan": 344, "pricylia": 402}, {"date": "2025-10-04", "jonathan": 25, "pricylia": 24}, {"date": "2025-10-05", "jonathan": 562, "pricylia": 414}, {"date": "2025-10-06", "jonathan": 346, "pricylia": 380}, {"date": "2025-10-07", "jonathan": 112, "pricylia": 133}, {"date": "2025-10-08", "jonathan": 632, "pricylia": 688}, {"date": "2025-10-09", "jonathan": 214, "pricylia": 254}, {"date": "2025-10-10", "jonathan": 140, "pricylia": 164}, {"date": "2025-10-11", "jonathan": 542, "pricylia": 706}, {"date": "2025-10-12", "jonathan": 248, "pricylia": 320}, {"date": "2025-10-13", "jonathan": 313, "pricylia": 355}, {"date": "2025-10-14", "jonathan": 149, "pricylia": 135}, {"date": "2025-10-15", "jonathan": 327, "pricylia": 358}, {"date": "2025-10-16", "jonathan": 194, "pricylia": 180}, {"date": "2025-10-17", "jonathan": 369, "pricylia": 427}, {"date": "2025-10-18", "jonathan": 401, "pricylia": 469}, {"date": "2025-10-19", "jonathan": 69, "pricylia": 56}, {"date": "2025-10-20", "jonathan": 78, "pricylia": 84}, {"date": "2025-10-21", "jonathan": 378, "pricylia": 430}, {"date": "2025-10-22", "jonathan": 157, "pricylia": 222}, {"date": "2025-10-23", "jonathan": 517, "pricylia": 489}, {"date": "2025-10-24", "jonathan": 581, "pricylia": 592}, {"date": "2025-10-25", "jonathan": 155, "pricylia": 164}, {"date": "2025-10-26", "jonathan": 140, "pricylia": 186}, {"date": "2025-10-27", "jonathan": 162, "pricylia": 215}, {"date": "2025-10-28", "jonathan": 66, "pricylia": 66}, {"date": "2025-10-29", "jonathan": 175, "pricylia": 180}, {"date": "2025-10-30", "jonathan": 175, "pricylia": 228}, {"date": "2025-10-31", "jonathan": 426, "pricylia": 511}, {"date": "2025-11-01", "jonathan": 146, "pricylia": 177}, {"date": "2025-11-02", "jonathan": 415, "pricylia": 376}, {"date": "2025-11-03", "jonathan": 146, "pricylia": 145}, {"date": "2025-11-04", "jonathan": 156, "pricylia": 183}, {"date": "2025-11-05", "jonathan": 52, "pricylia": 46}, {"date": "2025-11-06", "jonathan": 399, "pricylia": 255}, {"date": "2025-11-07", "jonathan": 278, "pricylia": 299}, {"date": "2025-11-08", "jonathan": 340, "pricylia": 428}, {"date": "2025-11-09", "jonathan": 598, "pricylia": 703}, {"date": "2025-11-10", "jonathan": 245, "pricylia": 245}, {"date": "2025-11-11", "jonathan": 480, "pricylia": 636}, {"date": "2025-11-12", "jonathan": 251, "pricylia": 257}, {"date": "2025-11-13", "jonathan": 489, "pricylia": 590}, {"date": "2025-11-14", "jonathan": 90, "pricylia": 92}, {"date": "2025-11-15", "jonathan": 101, "pricylia": 98}, {"date": "2025-11-16", "jonathan": 655, "pricylia": 546}, {"date": "2025-11-17", "jonathan": 895, "pricylia": 878}, {"date": "2025-11-18", "jonathan": 767, "pricylia": 882}, {"date": "2025-11-19", "jonathan": 656, "pricylia": 763}, {"date": "2025-11-20", "jonathan": 578, "pricylia": 579}, {"date": "2025-11-21", "jonathan": 893, "pricylia": 956}, {"date": "2025-11-22", "jonathan": 124, "pricylia": 182}, {"date": "2025-11-23", "jonathan": 316, "pricylia": 158}, {"date": "2025-11-24", "jonathan": 495, "pricylia": 576}, {"date": "2025-11-25", "jonathan": 497, "pricylia": 537}, {"date": "2025-11-26", "jonathan": 304, "pricylia": 329}, {"date": "2025-11-27", "jonathan": 645, "pricylia": 682}, {"date": "2025-11-28", "jonathan": 145, "pricylia": 103}, {"date": "2025-11-29", "jonathan": 94, "pricylia": 63}, {"date": "2025-11-30", "jonathan": 11, "pricylia": 15}, {"date": "2025-12-01", "jonathan": 734, "pricylia": 656}, {"date": "2025-12-02", "jonathan": 479, "pricylia": 537}, {"date": "2025-12-03", "jonathan": 329, "pricylia": 284}, {"date": "2025-12-04", "jonathan": 335, "pricylia": 303}, {"date": "2025-12-05", "jonathan": 345, "pricylia": 426}, {"date": "2025-12-06", "jonathan": 218, "pricylia": 293}, {"date": "2025-12-07", "jonathan": 143, "pricylia": 81}, {"date": "2025-12-08", "jonathan": 185, "pricylia": 193}, {"date": "2025-12-09", "jonathan": 350, "pricylia": 372}, {"date": "2025-12-10", "jonathan": 690, "pricylia": 650}, {"date": "2025-12-11", "jonathan": 339, "pricylia": 296}, {"date": "2025-12-12", "jonathan": 375, "pricylia": 326}, {"date": "2025-12-13", "jonathan": 188, "pricylia": 261}, {"date": "2025-12-14", "jonathan": 22, "pricylia": 36}, {"date": "2025-12-15", "jonathan": 441, "pricylia": 248}, {"date": "2025-12-16", "jonathan": 378, "pricylia": 403}, {"date": "2025-12-17", "jonathan": 268, "pricylia": 331}, {"date": "2025-12-18", "jonathan": 250, "pricylia": 302}, {"date": "2025-12-19", "jonathan": 161, "pricylia": 160}, {"date": "2025-12-20", "jonathan": 566, "pricylia": 201}, {"date": "2025-12-21", "jonathan": 72, "pricylia": 186}, {"date": "2025-12-22", "jonathan": 283, "pricylia": 291}, {"date": "2025-12-23", "jonathan": 257, "pricylia": 263}, {"date": "2025-12-24", "jonathan": 185, "pricylia": 250}, {"date": "2025-12-25", "jonathan": 301, "pricylia": 354}, {"date": "2025-12-26", "jonathan": 260, "pricylia": 325}, {"date": "2025-12-27", "jonathan": 237, "pricylia": 305}, {"date": "2025-12-28", "jonathan": 626, "pricylia": 749}, {"date": "2025-12-29", "jonathan": 344, "pricylia": 400}, {"date": "2025-12-30", "jonathan": 414, "pricylia": 558}, {"date": "2025-12-31", "jonathan": 281, "pricylia": 380}, {"date": "2026-01-01", "jonathan": 386, "pricylia": 438}, {"date": "2026-01-02", "jonathan": 623, "pricylia": 812}, {"date": "2026-01-03", "jonathan": 614, "pricylia": 609}, {"date": "2026-01-04", "jonathan": 134, "pricylia": 131}, {"date": "2026-01-05", "jonathan": 377, "pricylia": 330}, {"date": "2026-01-06", "jonathan": 388, "pricylia": 381}, {"date": "2026-01-07", "jonathan": 346, "pricylia": 407}, {"date": "2026-01-08", "jonathan": 159, "pricylia": 167}, {"date": "2026-01-09", "jonathan": 81, "pricylia": 106}, {"date": "2026-01-10", "jonathan": 112, "pricylia": 150}, {"date": "2026-01-11", "jonathan": 109, "pricylia": 91}, {"date": "2026-01-12", "jonathan": 286, "pricylia": 416}, {"date": "2026-01-13", "jonathan": 460, "pricylia": 479}, {"date": "2026-01-14", "jonathan": 264, "pricylia": 306}, {"date": "2026-01-15", "jonathan": 224, "pricylia": 261}, {"date": "2026-01-16", "jonathan": 418, "pricylia": 489}, {"date": "2026-01-17", "jonathan": 969, "pricylia": 1064}, {"date": "2026-01-18", "jonathan": 374, "pricylia": 539}, {"date": "2026-01-19", "jonathan": 221, "pricylia": 248}, {"date": "2026-01-20", "jonathan": 197, "pricylia": 238}, {"date": "2026-01-21", "jonathan": 223, "pricylia": 311}, {"date": "2026-01-22", "jonathan": 199, "pricylia": 250}, {"date": "2026-01-23", "jonathan": 177, "pricylia": 226}, {"date": "2026-01-24", "jonathan": 323, "pricylia": 352}, {"date": "2026-01-25", "jonathan": 139, "pricylia": 118}, {"date": "2026-01-26", "jonathan": 218, "pricylia": 223}, {"date": "2026-01-27", "jonathan": 100, "pricylia": 92}, {"date": "2026-01-28", "jonathan": 96, "pricylia": 120}, {"date": "2026-01-29", "jonathan": 183, "pricylia": 142}, {"date": "2026-01-30", "jonathan": 53, "pricylia": 45}, {"date": "2026-01-31", "jonathan": 76, "pricylia": 48}, {"date": "2026-02-01", "jonathan": 13, "pricylia": 15}, {"date": "2026-02-02", "jonathan": 181, "pricylia": 247}, {"date": "2026-02-03", "jonathan": 214, "pricylia": 226}, {"date": "2026-02-04", "jonathan": 279, "pricylia": 295}, {"date": "2026-02-05", "jonathan": 134, "pricylia": 144}, {"date": "2026-02-06", "jonathan": 185, "pricylia": 164}, {"date": "2026-02-07", "jonathan": 61, "pricylia": 64}, {"date": "2026-02-08", "jonathan": 137, "pricylia": 188}, {"date": "2026-02-09", "jonathan": 87, "pricylia": 146}, {"date": "2026-02-10", "jonathan": 158, "pricylia": 159}, {"date": "2026-02-11", "jonathan": 57, "pricylia": 73}, {"date": "2026-02-12", "jonathan": 107, "pricylia": 114}, {"date": "2026-02-13", "jonathan": 291, "pricylia": 322}, {"date": "2026-02-14", "jonathan": 44, "pricylia": 63}, {"date": "2026-02-15", "jonathan": 105, "pricylia": 97}, {"date": "2026-02-16", "jonathan": 92, "pricylia": 122}, {"date": "2026-02-17", "jonathan": 272, "pricylia": 268}, {"date": "2026-02-18", "jonathan": 359, "pricylia": 399}, {"date": "2026-02-19", "jonathan": 181, "pricylia": 267}, {"date": "2026-02-20", "jonathan": 149, "pricylia": 181}, {"date": "2026-02-21", "jonathan": 55, "pricylia": 79}, {"date": "2026-02-22", "jonathan": 123, "pricylia": 147}, {"date": "2026-02-23", "jonathan": 368, "pricylia": 326}, {"date": "2026-02-24", "jonathan": 158, "pricylia": 228}, {"date": "2026-02-25", "jonathan": 32, "pricylia": 31}, {"date": "2026-02-26", "jonathan": 453, "pricylia": 556}, {"date": "2026-02-27", "jonathan": 143, "pricylia": 149}, {"date": "2026-02-28", "jonathan": 94, "pricylia": 76}, {"date": "2026-03-01", "jonathan": 131, "pricylia": 150}, {"date": "2026-03-02", "jonathan": 260, "pricylia": 148}, {"date": "2026-03-03", "jonathan": 145, "pricylia": 183}, {"date": "2026-03-04", "jonathan": 244, "pricylia": 307}, {"date": "2026-03-05", "jonathan": 292, "pricylia": 400}, {"date": "2026-03-06", "jonathan": 455, "pricylia": 682}, {"date": "2026-03-07", "jonathan": 842, "pricylia": 1022}, {"date": "2026-03-08", "jonathan": 330, "pricylia": 398}, {"date": "2026-03-09", "jonathan": 461, "pricylia": 551}, {"date": "2026-03-10", "jonathan": 328, "pricylia": 459}, {"date": "2026-03-11", "jonathan": 375, "pricylia": 496}, {"date": "2026-03-12", "jonathan": 591, "pricylia": 546}, {"date": "2026-03-13", "jonathan": 215, "pricylia": 307}, {"date": "2026-03-14", "jonathan": 447, "pricylia": 581}, {"date": "2026-03-15", "jonathan": 145, "pricylia": 182}, {"date": "2026-03-16", "jonathan": 303, "pricylia": 316}, {"date": "2026-03-17", "jonathan": 164, "pricylia": 217}, {"date": "2026-03-18", "jonathan": 153, "pricylia": 190}, {"date": "2026-03-19", "jonathan": 283, "pricylia": 339}, {"date": "2026-03-20", "jonathan": 132, "pricylia": 208}, {"date": "2026-03-21", "jonathan": 240, "pricylia": 214}, {"date": "2026-03-22", "jonathan": 236, "pricylia": 133}, {"date": "2026-03-23", "jonathan": 227, "pricylia": 216}, {"date": "2026-03-24", "jonathan": 9, "pricylia": 25}];
-        const hourlyData = [{"hour": 0, "jonathan": 4796, "pricylia": 5532}, {"hour": 1, "jonathan": 5393, "pricylia": 5857}, {"hour": 2, "jonathan": 5670, "pricylia": 6627}, {"hour": 3, "jonathan": 4057, "pricylia": 4416}, {"hour": 4, "jonathan": 4411, "pricylia": 3732}, {"hour": 5, "jonathan": 655, "pricylia": 654}, {"hour": 6, "jonathan": 61, "pricylia": 4}, {"hour": 7, "jonathan": 93, "pricylia": 78}, {"hour": 8, "jonathan": 34, "pricylia": 11}, {"hour": 9, "jonathan": 70, "pricylia": 109}, {"hour": 10, "jonathan": 186, "pricylia": 278}, {"hour": 11, "jonathan": 559, "pricylia": 915}, {"hour": 12, "jonathan": 1530, "pricylia": 1830}, {"hour": 13, "jonathan": 2204, "pricylia": 2535}, {"hour": 14, "jonathan": 2911, "pricylia": 3227}, {"hour": 15, "jonathan": 2870, "pricylia": 3226}, {"hour": 16, "jonathan": 2554, "pricylia": 2522}, {"hour": 17, "jonathan": 2375, "pricylia": 2430}, {"hour": 18, "jonathan": 2389, "pricylia": 2462}, {"hour": 19, "jonathan": 1758, "pricylia": 2019}, {"hour": 20, "jonathan": 2766, "pricylia": 2911}, {"hour": 21, "jonathan": 3622, "pricylia": 4269}, {"hour": 22, "jonathan": 4258, "pricylia": 4938}, {"hour": 23, "jonathan": 4558, "pricylia": 4708}];
-        const weekdayData = [{"day": "Mon", "jonathan": 9510, "pricylia": 9827}, {"day": "Tue", "jonathan": 7987, "pricylia": 9207}, {"day": "Wed", "jonathan": 7577, "pricylia": 8629}, {"day": "Thu", "jonathan": 9416, "pricylia": 9999}, {"day": "Fri", "jonathan": 8841, "pricylia": 10241}, {"day": "Sat", "jonathan": 8948, "pricylia": 9760}, {"day": "Sun", "jonathan": 7501, "pricylia": 7627}];
-        const loveWeekly = [{"week": "2025-05-27", "jonathan": 10, "pricylia": 1}, {"week": "2025-06-03", "jonathan": 2, "pricylia": 3}, {"week": "2025-06-10", "jonathan": 3, "pricylia": 0}, {"week": "2025-06-24", "jonathan": 2, "pricylia": 0}, {"week": "2025-07-01", "jonathan": 16, "pricylia": 3}, {"week": "2025-07-08", "jonathan": 2, "pricylia": 0}, {"week": "2025-07-15", "jonathan": 5, "pricylia": 0}, {"week": "2025-07-22", "jonathan": 8, "pricylia": 5}, {"week": "2025-07-29", "jonathan": 3, "pricylia": 2}, {"week": "2025-08-05", "jonathan": 2, "pricylia": 0}, {"week": "2025-08-12", "jonathan": 5, "pricylia": 2}, {"week": "2025-08-19", "jonathan": 3, "pricylia": 1}, {"week": "2025-08-26", "jonathan": 5, "pricylia": 6}, {"week": "2025-09-02", "jonathan": 2, "pricylia": 0}, {"week": "2025-09-09", "jonathan": 2, "pricylia": 3}, {"week": "2025-09-16", "jonathan": 7, "pricylia": 3}, {"week": "2025-09-23", "jonathan": 3, "pricylia": 1}, {"week": "2025-09-30", "jonathan": 4, "pricylia": 1}, {"week": "2025-10-07", "jonathan": 9, "pricylia": 5}, {"week": "2025-10-14", "jonathan": 6, "pricylia": 4}, {"week": "2025-10-21", "jonathan": 5, "pricylia": 2}, {"week": "2025-10-28", "jonathan": 6, "pricylia": 3}, {"week": "2025-11-04", "jonathan": 12, "pricylia": 7}, {"week": "2025-11-11", "jonathan": 12, "pricylia": 6}, {"week": "2025-11-18", "jonathan": 38, "pricylia": 14}, {"week": "2025-11-25", "jonathan": 15, "pricylia": 9}, {"week": "2025-12-02", "jonathan": 25, "pricylia": 16}, {"week": "2025-12-09", "jonathan": 30, "pricylia": 28}, {"week": "2025-12-16", "jonathan": 16, "pricylia": 18}, {"week": "2025-12-23", "jonathan": 21, "pricylia": 35}, {"week": "2025-12-30", "jonathan": 36, "pricylia": 106}, {"week": "2026-01-06", "jonathan": 23, "pricylia": 53}, {"week": "2026-01-13", "jonathan": 73, "pricylia": 120}, {"week": "2026-01-20", "jonathan": 27, "pricylia": 52}, {"week": "2026-01-27", "jonathan": 6, "pricylia": 6}, {"week": "2026-02-03", "jonathan": 8, "pricylia": 36}, {"week": "2026-02-10", "jonathan": 16, "pricylia": 25}, {"week": "2026-02-17", "jonathan": 71, "pricylia": 64}, {"week": "2026-02-24", "jonathan": 63, "pricylia": 63}, {"week": "2026-03-03", "jonathan": 108, "pricylia": 170}, {"week": "2026-03-10", "jonathan": 119, "pricylia": 204}, {"week": "2026-03-17", "jonathan": 90, "pricylia": 109}, {"week": "2026-03-24", "jonathan": 0, "pricylia": 1}];
-        const laughWeekly = [{"week": "2025-05-27", "jonathan": 39, "pricylia": 168}, {"week": "2025-06-03", "jonathan": 22, "pricylia": 81}, {"week": "2025-06-10", "jonathan": 23, "pricylia": 77}, {"week": "2025-06-24", "jonathan": 3, "pricylia": 26}, {"week": "2025-07-01", "jonathan": 96, "pricylia": 349}, {"week": "2025-07-08", "jonathan": 16, "pricylia": 48}, {"week": "2025-07-15", "jonathan": 23, "pricylia": 141}, {"week": "2025-07-22", "jonathan": 85, "pricylia": 350}, {"week": "2025-07-29", "jonathan": 37, "pricylia": 142}, {"week": "2025-08-05", "jonathan": 14, "pricylia": 33}, {"week": "2025-08-12", "jonathan": 46, "pricylia": 185}, {"week": "2025-08-19", "jonathan": 50, "pricylia": 318}, {"week": "2025-08-26", "jonathan": 76, "pricylia": 334}, {"week": "2025-09-02", "jonathan": 63, "pricylia": 194}, {"week": "2025-09-09", "jonathan": 73, "pricylia": 225}, {"week": "2025-09-16", "jonathan": 96, "pricylia": 462}, {"week": "2025-09-23", "jonathan": 30, "pricylia": 149}, {"week": "2025-09-30", "jonathan": 77, "pricylia": 329}, {"week": "2025-10-07", "jonathan": 129, "pricylia": 656}, {"week": "2025-10-14", "jonathan": 58, "pricylia": 419}, {"week": "2025-10-21", "jonathan": 127, "pricylia": 579}, {"week": "2025-10-28", "jonathan": 127, "pricylia": 404}, {"week": "2025-11-04", "jonathan": 120, "pricylia": 541}, {"week": "2025-11-11", "jonathan": 216, "pricylia": 834}, {"week": "2025-11-18", "jonathan": 231, "pricylia": 1080}, {"week": "2025-11-25", "jonathan": 103, "pricylia": 585}, {"week": "2025-12-02", "jonathan": 123, "pricylia": 515}, {"week": "2025-12-09", "jonathan": 112, "pricylia": 474}, {"week": "2025-12-16", "jonathan": 99, "pricylia": 374}, {"week": "2025-12-23", "jonathan": 156, "pricylia": 626}, {"week": "2025-12-30", "jonathan": 251, "pricylia": 815}, {"week": "2026-01-06", "jonathan": 87, "pricylia": 361}, {"week": "2026-01-13", "jonathan": 269, "pricylia": 888}, {"week": "2026-01-20", "jonathan": 151, "pricylia": 428}, {"week": "2026-01-27", "jonathan": 61, "pricylia": 109}, {"week": "2026-02-03", "jonathan": 96, "pricylia": 270}, {"week": "2026-02-10", "jonathan": 101, "pricylia": 193}, {"week": "2026-02-17", "jonathan": 135, "pricylia": 376}, {"week": "2026-02-24", "jonathan": 101, "pricylia": 259}, {"week": "2026-03-03", "jonathan": 272, "pricylia": 800}, {"week": "2026-03-10", "jonathan": 248, "pricylia": 655}, {"week": "2026-03-17", "jonathan": 157, "pricylia": 340}, {"week": "2026-03-24", "jonathan": 1, "pricylia": 3}];
-        const sternbergData = [{"month": "2025-05", "intimacy": 0.24, "passion": 0.04, "commitment": 0.23}, {"month": "2025-06", "intimacy": 0.65, "passion": 0.22, "commitment": 0.93}, {"month": "2025-07", "intimacy": 2.86, "passion": 0.51, "commitment": 4.65}, {"month": "2025-08", "intimacy": 3.99, "passion": 0.31, "commitment": 1.16}, {"month": "2025-09", "intimacy": 4.05, "passion": 0.27, "commitment": 0.7}, {"month": "2025-10", "intimacy": 4.64, "passion": 0.48, "commitment": 1.4}, {"month": "2025-11", "intimacy": 9.52, "passion": 1.28, "commitment": 9.77}, {"month": "2025-12", "intimacy": 9.76, "passion": 3.12, "commitment": 3.72}, {"month": "2026-01", "intimacy": 10.0, "passion": 5.44, "commitment": 5.58}, {"month": "2026-02", "intimacy": 3.81, "passion": 4.08, "commitment": 3.02}, {"month": "2026-03", "intimacy": 7.14, "passion": 10.0, "commitment": 10.0}];
-        const llJonathan = [427, 222, 705, 62, 99];
-        const llPricylia = [698, 263, 626, 156, 104];
-
-        // ═══ CHART INIT ═══
-        let chartsInitialized = {};
-
+        const baseConfig = {responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{x:{grid:{display:false}, ticks:{color:'#8c7a6e', font:{family:'Nunito',size:10,weight:'600'}}}, y:{grid:{color:'#e8ddd0'}, ticks:{color:'#8c7a6e', font:{family:'Nunito',size:10}}}}};
+        const T='#5b8a72', P='#d4738a', G='#c4956a', L='#c25b78', D='#7b6b8a';
+        const monthlyData=[{"month": "2025-05", "jonathan": 197, "pricylia": 140}, {"month": "2025-06", "jonathan": 720, "pricylia": 749}, {"month": "2025-07", "jonathan": 2799, "pricylia": 2753}, {"month": "2025-08", "jonathan": 2988, "pricylia": 3163}, {"month": "2025-09", "jonathan": 3636, "pricylia": 4377}, {"month": "2025-10", "jonathan": 8054, "pricylia": 8904}, {"month": "2025-11", "jonathan": 11261, "pricylia": 11779}, {"month": "2025-12", "jonathan": 10056, "pricylia": 10420}, {"month": "2026-01", "jonathan": 8529, "pricylia": 9589}, {"month": "2026-02", "jonathan": 4532, "pricylia": 5146}, {"month": "2026-03", "jonathan": 7008, "pricylia": 8270}], dailyData=[{"date": "2025-05-31", "jonathan": 197, "pricylia": 140}, {"date": "2025-06-01", "jonathan": 119, "pricylia": 127}, {"date": "2025-06-02", "jonathan": 134, "pricylia": 130}, {"date": "2025-06-04", "jonathan": 26, "pricylia": 24}, {"date": "2025-06-05", "jonathan": 122, "pricylia": 137}, {"date": "2025-06-06", "jonathan": 5, "pricylia": 6}, {"date": "2025-06-07", "jonathan": 46, "pricylia": 41}, {"date": "2025-06-11", "jonathan": 37, "pricylia": 28}, {"date": "2025-06-12", "jonathan": 49, "pricylia": 53}, {"date": "2025-06-13", "jonathan": 127, "pricylia": 144}, {"date": "2025-06-30", "jonathan": 55, "pricylia": 59}, {"date": "2025-07-01", "jonathan": 20, "pricylia": 10}, {"date": "2025-07-02", "jonathan": 85, "pricylia": 90}, {"date": "2025-07-03", "jonathan": 185, "pricylia": 195}, {"date": "2025-07-04", "jonathan": 350, "pricylia": 354}, {"date": "2025-07-06", "jonathan": 296, "pricylia": 266}, {"date": "2025-07-07", "jonathan": 146, "pricylia": 164}, {"date": "2025-07-12", "jonathan": 9, "pricylia": 6}, {"date": "2025-07-13", "jonathan": 98, "pricylia": 116}, {"date": "2025-07-14", "jonathan": 29, "pricylia": 35}, {"date": "2025-07-15", "jonathan": 27, "pricylia": 19}, {"date": "2025-07-16", "jonathan": 68, "pricylia": 44}, {"date": "2025-07-17", "jonathan": 87, "pricylia": 91}, {"date": "2025-07-18", "jonathan": 107, "pricylia": 126}, {"date": "2025-07-19", "jonathan": 20, "pricylia": 21}, {"date": "2025-07-21", "jonathan": 95, "pricylia": 106}, {"date": "2025-07-22", "jonathan": 167, "pricylia": 200}, {"date": "2025-07-23", "jonathan": 171, "pricylia": 191}, {"date": "2025-07-24", "jonathan": 174, "pricylia": 157}, {"date": "2025-07-25", "jonathan": 82, "pricylia": 80}, {"date": "2025-07-26", "jonathan": 3, "pricylia": 3}, {"date": "2025-07-27", "jonathan": 283, "pricylia": 254}, {"date": "2025-07-28", "jonathan": 194, "pricylia": 144}, {"date": "2025-07-29", "jonathan": 14, "pricylia": 19}, {"date": "2025-07-31", "jonathan": 89, "pricylia": 62}, {"date": "2025-08-01", "jonathan": 6, "pricylia": 7}, {"date": "2025-08-02", "jonathan": 139, "pricylia": 124}, {"date": "2025-08-03", "jonathan": 220, "pricylia": 206}, {"date": "2025-08-06", "jonathan": 7, "pricylia": 5}, {"date": "2025-08-07", "jonathan": 19, "pricylia": 12}, {"date": "2025-08-08", "jonathan": 15, "pricylia": 14}, {"date": "2025-08-09", "jonathan": 6, "pricylia": 4}, {"date": "2025-08-10", "jonathan": 49, "pricylia": 52}, {"date": "2025-08-11", "jonathan": 111, "pricylia": 76}, {"date": "2025-08-12", "jonathan": 63, "pricylia": 69}, {"date": "2025-08-13", "jonathan": 134, "pricylia": 177}, {"date": "2025-08-14", "jonathan": 64, "pricylia": 72}, {"date": "2025-08-15", "jonathan": 1, "pricylia": 1}, {"date": "2025-08-16", "jonathan": 20, "pricylia": 23}, {"date": "2025-08-17", "jonathan": 70, "pricylia": 83}, {"date": "2025-08-18", "jonathan": 126, "pricylia": 190}, {"date": "2025-08-20", "jonathan": 67, "pricylia": 76}, {"date": "2025-08-21", "jonathan": 369, "pricylia": 404}, {"date": "2025-08-22", "jonathan": 8, "pricylia": 12}, {"date": "2025-08-23", "jonathan": 402, "pricylia": 375}, {"date": "2025-08-24", "jonathan": 32, "pricylia": 19}, {"date": "2025-08-25", "jonathan": 208, "pricylia": 193}, {"date": "2025-08-26", "jonathan": 266, "pricylia": 367}, {"date": "2025-08-27", "jonathan": 95, "pricylia": 125}, {"date": "2025-08-28", "jonathan": 174, "pricylia": 125}, {"date": "2025-08-29", "jonathan": 66, "pricylia": 58}, {"date": "2025-08-30", "jonathan": 251, "pricylia": 294}, {"date": "2025-09-01", "jonathan": 164, "pricylia": 188}, {"date": "2025-09-02", "jonathan": 15, "pricylia": 9}, {"date": "2025-09-03", "jonathan": 47, "pricylia": 69}, {"date": "2025-09-04", "jonathan": 72, "pricylia": 78}, {"date": "2025-09-05", "jonathan": 23, "pricylia": 28}, {"date": "2025-09-06", "jonathan": 295, "pricylia": 333}, {"date": "2025-09-07", "jonathan": 43, "pricylia": 41}, {"date": "2025-09-08", "jonathan": 95, "pricylia": 81}, {"date": "2025-09-09", "jonathan": 138, "pricylia": 173}, {"date": "2025-09-10", "jonathan": 6, "pricylia": 5}, {"date": "2025-09-11", "jonathan": 104, "pricylia": 103}, {"date": "2025-09-12", "jonathan": 119, "pricylia": 132}, {"date": "2025-09-13", "jonathan": 181, "pricylia": 227}, {"date": "2025-09-14", "jonathan": 39, "pricylia": 32}, {"date": "2025-09-15", "jonathan": 123, "pricylia": 163}, {"date": "2025-09-16", "jonathan": 161, "pricylia": 187}, {"date": "2025-09-17", "jonathan": 0, "pricylia": 1}, {"date": "2025-09-18", "jonathan": 223, "pricylia": 302}, {"date": "2025-09-19", "jonathan": 521, "pricylia": 714}, {"date": "2025-09-20", "jonathan": 360, "pricylia": 471}, {"date": "2025-09-21", "jonathan": 175, "pricylia": 183}, {"date": "2025-09-22", "jonathan": 119, "pricylia": 149}, {"date": "2025-09-23", "jonathan": 40, "pricylia": 64}, {"date": "2025-09-24", "jonathan": 99, "pricylia": 121}, {"date": "2025-09-26", "jonathan": 82, "pricylia": 91}, {"date": "2025-09-27", "jonathan": 5, "pricylia": 5}, {"date": "2025-09-28", "jonathan": 224, "pricylia": 233}, {"date": "2025-09-29", "jonathan": 163, "pricylia": 194}, {"date": "2025-10-02", "jonathan": 57, "pricylia": 72}, {"date": "2025-10-03", "jonathan": 344, "pricylia": 402}, {"date": "2025-10-04", "jonathan": 25, "pricylia": 24}, {"date": "2025-10-05", "jonathan": 562, "pricylia": 414}, {"date": "2025-10-06", "jonathan": 346, "pricylia": 380}, {"date": "2025-10-07", "jonathan": 112, "pricylia": 133}, {"date": "2025-10-08", "jonathan": 632, "pricylia": 688}, {"date": "2025-10-09", "jonathan": 214, "pricylia": 254}, {"date": "2025-10-10", "jonathan": 140, "pricylia": 164}, {"date": "2025-10-11", "jonathan": 542, "pricylia": 706}, {"date": "2025-10-12", "jonathan": 248, "pricylia": 320}, {"date": "2025-10-13", "jonathan": 313, "pricylia": 355}, {"date": "2025-10-14", "jonathan": 149, "pricylia": 135}, {"date": "2025-10-15", "jonathan": 327, "pricylia": 358}, {"date": "2025-10-16", "jonathan": 194, "pricylia": 180}, {"date": "2025-10-17", "jonathan": 369, "pricylia": 427}, {"date": "2025-10-18", "jonathan": 401, "pricylia": 469}, {"date": "2025-10-19", "jonathan": 69, "pricylia": 56}, {"date": "2025-10-20", "jonathan": 78, "pricylia": 84}, {"date": "2025-10-21", "jonathan": 378, "pricylia": 430}, {"date": "2025-10-22", "jonathan": 157, "pricylia": 222}, {"date": "2025-10-23", "jonathan": 517, "pricylia": 489}, {"date": "2025-10-24", "jonathan": 581, "pricylia": 592}, {"date": "2025-10-25", "jonathan": 155, "pricylia": 164}, {"date": "2025-10-26", "jonathan": 140, "pricylia": 186}, {"date": "2025-10-27", "jonathan": 162, "pricylia": 215}, {"date": "2025-10-28", "jonathan": 66, "pricylia": 66}, {"date": "2025-10-29", "jonathan": 175, "pricylia": 180}, {"date": "2025-10-30", "jonathan": 175, "pricylia": 228}, {"date": "2025-10-31", "jonathan": 426, "pricylia": 511}, {"date": "2025-11-01", "jonathan": 146, "pricylia": 177}, {"date": "2025-11-02", "jonathan": 415, "pricylia": 376}, {"date": "2025-11-03", "jonathan": 146, "pricylia": 145}, {"date": "2025-11-04", "jonathan": 156, "pricylia": 183}, {"date": "2025-11-05", "jonathan": 52, "pricylia": 46}, {"date": "2025-11-06", "jonathan": 399, "pricylia": 255}, {"date": "2025-11-07", "jonathan": 278, "pricylia": 299}, {"date": "2025-11-08", "jonathan": 340, "pricylia": 428}, {"date": "2025-11-09", "jonathan": 598, "pricylia": 703}, {"date": "2025-11-10", "jonathan": 245, "pricylia": 245}, {"date": "2025-11-11", "jonathan": 480, "pricylia": 636}, {"date": "2025-11-12", "jonathan": 251, "pricylia": 257}, {"date": "2025-11-13", "jonathan": 489, "pricylia": 590}, {"date": "2025-11-14", "jonathan": 90, "pricylia": 92}, {"date": "2025-11-15", "jonathan": 101, "pricylia": 98}, {"date": "2025-11-16", "jonathan": 655, "pricylia": 546}, {"date": "2025-11-17", "jonathan": 895, "pricylia": 878}, {"date": "2025-11-18", "jonathan": 767, "pricylia": 882}, {"date": "2025-11-19", "jonathan": 656, "pricylia": 763}, {"date": "2025-11-20", "jonathan": 578, "pricylia": 579}, {"date": "2025-11-21", "jonathan": 893, "pricylia": 956}, {"date": "2025-11-22", "jonathan": 124, "pricylia": 182}, {"date": "2025-11-23", "jonathan": 316, "pricylia": 158}, {"date": "2025-11-24", "jonathan": 495, "pricylia": 576}, {"date": "2025-11-25", "jonathan": 497, "pricylia": 537}, {"date": "2025-11-26", "jonathan": 304, "pricylia": 329}, {"date": "2025-11-27", "jonathan": 645, "pricylia": 682}, {"date": "2025-11-28", "jonathan": 145, "pricylia": 103}, {"date": "2025-11-29", "jonathan": 94, "pricylia": 63}, {"date": "2025-11-30", "jonathan": 11, "pricylia": 15}, {"date": "2025-12-01", "jonathan": 734, "pricylia": 656}, {"date": "2025-12-02", "jonathan": 479, "pricylia": 537}, {"date": "2025-12-03", "jonathan": 329, "pricylia": 284}, {"date": "2025-12-04", "jonathan": 335, "pricylia": 303}, {"date": "2025-12-05", "jonathan": 345, "pricylia": 426}, {"date": "2025-12-06", "jonathan": 218, "pricylia": 293}, {"date": "2025-12-07", "jonathan": 143, "pricylia": 81}, {"date": "2025-12-08", "jonathan": 185, "pricylia": 193}, {"date": "2025-12-09", "jonathan": 350, "pricylia": 372}, {"date": "2025-12-10", "jonathan": 690, "pricylia": 650}, {"date": "2025-12-11", "jonathan": 339, "pricylia": 296}, {"date": "2025-12-12", "jonathan": 375, "pricylia": 326}, {"date": "2025-12-13", "jonathan": 188, "pricylia": 261}, {"date": "2025-12-14", "jonathan": 22, "pricylia": 36}, {"date": "2025-12-15", "jonathan": 441, "pricylia": 248}, {"date": "2025-12-16", "jonathan": 378, "pricylia": 403}, {"date": "2025-12-17", "jonathan": 268, "pricylia": 331}, {"date": "2025-12-18", "jonathan": 250, "pricylia": 302}, {"date": "2025-12-19", "jonathan": 161, "pricylia": 160}, {"date": "2025-12-20", "jonathan": 566, "pricylia": 201}, {"date": "2025-12-21", "jonathan": 72, "pricylia": 186}, {"date": "2025-12-22", "jonathan": 283, "pricylia": 291}, {"date": "2025-12-23", "jonathan": 257, "pricylia": 263}, {"date": "2025-12-24", "jonathan": 185, "pricylia": 250}, {"date": "2025-12-25", "jonathan": 301, "pricylia": 354}, {"date": "2025-12-26", "jonathan": 260, "pricylia": 325}, {"date": "2025-12-27", "jonathan": 237, "pricylia": 305}, {"date": "2025-12-28", "jonathan": 626, "pricylia": 749}, {"date": "2025-12-29", "jonathan": 344, "pricylia": 400}, {"date": "2025-12-30", "jonathan": 414, "pricylia": 558}, {"date": "2025-12-31", "jonathan": 281, "pricylia": 380}, {"date": "2026-01-01", "jonathan": 386, "pricylia": 438}, {"date": "2026-01-02", "jonathan": 623, "pricylia": 812}, {"date": "2026-01-03", "jonathan": 614, "pricylia": 609}, {"date": "2026-01-04", "jonathan": 134, "pricylia": 131}, {"date": "2026-01-05", "jonathan": 377, "pricylia": 330}, {"date": "2026-01-06", "jonathan": 388, "pricylia": 381}, {"date": "2026-01-07", "jonathan": 346, "pricylia": 407}, {"date": "2026-01-08", "jonathan": 159, "pricylia": 167}, {"date": "2026-01-09", "jonathan": 81, "pricylia": 106}, {"date": "2026-01-10", "jonathan": 112, "pricylia": 150}, {"date": "2026-01-11", "jonathan": 109, "pricylia": 91}, {"date": "2026-01-12", "jonathan": 286, "pricylia": 416}, {"date": "2026-01-13", "jonathan": 460, "pricylia": 479}, {"date": "2026-01-14", "jonathan": 264, "pricylia": 306}, {"date": "2026-01-15", "jonathan": 224, "pricylia": 261}, {"date": "2026-01-16", "jonathan": 418, "pricylia": 489}, {"date": "2026-01-17", "jonathan": 969, "pricylia": 1064}, {"date": "2026-01-18", "jonathan": 374, "pricylia": 539}, {"date": "2026-01-19", "jonathan": 221, "pricylia": 248}, {"date": "2026-01-20", "jonathan": 197, "pricylia": 238}, {"date": "2026-01-21", "jonathan": 223, "pricylia": 311}, {"date": "2026-01-22", "jonathan": 199, "pricylia": 250}, {"date": "2026-01-23", "jonathan": 177, "pricylia": 226}, {"date": "2026-01-24", "jonathan": 323, "pricylia": 352}, {"date": "2026-01-25", "jonathan": 139, "pricylia": 118}, {"date": "2026-01-26", "jonathan": 218, "pricylia": 223}, {"date": "2026-01-27", "jonathan": 100, "pricylia": 92}, {"date": "2026-01-28", "jonathan": 96, "pricylia": 120}, {"date": "2026-01-29", "jonathan": 183, "pricylia": 142}, {"date": "2026-01-30", "jonathan": 53, "pricylia": 45}, {"date": "2026-01-31", "jonathan": 76, "pricylia": 48}, {"date": "2026-02-01", "jonathan": 13, "pricylia": 15}, {"date": "2026-02-02", "jonathan": 181, "pricylia": 247}, {"date": "2026-02-03", "jonathan": 214, "pricylia": 226}, {"date": "2026-02-04", "jonathan": 279, "pricylia": 295}, {"date": "2026-02-05", "jonathan": 134, "pricylia": 144}, {"date": "2026-02-06", "jonathan": 185, "pricylia": 164}, {"date": "2026-02-07", "jonathan": 61, "pricylia": 64}, {"date": "2026-02-08", "jonathan": 137, "pricylia": 188}, {"date": "2026-02-09", "jonathan": 87, "pricylia": 146}, {"date": "2026-02-10", "jonathan": 158, "pricylia": 159}, {"date": "2026-02-11", "jonathan": 57, "pricylia": 73}, {"date": "2026-02-12", "jonathan": 107, "pricylia": 114}, {"date": "2026-02-13", "jonathan": 291, "pricylia": 322}, {"date": "2026-02-14", "jonathan": 44, "pricylia": 63}, {"date": "2026-02-15", "jonathan": 105, "pricylia": 97}, {"date": "2026-02-16", "jonathan": 92, "pricylia": 122}, {"date": "2026-02-17", "jonathan": 272, "pricylia": 268}, {"date": "2026-02-18", "jonathan": 359, "pricylia": 399}, {"date": "2026-02-19", "jonathan": 181, "pricylia": 267}, {"date": "2026-02-20", "jonathan": 149, "pricylia": 181}, {"date": "2026-02-21", "jonathan": 55, "pricylia": 79}, {"date": "2026-02-22", "jonathan": 123, "pricylia": 147}, {"date": "2026-02-23", "jonathan": 368, "pricylia": 326}, {"date": "2026-02-24", "jonathan": 158, "pricylia": 228}, {"date": "2026-02-25", "jonathan": 32, "pricylia": 31}, {"date": "2026-02-26", "jonathan": 453, "pricylia": 556}, {"date": "2026-02-27", "jonathan": 143, "pricylia": 149}, {"date": "2026-02-28", "jonathan": 94, "pricylia": 76}, {"date": "2026-03-01", "jonathan": 131, "pricylia": 150}, {"date": "2026-03-02", "jonathan": 260, "pricylia": 148}, {"date": "2026-03-03", "jonathan": 145, "pricylia": 183}, {"date": "2026-03-04", "jonathan": 244, "pricylia": 307}, {"date": "2026-03-05", "jonathan": 292, "pricylia": 400}, {"date": "2026-03-06", "jonathan": 455, "pricylia": 682}, {"date": "2026-03-07", "jonathan": 842, "pricylia": 1022}, {"date": "2026-03-08", "jonathan": 330, "pricylia": 398}, {"date": "2026-03-09", "jonathan": 461, "pricylia": 551}, {"date": "2026-03-10", "jonathan": 328, "pricylia": 459}, {"date": "2026-03-11", "jonathan": 375, "pricylia": 496}, {"date": "2026-03-12", "jonathan": 591, "pricylia": 546}, {"date": "2026-03-13", "jonathan": 215, "pricylia": 307}, {"date": "2026-03-14", "jonathan": 447, "pricylia": 581}, {"date": "2026-03-15", "jonathan": 145, "pricylia": 182}, {"date": "2026-03-16", "jonathan": 303, "pricylia": 316}, {"date": "2026-03-17", "jonathan": 164, "pricylia": 217}, {"date": "2026-03-18", "jonathan": 153, "pricylia": 190}, {"date": "2026-03-19", "jonathan": 283, "pricylia": 339}, {"date": "2026-03-20", "jonathan": 132, "pricylia": 208}, {"date": "2026-03-21", "jonathan": 240, "pricylia": 214}, {"date": "2026-03-22", "jonathan": 236, "pricylia": 133}, {"date": "2026-03-23", "jonathan": 227, "pricylia": 216}, {"date": "2026-03-24", "jonathan": 9, "pricylia": 25}], hourlyData=[{"hour": 0, "jonathan": 4796, "pricylia": 5532}, {"hour": 1, "jonathan": 5393, "pricylia": 5857}, {"hour": 2, "jonathan": 5670, "pricylia": 6627}, {"hour": 3, "jonathan": 4057, "pricylia": 4416}, {"hour": 4, "jonathan": 4411, "pricylia": 3732}, {"hour": 5, "jonathan": 655, "pricylia": 654}, {"hour": 6, "jonathan": 61, "pricylia": 4}, {"hour": 7, "jonathan": 93, "pricylia": 78}, {"hour": 8, "jonathan": 34, "pricylia": 11}, {"hour": 9, "jonathan": 70, "pricylia": 109}, {"hour": 10, "jonathan": 186, "pricylia": 278}, {"hour": 11, "jonathan": 559, "pricylia": 915}, {"hour": 12, "jonathan": 1530, "pricylia": 1830}, {"hour": 13, "jonathan": 2204, "pricylia": 2535}, {"hour": 14, "jonathan": 2911, "pricylia": 3227}, {"hour": 15, "jonathan": 2870, "pricylia": 3226}, {"hour": 16, "jonathan": 2554, "pricylia": 2522}, {"hour": 17, "jonathan": 2375, "pricylia": 2430}, {"hour": 18, "jonathan": 2389, "pricylia": 2462}, {"hour": 19, "jonathan": 1758, "pricylia": 2019}, {"hour": 20, "jonathan": 2766, "pricylia": 2911}, {"hour": 21, "jonathan": 3622, "pricylia": 4269}, {"hour": 22, "jonathan": 4258, "pricylia": 4938}, {"hour": 23, "jonathan": 4558, "pricylia": 4708}];
+        const loveWeekly=[{"week": "2025-05-27", "jonathan": 10, "pricylia": 1}, {"week": "2025-06-03", "jonathan": 2, "pricylia": 3}, {"week": "2025-06-10", "jonathan": 3, "pricylia": 0}, {"week": "2025-06-24", "jonathan": 2, "pricylia": 0}, {"week": "2025-07-01", "jonathan": 16, "pricylia": 3}, {"week": "2025-07-08", "jonathan": 2, "pricylia": 0}, {"week": "2025-07-15", "jonathan": 5, "pricylia": 0}, {"week": "2025-07-22", "jonathan": 8, "pricylia": 5}, {"week": "2025-07-29", "jonathan": 3, "pricylia": 2}, {"week": "2025-08-05", "jonathan": 2, "pricylia": 0}, {"week": "2025-08-12", "jonathan": 5, "pricylia": 2}, {"week": "2025-08-19", "jonathan": 3, "pricylia": 1}, {"week": "2025-08-26", "jonathan": 5, "pricylia": 6}, {"week": "2025-09-02", "jonathan": 2, "pricylia": 0}, {"week": "2025-09-09", "jonathan": 2, "pricylia": 3}, {"week": "2025-09-16", "jonathan": 7, "pricylia": 3}, {"week": "2025-09-23", "jonathan": 3, "pricylia": 1}, {"week": "2025-09-30", "jonathan": 4, "pricylia": 1}, {"week": "2025-10-07", "jonathan": 9, "pricylia": 5}, {"week": "2025-10-14", "jonathan": 6, "pricylia": 4}, {"week": "2025-10-21", "jonathan": 5, "pricylia": 2}, {"week": "2025-10-28", "jonathan": 6, "pricylia": 3}, {"week": "2025-11-04", "jonathan": 12, "pricylia": 7}, {"week": "2025-11-11", "jonathan": 12, "pricylia": 6}, {"week": "2025-11-18", "jonathan": 38, "pricylia": 14}, {"week": "2025-11-25", "jonathan": 15, "pricylia": 9}, {"week": "2025-12-02", "jonathan": 25, "pricylia": 16}, {"week": "2025-12-09", "jonathan": 30, "pricylia": 28}, {"week": "2025-12-16", "jonathan": 16, "pricylia": 18}, {"week": "2025-12-23", "jonathan": 21, "pricylia": 35}, {"week": "2025-12-30", "jonathan": 36, "pricylia": 106}, {"week": "2026-01-06", "jonathan": 23, "pricylia": 53}, {"week": "2026-01-13", "jonathan": 73, "pricylia": 120}, {"week": "2026-01-20", "jonathan": 27, "pricylia": 52}, {"week": "2026-01-27", "jonathan": 6, "pricylia": 6}, {"week": "2026-02-03", "jonathan": 8, "pricylia": 36}, {"week": "2026-02-10", "jonathan": 16, "pricylia": 25}, {"week": "2026-02-17", "jonathan": 71, "pricylia": 64}, {"week": "2026-02-24", "jonathan": 63, "pricylia": 63}, {"week": "2026-03-03", "jonathan": 108, "pricylia": 170}, {"week": "2026-03-10", "jonathan": 119, "pricylia": 204}, {"week": "2026-03-17", "jonathan": 90, "pricylia": 109}, {"week": "2026-03-24", "jonathan": 0, "pricylia": 1}], laughWeekly=[{"week": "2025-05-27", "jonathan": 39, "pricylia": 168}, {"week": "2025-06-03", "jonathan": 22, "pricylia": 81}, {"week": "2025-06-10", "jonathan": 23, "pricylia": 77}, {"week": "2025-06-24", "jonathan": 3, "pricylia": 26}, {"week": "2025-07-01", "jonathan": 96, "pricylia": 349}, {"week": "2025-07-08", "jonathan": 16, "pricylia": 48}, {"week": "2025-07-15", "jonathan": 23, "pricylia": 141}, {"week": "2025-07-22", "jonathan": 85, "pricylia": 350}, {"week": "2025-07-29", "jonathan": 37, "pricylia": 142}, {"week": "2025-08-05", "jonathan": 14, "pricylia": 33}, {"week": "2025-08-12", "jonathan": 46, "pricylia": 185}, {"week": "2025-08-19", "jonathan": 50, "pricylia": 318}, {"week": "2025-08-26", "jonathan": 76, "pricylia": 334}, {"week": "2025-09-02", "jonathan": 63, "pricylia": 194}, {"week": "2025-09-09", "jonathan": 73, "pricylia": 225}, {"week": "2025-09-16", "jonathan": 96, "pricylia": 462}, {"week": "2025-09-23", "jonathan": 30, "pricylia": 149}, {"week": "2025-09-30", "jonathan": 77, "pricylia": 329}, {"week": "2025-10-07", "jonathan": 129, "pricylia": 656}, {"week": "2025-10-14", "jonathan": 58, "pricylia": 419}, {"week": "2025-10-21", "jonathan": 127, "pricylia": 579}, {"week": "2025-10-28", "jonathan": 127, "pricylia": 404}, {"week": "2025-11-04", "jonathan": 120, "pricylia": 541}, {"week": "2025-11-11", "jonathan": 216, "pricylia": 834}, {"week": "2025-11-18", "jonathan": 231, "pricylia": 1080}, {"week": "2025-11-25", "jonathan": 103, "pricylia": 585}, {"week": "2025-12-02", "jonathan": 123, "pricylia": 515}, {"week": "2025-12-09", "jonathan": 112, "pricylia": 474}, {"week": "2025-12-16", "jonathan": 99, "pricylia": 374}, {"week": "2025-12-23", "jonathan": 156, "pricylia": 626}, {"week": "2025-12-30", "jonathan": 251, "pricylia": 815}, {"week": "2026-01-06", "jonathan": 87, "pricylia": 361}, {"week": "2026-01-13", "jonathan": 269, "pricylia": 888}, {"week": "2026-01-20", "jonathan": 151, "pricylia": 428}, {"week": "2026-01-27", "jonathan": 61, "pricylia": 109}, {"week": "2026-02-03", "jonathan": 96, "pricylia": 270}, {"week": "2026-02-10", "jonathan": 101, "pricylia": 193}, {"week": "2026-02-17", "jonathan": 135, "pricylia": 376}, {"week": "2026-02-24", "jonathan": 101, "pricylia": 259}, {"week": "2026-03-03", "jonathan": 272, "pricylia": 800}, {"week": "2026-03-10", "jonathan": 248, "pricylia": 655}, {"week": "2026-03-17", "jonathan": 157, "pricylia": 340}, {"week": "2026-03-24", "jonathan": 1, "pricylia": 3}];
+        const sternbergData=[{"month": "2025-05", "intimacy": 0.24, "passion": 0.04, "commitment": 0.23}, {"month": "2025-06", "intimacy": 0.65, "passion": 0.22, "commitment": 0.93}, {"month": "2025-07", "intimacy": 2.86, "passion": 0.51, "commitment": 4.65}, {"month": "2025-08", "intimacy": 3.99, "passion": 0.31, "commitment": 1.16}, {"month": "2025-09", "intimacy": 4.05, "passion": 0.27, "commitment": 0.7}, {"month": "2025-10", "intimacy": 4.64, "passion": 0.48, "commitment": 1.4}, {"month": "2025-11", "intimacy": 9.52, "passion": 1.28, "commitment": 9.77}, {"month": "2025-12", "intimacy": 9.76, "passion": 3.12, "commitment": 3.72}, {"month": "2026-01", "intimacy": 10.0, "passion": 5.44, "commitment": 5.58}, {"month": "2026-02", "intimacy": 3.81, "passion": 4.08, "commitment": 3.02}, {"month": "2026-03", "intimacy": 7.14, "passion": 10.0, "commitment": 10.0}], llJ=[427, 222, 705, 62, 99], llP=[698, 263, 626, 156, 104];
+        let ci={};
         function initCharts() {
-            // Monthly
-            if (!chartsInitialized.monthly && document.getElementById('monthlyChart')) {
-                new Chart(document.getElementById('monthlyChart'), {
-                    type: 'bar',
-                    data: {
-                        labels: monthlyData.map(d => d.month),
-                        datasets: [
-                            { label: 'Jonathan', data: monthlyData.map(d => d.jonathan), backgroundColor: TEAL, borderRadius: 4, barThickness: 14 },
-                            { label: 'Pricylia', data: monthlyData.map(d => d.pricylia), backgroundColor: PINK, borderRadius: 4, barThickness: 14 }
-                        ]
-                    },
-                    options: baseConfig
-                });
-                chartsInitialized.monthly = true;
-            }
-
-            // Love
-            if (!chartsInitialized.love && document.getElementById('loveChart')) {
-                new Chart(document.getElementById('loveChart'), {
-                    type: 'line',
-                    data: {
-                        labels: loveWeekly.map((d, i) => i % 4 === 0 ? d.week : ''),
-                        datasets: [
-                            { label: 'Jonathan', data: loveWeekly.map(d => d.jonathan), borderColor: TEAL, backgroundColor: 'rgba(91,138,114,0.08)', borderWidth: 2, pointRadius: 0, tension: 0.3, fill: true },
-                            { label: 'Pricylia', data: loveWeekly.map(d => d.pricylia), borderColor: PINK, backgroundColor: 'rgba(212,115,138,0.08)', borderWidth: 2, pointRadius: 0, tension: 0.3, fill: true }
-                        ]
-                    },
-                    options: baseConfig
-                });
-                chartsInitialized.love = true;
-            }
-
-            // Laugh
-            if (!chartsInitialized.laugh && document.getElementById('laughChart')) {
-                new Chart(document.getElementById('laughChart'), {
-                    type: 'line',
-                    data: {
-                        labels: laughWeekly.map((d, i) => i % 4 === 0 ? d.week : ''),
-                        datasets: [
-                            { label: 'Jonathan', data: laughWeekly.map(d => d.jonathan), borderColor: TEAL, backgroundColor: 'rgba(91,138,114,0.08)', borderWidth: 2, pointRadius: 0, tension: 0.3, fill: true },
-                            { label: 'Pricylia', data: laughWeekly.map(d => d.pricylia), borderColor: PINK, backgroundColor: 'rgba(212,115,138,0.08)', borderWidth: 2, pointRadius: 0, tension: 0.3, fill: true }
-                        ]
-                    },
-                    options: baseConfig
-                });
-                chartsInitialized.laugh = true;
-            }
-
-            // Hourly
-            if (!chartsInitialized.hourly && document.getElementById('hourlyChart')) {
-                new Chart(document.getElementById('hourlyChart'), {
-                    type: 'bar',
-                    data: {
-                        labels: hourlyData.map(d => d.hour + ':00'),
-                        datasets: [
-                            { label: 'Jonathan', data: hourlyData.map(d => d.jonathan), backgroundColor: TEAL, borderRadius: 3, barThickness: 8 },
-                            { label: 'Pricylia', data: hourlyData.map(d => d.pricylia), backgroundColor: PINK, borderRadius: 3, barThickness: 8 }
-                        ]
-                    },
-                    options: baseConfig
-                });
-                chartsInitialized.hourly = true;
-            }
-
-            // Daily
-            if (!chartsInitialized.daily && document.getElementById('dailyChart')) {
-                new Chart(document.getElementById('dailyChart'), {
-                    type: 'line',
-                    data: {
-                        labels: dailyData.map((d, i) => i % 14 === 0 ? d.date : ''),
-                        datasets: [
-                            { label: 'Jonathan', data: dailyData.map(d => d.jonathan), borderColor: TEAL, backgroundColor: 'rgba(91,138,114,0.06)', borderWidth: 1.5, pointRadius: 0, tension: 0.3, fill: true },
-                            { label: 'Pricylia', data: dailyData.map(d => d.pricylia), borderColor: PINK, backgroundColor: 'rgba(212,115,138,0.06)', borderWidth: 1.5, pointRadius: 0, tension: 0.3, fill: true }
-                        ]
-                    },
-                    options: baseConfig
-                });
-                chartsInitialized.daily = true;
-            }
-
-            // Weekday
-            if (!chartsInitialized.weekday && document.getElementById('weekdayChart')) {
-                new Chart(document.getElementById('weekdayChart'), {
-                    type: 'bar',
-                    data: {
-                        labels: weekdayData.map(d => d.day),
-                        datasets: [
-                            { label: 'Jonathan', data: weekdayData.map(d => d.jonathan), backgroundColor: TEAL, borderRadius: 4, barThickness: 20 },
-                            { label: 'Pricylia', data: weekdayData.map(d => d.pricylia), backgroundColor: PINK, borderRadius: 4, barThickness: 20 }
-                        ]
-                    },
-                    options: baseConfig
-                });
-                chartsInitialized.weekday = true;
-            }
-
-            // Sternberg
-            if (!chartsInitialized.sternberg && document.getElementById('sternbergChart')) {
-                new Chart(document.getElementById('sternbergChart'), {
-                    type: 'line',
-                    data: {
-                        labels: sternbergData.map(d => d.month),
-                        datasets: [
-                            { label: 'Intimacy', data: sternbergData.map(d => d.intimacy), borderColor: DEEP, backgroundColor: 'rgba(123,107,138,0.1)', borderWidth: 2.5, pointRadius: 3, tension: 0.3, fill: true },
-                            { label: 'Passion', data: sternbergData.map(d => d.passion), borderColor: LOVE, backgroundColor: 'rgba(194,91,120,0.1)', borderWidth: 2.5, pointRadius: 3, tension: 0.3, fill: true },
-                            { label: 'Commitment', data: sternbergData.map(d => d.commitment), borderColor: GOLD, backgroundColor: 'rgba(196,149,106,0.1)', borderWidth: 2.5, pointRadius: 3, tension: 0.3, fill: true }
-                        ]
-                    },
-                    options: baseConfig
-                });
-                chartsInitialized.sternberg = true;
-            }
-
-            // Love Languages (Radar)
-            if (!chartsInitialized.loveLang && document.getElementById('loveLangChart')) {
-                new Chart(document.getElementById('loveLangChart'), {
-                    type: 'radar',
-                    data: {
-                        labels: ['Words of Affirmation', 'Acts of Service', 'Quality Time', 'Physical Touch', 'Gifts'],
-                        datasets: [
-                            { label: 'Jonathan', data: llJonathan, borderColor: TEAL, backgroundColor: 'rgba(91,138,114,0.15)', borderWidth: 2, pointRadius: 4, pointBackgroundColor: TEAL },
-                            { label: 'Pricylia', data: llPricylia, borderColor: PINK, backgroundColor: 'rgba(212,115,138,0.15)', borderWidth: 2, pointRadius: 4, pointBackgroundColor: PINK }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { display: false } },
-                        scales: {
-                            r: {
-                                grid: { color: '#e8ddd0' },
-                                angleLines: { color: '#e8ddd0' },
-                                ticks: { color: '#8c7a6e', backdropColor: 'transparent', font: { size: 10 } },
-                                pointLabels: { color: '#8c7a6e', font: { family: 'Nunito', size: 11 } }
-                            }
-                        }
-                    }
-                });
-                chartsInitialized.loveLang = true;
-            }
+            if(!ci.m&&document.getElementById('monthlyChart')){new Chart(document.getElementById('monthlyChart'),{type:'bar',data:{labels:monthlyData.map(d=>d.month),datasets:[{data:monthlyData.map(d=>d.jonathan),backgroundColor:T,borderRadius:4,barThickness:14},{data:monthlyData.map(d=>d.pricylia),backgroundColor:P,borderRadius:4,barThickness:14}]},options:baseConfig});ci.m=1;}
+            if(!ci.lv&&document.getElementById('loveChart')){new Chart(document.getElementById('loveChart'),{type:'line',data:{labels:loveWeekly.map((d,i)=>i%4===0?d.week:''),datasets:[{data:loveWeekly.map(d=>d.jonathan),borderColor:T,backgroundColor:'rgba(91,138,114,0.08)',borderWidth:2,pointRadius:0,tension:0.3,fill:true},{data:loveWeekly.map(d=>d.pricylia),borderColor:P,backgroundColor:'rgba(212,115,138,0.08)',borderWidth:2,pointRadius:0,tension:0.3,fill:true}]},options:baseConfig});ci.lv=1;}
+            if(!ci.la&&document.getElementById('laughChart')){new Chart(document.getElementById('laughChart'),{type:'line',data:{labels:laughWeekly.map((d,i)=>i%4===0?d.week:''),datasets:[{data:laughWeekly.map(d=>d.jonathan),borderColor:T,backgroundColor:'rgba(91,138,114,0.08)',borderWidth:2,pointRadius:0,tension:0.3,fill:true},{data:laughWeekly.map(d=>d.pricylia),borderColor:P,backgroundColor:'rgba(212,115,138,0.08)',borderWidth:2,pointRadius:0,tension:0.3,fill:true}]},options:baseConfig});ci.la=1;}
+            if(!ci.h&&document.getElementById('hourlyChart')){new Chart(document.getElementById('hourlyChart'),{type:'bar',data:{labels:hourlyData.map(d=>d.hour+':00'),datasets:[{data:hourlyData.map(d=>d.jonathan),backgroundColor:T,borderRadius:3,barThickness:8},{data:hourlyData.map(d=>d.pricylia),backgroundColor:P,borderRadius:3,barThickness:8}]},options:baseConfig});ci.h=1;}
+            if(!ci.d&&document.getElementById('dailyChart')){new Chart(document.getElementById('dailyChart'),{type:'line',data:{labels:dailyData.map((d,i)=>i%14===0?d.date:''),datasets:[{data:dailyData.map(d=>d.jonathan),borderColor:T,backgroundColor:'rgba(91,138,114,0.06)',borderWidth:1.5,pointRadius:0,tension:0.3,fill:true},{data:dailyData.map(d=>d.pricylia),borderColor:P,backgroundColor:'rgba(212,115,138,0.06)',borderWidth:1.5,pointRadius:0,tension:0.3,fill:true}]},options:baseConfig});ci.d=1;}
+            if(!ci.s&&document.getElementById('sternbergChart')){new Chart(document.getElementById('sternbergChart'),{type:'line',data:{labels:sternbergData.map(d=>d.month),datasets:[{data:sternbergData.map(d=>d.intimacy),borderColor:D,backgroundColor:'rgba(123,107,138,0.1)',borderWidth:2.5,pointRadius:3,tension:0.3,fill:true},{data:sternbergData.map(d=>d.passion),borderColor:L,backgroundColor:'rgba(194,91,120,0.1)',borderWidth:2.5,pointRadius:3,tension:0.3,fill:true},{data:sternbergData.map(d=>d.commitment),borderColor:G,backgroundColor:'rgba(196,149,106,0.1)',borderWidth:2.5,pointRadius:3,tension:0.3,fill:true}]},options:baseConfig});ci.s=1;}
+            if(!ci.ll&&document.getElementById('loveLangChart')){new Chart(document.getElementById('loveLangChart'),{type:'radar',data:{labels:['Words of Affirmation','Acts of Service','Quality Time','Physical Touch','Gifts'],datasets:[{data:llJ,borderColor:T,backgroundColor:'rgba(91,138,114,0.15)',borderWidth:2,pointRadius:4,pointBackgroundColor:T},{data:llP,borderColor:P,backgroundColor:'rgba(212,115,138,0.15)',borderWidth:2,pointRadius:4,pointBackgroundColor:P}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{r:{grid:{color:'#e8ddd0'},angleLines:{color:'#e8ddd0'},ticks:{color:'#8c7a6e',backdropColor:'transparent',font:{size:10}},pointLabels:{color:'#8c7a6e',font:{family:'Nunito',size:11}}}}}});ci.ll=1;}
         }
-
-        // Init charts on load
-        window.addEventListener('load', () => setTimeout(initCharts, 200));
-
-        // ═══ SCROLL ANIMATION ═══
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) e.target.classList.add('visible');
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        window.addEventListener('load',()=>setTimeout(initCharts,200));
     </script>
 </body>
 </html>
