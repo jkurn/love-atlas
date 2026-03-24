@@ -84,14 +84,14 @@ section.page.active { display: block; }
 }
 .sticky-nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,0.08)}
 .nav-inner{
-  max-width:960px;margin:0 auto;padding:0 1rem;
+  max-width:1100px;margin:0 auto;padding:0 1rem;
   display:flex;gap:0.3rem;overflow-x:auto;
-  scrollbar-width:none;
+  scrollbar-width:none;justify-content:center;
 }
 .nav-inner::-webkit-scrollbar{display:none}
 .nav-inner a{
-  font-size:0.78rem;font-weight:600;color:var(--muted);
-  text-decoration:none;padding:0.4rem 0.7rem;border-radius:12px;
+  font-size:0.82rem;font-weight:600;color:var(--muted);
+  text-decoration:none;padding:0.5rem 1rem;border-radius:12px;
   white-space:nowrap;transition:all 0.2s;
 }
 .nav-inner a:hover,.nav-inner a.active{
@@ -392,6 +392,51 @@ section.page.active { display: block; }
   text-align:center;padding:3rem 1.5rem 4rem;
   font-family:'Playfair Display',serif;font-style:italic;
   color:var(--p);font-size:1.1rem;
+}
+
+/* ── Desktop enhancements ─────────────────────────────────────────── */
+@media(min-width:1024px){
+  .container{max-width:1100px;padding:0 2.5rem}
+  .hero h1{font-size:4.5rem}
+  .hero-photo{width:300px;height:300px}
+  .kpi-row{max-width:900px;gap:1.5rem}
+  .kpi-num{font-size:2rem}
+  h2.section-title{font-size:2.8rem}
+  .section-intro{font-size:1.3rem}
+  .ritual-grid{grid-template-columns:repeat(3,1fr);gap:1.5rem}
+  .care-grid{grid-template-columns:repeat(2,1fr);gap:1.5rem}
+  .stat-cards{grid-template-columns:repeat(4,1fr);gap:1.2rem}
+  .stat-big{font-size:2.2rem}
+  .chart-wrap{padding:2rem;min-height:350px}
+  .chart-wrap canvas{max-height:400px}
+  .fw-grid{grid-template-columns:1fr 1fr;gap:2rem}
+  .moments-grid{grid-template-columns:1fr 1fr;gap:1.5rem}
+  .profiles-grid{grid-template-columns:1fr 1fr;gap:2.5rem}
+  .profile-card{padding:2rem}
+  .gallery-grid{columns:3;column-gap:1.2rem}
+  .facts-grid{grid-template-columns:1fr 1fr;gap:0.8rem}
+  .chat-thread{max-width:650px}
+  .chat-bubble{max-width:70%}
+  .phase{padding:2rem 0 2rem 2.5rem}
+  .phase-title{font-size:1.7rem}
+  .photo-break{height:450px}
+  .galaxy-quote{font-size:2rem}
+  .galaxy-inner{max-width:800px}
+  .moment-card{padding:1.5rem}
+  .shrine-grid{grid-template-columns:repeat(3,1fr)}
+  .joke-glossary dl{grid-template-columns:auto 1fr auto 1fr}
+}
+
+@media(min-width:1440px){
+  .container{max-width:1280px}
+  .hero h1{font-size:5rem}
+  .stat-cards{grid-template-columns:repeat(4,1fr)}
+  .ritual-grid{grid-template-columns:repeat(6,1fr)}
+  .gallery-grid{columns:4;column-gap:1.5rem}
+  .facts-grid{grid-template-columns:1fr 1fr 1fr}
+  .shrine-grid{grid-template-columns:repeat(4,1fr)}
+  .moments-grid{grid-template-columns:1fr 1fr 1fr}
+  .chart-wrap canvas{max-height:450px}
 }
 
 /* ── GSAP animation base ──────────────────────────────────────────── */
