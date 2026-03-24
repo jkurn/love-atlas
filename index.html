@@ -331,6 +331,11 @@ section{padding:4rem 0}
 .joke-item dt{font-weight:700;color:var(--deep);font-size:0.95rem}
 .joke-item dd{font-size:0.85rem;color:var(--muted);margin:0.2rem 0 0}
 
+/* ── Facts collapse ──────────────────────────────────────────────── */
+#facts .facts-hidden{display:none}
+#facts.show-all .facts-hidden{display:block}
+#facts.show-all .facts-grid.facts-hidden{display:grid}
+
 /* ── Facts ────────────────────────────────────────────────────────── */
 .fact-cat-header{
   font-size:1.3rem;color:var(--deep);margin:2rem 0 1rem;
@@ -445,15 +450,15 @@ section{padding:4rem 0}
 <!-- ════ STICKY NAV ════ -->
 <nav class="sticky-nav" id="sticky-nav">
   <div class="nav-inner">
-    <a href="#story">Our Story</a>
-    <a href="#rituals">Our Rituals</a>
-    <a href="#numbers">Our Numbers</a>
-    <a href="#frameworks">The Frameworks</a>
-    <a href="#moments">That&rsquo;s So Us</a>
-    <a href="#profiles">Who Are We</a>
-    <a href="#facts">101 Facts</a>
+    <a href="#story">Story</a>
+    <a href="#rituals">Rituals</a>
+    <a href="#numbers">Numbers</a>
+    <a href="#frameworks">Frameworks</a>
+    <a href="#moments">Us</a>
+    <a href="#profiles">Who</a>
+    <a href="#facts">101</a>
     <a href="#shrine">Shrine</a>
-    <a href="#memories">Memories</a>
+    <a href="#memories">Photos</a>
   </div>
 </nav>
 
@@ -1095,6 +1100,12 @@ section{padding:4rem 0}
       </div>
     </div>
 
+    <div class="glass-card fw-stat reveal-el" style="max-width:500px;margin:0 auto 2rem">
+      <div class="fw-stat-num" style="color:var(--j);font-size:2.2rem;font-weight:700">95%</div>
+      <div class="fw-stat-label" style="font-weight:700;margin:0.3rem 0">Bid response rate</div>
+      <div class="fw-stat-sub" style="font-size:0.88rem;color:var(--muted)">You turn toward each other 95% of the time. Gottman says 86% predicts a lasting marriage.</div>
+    </div>
+
     <div class="glass-card reveal-el" style="padding:1.5rem;margin-bottom:2rem;text-align:center">
       <p style="font-size:0.95rem;color:var(--muted)">Four Horsemen (criticism, contempt, defensiveness, stonewalling): <strong style="color:var(--j)">Absent</strong></p>
     </div>
@@ -1255,6 +1266,32 @@ section{padding:4rem 0}
 </div>
 
     </div>
+
+<h3 class="section-subtitle reveal-el" style="font-family:'Playfair Display',serif;font-style:italic;font-size:1.4rem;color:var(--gold);margin:2.5rem 0 1rem;text-align:center">Top 5 Funniest Conversations</h3>
+
+<div class="moments-grid">
+  <div class="glass-card reveal-el" style="padding:1.2rem">
+    <h4 style="color:var(--love);font-size:1rem;margin-bottom:0.3rem">🌶️ The Samyang Airplane Disaster</h4>
+    <p style="font-size:0.85rem;color:var(--muted)">May 31, 2025 — Day One</p>
+    <p style="font-size:0.9rem;margin-top:0.5rem">Jonathan ate 2x spicy Samyang before a flight. "Pas di pesawat pas ada turbulence, ada lah brpa kali udah rasanya plszz can i just land." Pricylia's response: "Tp kalo ada makanan pedes lg ttp aja makan lg udh ga igt pain sblmnya."</p>
+  </div>
+  <div class="glass-card reveal-el" style="padding:1.2rem">
+    <h4 style="color:var(--love);font-size:1rem;margin-bottom:0.3rem">🎲 The Dream That Solved the Game</h4>
+    <p style="font-size:0.85rem;color:var(--muted)">Jul 3, 2025</p>
+    <p style="font-size:0.9rem;margin-top:0.5rem">Pricylia literally dreamed the answer to their 2-truth-1-lie game. "Should i follow my dream lol.. Saking penasarannya HAHA malah kebawa mimpi." Jonathan: "Your dream is incredible! Bisa tau aja."</p>
+  </div>
+  <div class="glass-card reveal-el" style="padding:1.2rem">
+    <h4 style="color:var(--love);font-size:1rem;margin-bottom:0.3rem">🎤 The Dangdut Confession</h4>
+    <p style="font-size:0.85rem;color:var(--muted)">Jun 7, 2025</p>
+    <p style="font-size:0.9rem;margin-top:0.5rem">Both pretending to be above dangdut music, then: "Aku smpe nyari lagu ayu ting ting skalian lol." Exposed.</p>
+  </div>
+  <div class="glass-card reveal-el" style="padding:1.2rem">
+    <h4 style="color:var(--love);font-size:1rem;margin-bottom:0.3rem">🍜 The Dimsum AI Summary</h4>
+    <p style="font-size:0.85rem;color:var(--muted)">Mar 23, 2026</p>
+    <p style="font-size:0.9rem;margin-top:0.5rem">Jonathan showing AI tools summarizing their conversations, Pricylia: "nnt lia nya disayang2." Jonathan: "Pricylia aja disayang2, AI nya kerja aja hahahaha."</p>
+  </div>
+</div>
+
   </div>
 </section>
 
@@ -1308,6 +1345,47 @@ section{padding:4rem 0}
 
       </dl>
     </div>
+
+    <h3 class="section-subtitle reveal-el" style="font-family:'Playfair Display',serif;font-style:italic;font-size:1.4rem;color:var(--deep);margin:2.5rem 0 1rem">How We Changed Each Other</h3>
+
+    <div class="profiles-grid">
+      <div class="glass-card reveal-el" style="padding:1.5rem">
+        <h4 style="color:var(--p);margin-bottom:0.8rem">What Jonathan picked up from Pricylia</h4>
+        <ul style="list-style:none;font-size:0.9rem;line-height:1.8">
+          <li>🥤 Actually drinks water now (after 100+ "minum air" reminders)</li>
+          <li>👗 Asks her opinion on clothes — "as a complete newbie"</li>
+          <li>🍲 Became a Makassar food explorer (from not knowing what coto was)</li>
+          <li>🎵 Admitted to searching for Ayu Ting Ting songs</li>
+          <li>💕 Started calling her "sayang" because she said she liked it</li>
+        </ul>
+      </div>
+      <div class="glass-card reveal-el" style="padding:1.5rem">
+        <h4 style="color:var(--j);margin-bottom:0.8rem">What Pricylia picked up from Jonathan</h4>
+        <ul style="list-style:none;font-size:0.9rem;line-height:1.8">
+          <li>🤖 From "aku ga gt paham AI" to calling his AI tools "ur baby"</li>
+          <li>🧠 Uses his frameworks back at him — "flownya bagus, kayak yg km blg"</li>
+          <li>🍊 Started eating pomegranate because he recommended it</li>
+          <li>🏄 Went kayaking and cycling — things outside her comfort zone</li>
+          <li>💬 Feels safe to speak up: "sbgai org yg jarang omongin apa yg aku pikirin, i feel safe to tell you anything"</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="section-subtitle reveal-el" style="font-family:'Playfair Display',serif;font-style:italic;font-size:1.4rem;color:var(--love);margin:2.5rem 0 1rem">What We Dream About</h3>
+
+    <div class="glass-card reveal-el" style="padding:1.5rem">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;font-size:0.9rem">
+        <div>✈️ <strong>Coto trip to Makassar</strong> — the quest that started on day one</div>
+        <div>🇯🇵 <strong>Japan together</strong> — both have special connections there</div>
+        <div>🏠 <strong>Rumah 1 tingkat yg panjang ke belakang</strong> — her dream house</div>
+        <div>🎬 <strong>Home theatre</strong> — his goal, "yg buagus bgt"</div>
+        <div>👗 <strong>Bikin wedding dressku sendiri</strong> — she wants to design her own</div>
+        <div>🏡 <strong>BBQ house with board games</strong> — he wants to be the third space for friends</div>
+        <div>🌏 <strong>Korea together</strong> — both have special attachment</div>
+        <div>🎪 <strong>Jakarta Fashion Week</strong> — "ini yg paling aku pengenin"</div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1315,6 +1393,7 @@ section{padding:4rem 0}
 <section id="facts">
   <div class="container">
     <h2 class="section-title reveal-el">101 Facts About Us</h2>
+    <p class="reveal-el" style="text-align:center;margin-bottom:1.5rem"><em style="color:var(--muted);font-size:0.9rem">Showing first 10 — tap below to see all 101</em></p>
     <h3 class="fact-cat-header reveal-el">The Firsts</h3>
 <div class="facts-grid">
 <div class="fact-card glass-card reveal-el" onclick="this.classList.toggle('open')">
@@ -1752,6 +1831,10 @@ section{padding:4rem 0}
   <div class="fact-answer"><p>First time tny chatgpt menang siapa</p></div>
 </div>
 </div>
+
+    <div class="reveal-el" id="facts-toggle-wrap" style="text-align:center;margin:1.5rem 0">
+      <button id="facts-toggle-btn" onclick="document.getElementById('facts').classList.toggle('show-all');this.textContent=this.textContent==='Show all 101 →'?'Show less ←':'Show all 101 →'" style="background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.8rem 2rem;border-radius:var(--radius);font-family:'Nunito',sans-serif;font-size:0.95rem;font-weight:700;color:var(--deep);cursor:pointer;backdrop-filter:blur(12px)">Show all 101 →</button>
+    </div>
 
   </div>
 </section>
@@ -2435,6 +2518,30 @@ new Chart(document.getElementById('loveLanguageChart'), {
     }
   }
 });
+
+// ── Facts collapse: hide everything after fact #10 ──────────────────
+(function(){
+  const factsSection = document.getElementById('facts');
+  if(!factsSection) return;
+  const allCards = factsSection.querySelectorAll('.fact-card');
+  let hiding = false;
+  allCards.forEach((card, i) => {
+    if(i >= 10 && !hiding) hiding = true;
+    if(hiding){
+      card.classList.add('facts-hidden');
+      // Also hide parent grid and preceding header if all cards in grid are hidden
+    }
+  });
+  // Hide category headers and grids that only contain hidden cards
+  factsSection.querySelectorAll('.facts-grid').forEach(grid => {
+    const visible = grid.querySelectorAll('.fact-card:not(.facts-hidden)');
+    if(visible.length === 0){
+      grid.classList.add('facts-hidden');
+      const prev = grid.previousElementSibling;
+      if(prev && prev.classList.contains('fact-cat-header')) prev.classList.add('facts-hidden');
+    }
+  });
+})();
 </script>
 </body>
 </html>
