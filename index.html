@@ -62,6 +62,10 @@ h2.section-title{
 .container{max-width:960px;margin:0 auto;padding:0 1.5rem}
 section{padding:4rem 0}
 
+/* ── Tabbed Pages ──────────────────────────────────────────────────── */
+section.page { display: none; }
+section.page.active { display: block; }
+
 /* ── Sticky Nav ───────────────────────────────────────────────────── */
 .sticky-nav{
   position:sticky;top:0;z-index:100;
@@ -450,20 +454,20 @@ section{padding:4rem 0}
 <!-- ════ STICKY NAV ════ -->
 <nav class="sticky-nav" id="sticky-nav">
   <div class="nav-inner">
-    <a href="#story">Story</a>
-    <a href="#rituals">Rituals</a>
-    <a href="#numbers">Numbers</a>
-    <a href="#frameworks">Frameworks</a>
-    <a href="#moments">Us</a>
-    <a href="#profiles">Who</a>
-    <a href="#facts">101</a>
-    <a href="#shrine">Shrine</a>
-    <a href="#memories">Photos</a>
+    <a href="#story" onclick="showPage('story',this);return false" class="active">Story</a>
+    <a href="#rituals" onclick="showPage('rituals',this);return false">Rituals</a>
+    <a href="#numbers" onclick="showPage('numbers',this);return false">Numbers</a>
+    <a href="#frameworks" onclick="showPage('frameworks',this);return false">Frameworks</a>
+    <a href="#moments" onclick="showPage('moments',this);return false">Us</a>
+    <a href="#profiles" onclick="showPage('profiles',this);return false">Who</a>
+    <a href="#facts" onclick="showPage('facts',this);return false">101</a>
+    <a href="#shrine" onclick="showPage('shrine',this);return false">Shrine</a>
+    <a href="#memories" onclick="showPage('memories',this);return false">Photos</a>
   </div>
 </nav>
 
 <!-- ════ SECTION 1: OUR STORY ════ -->
-<section id="story">
+<section id="story" class="page active">
   <div class="container">
     <h2 class="section-title reveal-el">Our Story</h2>
 
@@ -579,7 +583,7 @@ section{padding:4rem 0}
 </section>
 
 <!-- ════ SECTION 2: OUR RITUALS ════ -->
-<section id="rituals">
+<section id="rituals" class="page">
   <div class="container">
     <h2 class="section-title reveal-el">Our Rituals</h2>
 
@@ -669,7 +673,7 @@ section{padding:4rem 0}
 </section>
 
 <!-- ════ SECTION 3: OUR NUMBERS ════ -->
-<section id="numbers">
+<section id="numbers" class="page">
   <div class="container">
     <h2 class="section-title reveal-el">Our Numbers</h2>
 
@@ -1065,7 +1069,7 @@ section{padding:4rem 0}
 </section>
 
 <!-- ════ SECTION 4: THE FRAMEWORKS ════ -->
-<section id="frameworks">
+<section id="frameworks" class="page">
   <div class="container">
     <h2 class="section-title reveal-el">The Frameworks</h2>
 
@@ -1145,7 +1149,7 @@ section{padding:4rem 0}
 </section>
 
 <!-- ════ SECTION 5: THAT'S SO US ════ -->
-<section id="moments">
+<section id="moments" class="page">
   <div class="container">
     <h2 class="section-title reveal-el">That&rsquo;s So Us</h2>
     <div class="moments-grid">
@@ -1296,7 +1300,7 @@ section{padding:4rem 0}
 </section>
 
 <!-- ════ SECTION 6: WHO ARE WE ════ -->
-<section id="profiles">
+<section id="profiles" class="page">
   <div class="container">
     <h2 class="section-title reveal-el">Who Are We</h2>
 
@@ -1390,7 +1394,7 @@ section{padding:4rem 0}
 </section>
 
 <!-- ════ SECTION 7: 101 FACTS ════ -->
-<section id="facts">
+<section id="facts" class="page">
   <div class="container">
     <h2 class="section-title reveal-el">101 Facts About Us</h2>
     <p class="reveal-el" style="text-align:center;margin-bottom:1.5rem"><em style="color:var(--muted);font-size:0.9rem">Showing first 10 — tap below to see all 101</em></p>
@@ -1840,7 +1844,7 @@ section{padding:4rem 0}
 </section>
 
 <!-- ════ SECTION: SHRINE OF THINGS WE MADE ════ -->
-<section id="shrine">
+<section id="shrine" class="page">
 <style>
 .shrine-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
 .shrine-card{padding:1rem;font-size:0.88rem;position:relative}
@@ -2279,7 +2283,7 @@ section{padding:4rem 0}
 </section>
 
 <!-- ════ SECTION 8: OUR MEMORIES ════ -->
-<section id="memories">
+<section id="memories" class="page">
   <div class="container">
     <h2 class="section-title reveal-el">Our Memories</h2>
     <div class="gallery-grid">
@@ -2309,6 +2313,37 @@ section{padding:4rem 0}
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
+// ── Tab Navigation ──────────────────────────────────────────────────
+function showPage(id, el) {
+  // Hide all pages
+  document.querySelectorAll('section.page').forEach(s => s.classList.remove('active'));
+  // Show target page
+  const target = document.getElementById(id);
+  if (target) target.classList.add('active');
+  // Update nav active state
+  document.querySelectorAll('.nav-inner a').forEach(a => a.classList.remove('active'));
+  if (el) el.classList.add('active');
+  // Scroll to top of the section
+  window.scrollTo({ top: document.querySelector('.sticky-nav').offsetTop, behavior: 'instant' });
+  // Re-trigger GSAP reveals for newly visible content
+  if (typeof ScrollTrigger !== 'undefined') {
+    setTimeout(() => ScrollTrigger.refresh(), 100);
+  }
+  // Force reveal elements in the active section
+  document.querySelectorAll('#' + id + ' .reveal-el').forEach(el => {
+    el.classList.add('revealed');
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+  });
+  // Re-render charts in visible section
+  setTimeout(() => {
+    document.querySelectorAll('#' + id + ' canvas').forEach(canvas => {
+      const chart = Chart.getChart(canvas);
+      if (chart) chart.resize();
+    });
+  }, 300);
+}
+
 // ── GSAP ScrollTrigger ───────────────────────────────────────────────
 gsap.registerPlugin(ScrollTrigger);
 
@@ -2365,18 +2400,7 @@ window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 100);
 });
 
-// Nav active state
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-inner a');
-window.addEventListener('scroll', () => {
-  let current = '';
-  sections.forEach(s => {
-    if (window.scrollY >= s.offsetTop - 120) current = s.id;
-  });
-  navLinks.forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-  });
-});
+// Nav active state is now handled by showPage() tab navigation
 
 // ── Chart.js defaults ────────────────────────────────────────────────
 Chart.defaults.font.family = "'Nunito', sans-serif";
