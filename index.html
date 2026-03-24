@@ -238,7 +238,7 @@ section{padding:4rem 0}
 .emoji-item small{font-size:0.65rem;color:var(--muted)}
 
 /* ── Calendar Heatmap ─────────────────────────────────────────────── */
-.cal-container{overflow-x:auto;margin:1.5rem 0;padding-bottom:0.5rem}
+.cal-container{overflow-x:auto;margin:1.5rem 0;padding-bottom:0.5rem;max-width:100%;-webkit-overflow-scrolling:touch}
 .cal-grid{
   display:grid;
   grid-template-rows:auto repeat(7,14px);
@@ -404,6 +404,8 @@ section{padding:4rem 0}
   .pet-cloud{flex-wrap:wrap}
   .shared-phrases{grid-template-columns:1fr}
   .heatmap-grid{overflow-x:auto;font-size:0.6rem}
+  .cal-grid{grid-template-columns:24px repeat(46,10px);grid-template-rows:auto repeat(7,10px)}
+  .cal-container{margin:1rem -0.5rem;padding:0 0.5rem}
 }
 @media(max-width:480px){
   .ritual-grid{grid-template-columns:1fr}
@@ -412,6 +414,7 @@ section{padding:4rem 0}
   .kpi-row{grid-template-columns:1fr}
   .nav-inner a{font-size:0.75rem;padding:0.4rem 0.6rem}
   .profile-card .profile-photo{width:90px;height:90px}
+  .cal-grid{grid-template-columns:20px repeat(46,8px);grid-template-rows:auto repeat(7,8px)}
 }
 
 /* ── Reduced motion ───────────────────────────────────────────────── */
