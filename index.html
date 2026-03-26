@@ -2353,10 +2353,19 @@ document.querySelectorAll('img').forEach(img => {
   // Also check on load in case it's already failed
   if (img.complete) checkBroken();
 });
-// Refresh GSAP after all images settle
+// Refresh GSAP and fallback-init charts after all images settle
 window.addEventListener('load', () => {
-  setTimeout(() => ScrollTrigger.refresh(), 500);
+  setTimeout(() => {
+    ScrollTrigger.refresh();
+    // Fallback: init any charts not yet initialized by IntersectionObserver
+    if (typeof initChart === 'function') {
+      document.querySelectorAll('canvas[id]').forEach(c => {
+        if (!Chart.getChart(c)) { try { initChart(c.id); } catch(e) {} }
+      });
+    }
+  }, 1500);
 });
+// Charts are initialized lazily via IntersectionObserver after initChart is defined (see below)
 
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
