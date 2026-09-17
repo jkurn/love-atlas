@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy 31st, Pricylia</title>
+<meta name="description" content="A birthday letter for Pricylia — 17 September 2026.">
+<meta property="og:title" content="Happy 31st, Pricylia">
+<meta property="og:description" content="Open me, sayang.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500;1,9..144,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#fbf4ec;
+  --paper:#fffaf3;
+  --ink:#3a2428;
+  --muted:#8a6a72;
+  --rose:#c45d77;
+  --maroon:#8b3a4a;
+  --gold:#c4a574;
+  --sage:#6f9484;
+  --blush:#f4d6db;
+  --petal:#e8a0b0;
+  --shadow:0 18px 50px rgba(90,40,50,.12);
+  --radius:22px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Nunito',sans-serif;
+  color:var(--ink);
+  background:var(--cream);
+  line-height:1.6;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+body::before{
+  content:"";
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(900px 500px at 10% -10%, rgba(244,214,219,.7), transparent 60%),
+    radial-gradient(700px 400px at 110% 10%, rgba(196,165,116,.22), transparent 55%),
+    radial-gradient(600px 500px at 50% 120%, rgba(111,148,132,.16), transparent 50%);
+}
+img{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer}
+a{color:var(--maroon)}
+.wrap{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:0 1.25rem 5rem}
+
+/* Envelope gate */
+.gate{
+  position:fixed;inset:0;z-index:80;
+  display:flex;align-items:center;justify-content:center;
+  background:
+    radial-gradient(800px 500px at 50% 30%, #fff7f0, #f3d5d8 70%, #ead3c2);
+  transition:opacity .8s ease, visibility .8s ease;
+}
+.gate.open{opacity:0;visibility:hidden;pointer-events:none}
+.gate-inner{text-align:center;padding:1.5rem;max-width:420px}
+.envelope{
+  position:relative;
+  width:min(320px,78vw);margin:0 auto 1.4rem;cursor:pointer;
+  filter:drop-shadow(0 20px 30px rgba(90,40,50,.18));
+  transform-origin:center;
+  animation:floaty 3.4s ease-in-out infinite;
+}
+.envelope svg{width:100%;height:auto}
+.gate h1{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:700;
+  font-size:clamp(1.8rem,5vw,2.6rem);color:var(--maroon);margin-bottom:.35rem;
+}
+.gate p{color:var(--muted);font-size:1.02rem}
+.tap{
+  display:inline-block;margin-top:1.1rem;
+  background:var(--maroon);color:#fff;border:0;
+  padding:.85rem 1.4rem;border-radius:999px;font-weight:800;
+  box-shadow:0 10px 24px rgba(139,58,74,.28);
+}
+.seal{
+  position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);
+  width:54px;height:54px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #c45d77, #7a2d3c);
+  box-shadow:inset 0 -6px 10px rgba(0,0,0,.2), 0 6px 14px rgba(90,30,40,.25);
+  display:grid;place-items:center;color:#fff;font-size:1.3rem;
+  pointer-events:none;
+}
+
+/* Petals */
+.petals{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:5}
+.petal{
+  position:absolute;top:-40px;width:12px;height:16px;border-radius:80% 0 80% 0;
+  background:var(--petal);opacity:.75;
+  animation:fall linear forwards;
+}
+.petal:nth-child(odd){background:#c4a574;border-radius:0 80% 0 80%}
+.petal:nth-child(3n){background:#6f9484}
+
+/* Hero */
+.hero{text-align:center;padding:3.5rem 0 2rem}
+.kicker{
+  letter-spacing:.22em;text-transform:uppercase;font-size:.72rem;
+  color:var(--maroon);font-weight:800;margin-bottom:.7rem;
+}
+.hero h1{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:700;
+  font-size:clamp(2.4rem,8vw,4.6rem);color:var(--maroon);line-height:1.05;
+}
+.hero .sub{
+  font-family:'Caveat',cursive;font-size:clamp(1.5rem,4vw,2.1rem);
+  color:var(--sage);margin:.4rem 0 1.4rem;
+}
+.polaroid{
+  width:min(280px,70vw);margin:0 auto 1.2rem;background:#fff;
+  padding:12px 12px 36px;border-radius:4px;
+  box-shadow:var(--shadow);transform:rotate(-2.4deg);
+}
+.polaroid img{width:100%;height:250px;object-fit:cover;border-radius:2px}
+.polaroid span{
+  font-family:'Caveat',cursive;font-size:1.25rem;display:block;margin-top:.55rem;color:var(--maroon);
+}
+.age{
+  display:inline-flex;gap:.6rem;align-items:center;justify-content:center;
+  margin-top:.6rem;flex-wrap:wrap;
+}
+.pill{
+  background:#fff;border:1px solid rgba(139,58,74,.12);
+  border-radius:999px;padding:.35rem .8rem;font-size:.82rem;color:var(--muted);
+}
+
+/* Paper card */
+.letter{
+  background:var(--paper);
+  border:1px solid rgba(139,58,74,.1);
+  border-radius:var(--radius);
+  padding:clamp(1.4rem,4vw,2.4rem);
+  box-shadow:var(--shadow);
+  position:relative;
+}
+.letter::after{
+  content:"";position:absolute;inset:10px;border:1px dashed rgba(196,165,116,.55);
+  border-radius:16px;pointer-events:none;
+}
+.letter h2,.section-title{
+  font-family:'Fraunces',serif;font-style:italic;text-align:center;
+  color:var(--maroon);font-size:clamp(1.7rem,4vw,2.4rem);margin-bottom:1rem;
+}
+.letter p{margin:0 auto .9rem;max-width:58ch}
+.signoff{font-family:'Caveat',cursive;font-size:1.7rem;color:var(--rose);margin-top:1rem}
+
+section{padding:3.2rem 0 0}
+.lede{text-align:center;color:var(--muted);max-width:46ch;margin:-.3rem auto 1.6rem}
+
+/* 31 reasons */
+.reasons{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.75rem;
+}
+.reason{
+  background:#fff;border-radius:16px;min-height:150px;padding:1rem .85rem .9rem;
+  box-shadow:0 8px 22px rgba(90,40,50,.08);
+  border:1px solid rgba(139,58,74,.08);
+  cursor:pointer;text-align:center;
+  display:flex;flex-direction:column;justify-content:center;gap:.35rem;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.reason:hover{transform:translateY(-4px) rotate(-.6deg);box-shadow:0 16px 30px rgba(90,40,50,.12)}
+.reason .n{
+  font-family:'Fraunces',serif;font-weight:700;color:var(--gold);font-size:1.15rem;
+}
+.reason .t{font-size:.92rem;font-weight:700;line-height:1.35}
+.reason .d{display:none;font-size:.82rem;color:var(--muted)}
+.reason.open .d{display:block}
+.reason.open{background:linear-gradient(180deg,#fff,#fdeef1)}
+.reason.featured{grid-column:1/-1;min-height:120px;flex-direction:row;gap:1rem;padding:1.1rem 1.3rem}
+.reason.featured .d{display:block}
+
+/* Timeline */
+.story{position:relative;padding-left:1.2rem}
+.story::before{
+  content:"";position:absolute;left:6px;top:.3rem;bottom:.3rem;width:2px;
+  background:linear-gradient(var(--rose),var(--gold),var(--sage));
+}
+.beat{position:relative;padding:0 0 1.4rem 1.3rem}
+.beat::before{
+  content:"";position:absolute;left:-1.05rem;top:.45rem;
+  width:12px;height:12px;border-radius:50%;background:var(--rose);
+  border:3px solid #fff;box-shadow:0 0 0 2px var(--blush);
+}
+.beat .when{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:800}
+.beat h3{font-family:'Fraunces',serif;font-size:1.2rem;margin:.15rem 0 .2rem}
+.quote{font-family:'Caveat',cursive;font-size:1.35rem;color:var(--rose)}
+
+/* Stickers / jokes */
+.stickers{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.8rem;
+}
+.sticker{
+  background:#fff;border-radius:22px;padding:1.1rem 1rem 1rem;
+  text-align:center;box-shadow:var(--shadow);
+  border:2px dashed rgba(196,165,116,.5);
+  transform:rotate(var(--tilt, -1deg));
+}
+.sticker .emo{font-size:1.8rem}
+.sticker h3{font-family:'Fraunces',serif;font-size:1.15rem;margin:.25rem 0}
+.sticker p{font-size:.88rem;color:var(--muted)}
+
+/* Dice */
+.dice-box{text-align:center}
+.die{
+  width:92px;height:92px;margin:0 auto 1rem;border-radius:18px;
+  background:#fff;border:2px solid var(--maroon);
+  display:grid;place-items:center;font-size:2rem;
+  box-shadow:0 12px 24px rgba(139,58,74,.16);
+  transition:transform .4s cubic-bezier(.2,1.4,.3,1);
+}
+.die.roll{transform:rotate(18deg) scale(1.08)}
+.roll-btn{
+  background:var(--maroon);color:#fff;border:0;border-radius:999px;
+  padding:.8rem 1.4rem;font-weight:800;
+}
+.memory{
+  margin:1rem auto 0;max-width:42ch;min-height:4.8rem;
+  font-family:'Fraunces',serif;font-style:italic;font-size:1.2rem;color:var(--maroon);
+}
+
+/* Gallery */
+.film{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.1rem;
+  padding:.4rem 0 1rem;
+}
+.shot{
+  background:#fff;padding:10px 10px 28px;border-radius:3px;
+  box-shadow:var(--shadow);transform:rotate(var(--r, 1deg));
+  cursor:pointer;
+}
+.shot img{width:100%;height:210px;object-fit:cover;object-position:center}
+.shot.tall img{object-position:center 20%}
+.shot.bottom img{object-position:center 80%}
+.shot figcaption{
+  font-family:'Caveat',cursive;text-align:center;margin-top:.45rem;font-size:1.15rem;color:var(--maroon);
+}
+
+/* Close */
+.close{
+  text-align:center;padding:3.5rem 0 1rem;
+}
+.close h2{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(2rem,6vw,3.2rem);color:var(--maroon)}
+.close p{font-family:'Caveat',cursive;font-size:1.6rem;color:var(--sage);margin:.4rem 0 1.2rem}
+.names{font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;color:var(--muted)}
+
+.lightbox{
+  position:fixed;inset:0;background:rgba(40,20,24,.86);display:none;
+  align-items:center;justify-content:center;z-index:90;padding:1.5rem;
+}
+.lightbox.show{display:flex}
+.lightbox img{max-width:min(920px,100%);max-height:88vh;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+
+@keyframes floaty{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(280deg);opacity:.15}
+}
+@keyframes pop{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:none}
+}
+.reveal{opacity:0;animation:pop .7s ease forwards}
+@media (prefers-reduced-motion:reduce){
+  .envelope,.petal,.reveal,.reason{animation:none!important;opacity:1}
+  html{scroll-behavior:auto}
+}
+@media (max-width:640px){
+  .polaroid img,.shot img{height:200px}
+  .reasons{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+</style>
+</head>
+<body>
+<div class="gate" id="gate">
+  <div class="gate-inner">
+    <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Open birthday letter">
+      <svg viewBox="0 0 360 240" fill="none" aria-hidden="true">
+        <rect x="18" y="48" width="324" height="174" rx="10" fill="#fffaf3" stroke="#c4a574"/>
+        <path d="M18 58 L180 150 L342 58" fill="#f4d6db" stroke="#c4a574"/>
+        <path d="M18 222 L140 132" stroke="#c4a574"/>
+        <path d="M342 222 L220 132" stroke="#c4a574"/>
+        <text x="180" y="188" text-anchor="middle" font-family="Caveat, cursive" font-size="26" fill="#8b3a4a">For Pricylia</text>
+      </svg>
+      <div class="seal">♥</div>
+    </div>
+    <h1>A little letter.</h1>
+    <p>17 September 2026 · your 31st</p>
+    <button class="tap" id="openBtn" type="button">Open me, sayang</button>
+  </div>
+</div>
+
+<div class="petals" id="petals" hidden></div>
+
+<main class="wrap">
+  <header class="hero">
+    <p class="kicker">September 17 · 2026</p>
+    <div class="polaroid">
+      <img src="photos/us-1.jpg" alt="Jonathan and Pricylia, close and smiling">
+      <span>my muse, obviously</span>
+    </div>
+    <h1>Happy 31st,<br>Pricylia.</h1>
+    <p class="sub">from your clingy Jonachu</p>
+    <div class="age">
+      <span class="pill">born 17.09.1995</span>
+      <span class="pill">INFJ, still keeping the J</span>
+      <span class="pill">Makassar → Jakarta</span>
+    </div>
+  </header>
+
+  <section>
+    <article class="letter">
+      <h2>Sayang,</h2>
+      <p>Happy 31. I keep thinking about the girl who wrote down <strong>15 Nov, 23.34</strong> like it was a secret she didn’t want the universe to lose. Who goes to KFC for nasi uduk. Who blushes so hard I had to give her a seafood nickname. Who spent two weeks on a jar so I would melt.</p>
+      <p>31 looks good on you. Denim and flowers. Sushi Tei instead of cake. BTOB somewhere in the background. Conan still the first crush. You are my muse, my attention snatcher, my lucky charm, my happy magnet, and my lovely hug buddy.</p>
+      <p>Aku udah ga pikirin AI lg. Cuma pikirin Pricyl AI.</p>
+      <p>Open everything on this page. I made it the way I make you things — a little extra, a little receh, very you.</p>
+      <p class="signoff">Selalu,<br>Jonachu ♡</p>
+    </article>
+  </section>
+
+  <section>
+    <h2 class="section-title">31 little reasons</h2>
+    <p class="lede">Tap a tag. They’re hang-tags, because of course they are — you’re a designer.</p>
+    <div class="reasons" id="reasons"></div>
+  </section>
+
+  <section>
+    <h2 class="section-title">How we got here</h2>
+    <div class="story">
+      <div class="beat">
+        <p class="when">31 May 2025 · 12:28</p>
+        <h3>Hi Pricylia, this is Jonathan</h3>
+        <p>Kevin and Katherine play matchmaker. Ancol boy, Makassar girl. First text lands at lunch.</p>
+      </div>
+      <div class="beat">
+        <p class="when">11 June 2025</p>
+        <h3>Chadol, until 1:37am</h3>
+        <p>First date. You called it insightful. I drove 45 minutes home already a little ruined.</p>
+        <p class="quote">“Next on me ya! Mau coto kan?”</p>
+      </div>
+      <div class="beat">
+        <p class="when">12 July 2025</p>
+        <h3>Cow Play Cow Moo</h3>
+        <p>Arcade, karaoke, basketball, deep talks. Cari Jodoh became ours by accident.</p>
+      </div>
+      <div class="beat">
+        <p class="when">26 July 2025</p>
+        <h3>The cups</h3>
+        <p>You painted rain. Time got slow. We still have them.</p>
+      </div>
+      <div class="beat">
+        <p class="when">7 November 2025 · 00:00</p>
+        <h3>You were first</h3>
+        <p>Midnight on the dot. Jar, book, luggage tag, a Suno song. Two weeks of melting, on purpose.</p>
+      </div>
+      <div class="beat">
+        <p class="when">15 November 2025 · 23:34</p>
+        <h3>Official</h3>
+        <p>Ecopark. Four red cars in the parking lot. Your sister said we looked super happy. You catet the exact minute.</p>
+        <p class="quote">“It’s only been a month but you already feel like home.”</p>
+      </div>
+      <div class="beat">
+        <p class="when">every 15th since</p>
+        <h3>Monthly, on purpose</h3>
+        <p>Gondola, kayak, bicycle, first standing music fest, dice dates, same-braincell texts, 11:11.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Our little language</h2>
+    <div class="stickers">
+      <article class="sticker" style="--tilt:-2deg"><div class="emo">🦐</div><h3>udang kepanasan</h3><p>You blush. I never get tired of it.</p></article>
+      <article class="sticker" style="--tilt:1.5deg"><div class="emo">⚡</div><h3>Jonachu</h3><p>Charges you with hugs. Tamagotchi energy.</p></article>
+      <article class="sticker" style="--tilt:-1deg"><div class="emo">11:11</div><h3>same minute</h3><p>We notice. We always notice.</p></article>
+      <article class="sticker" style="--tilt:2deg"><div class="emo">💧</div><h3>love potion</h3><p>Pristine water. I still think you slipped something in.</p></article>
+      <article class="sticker" style="--tilt:-1.5deg"><div class="emo">🌶️</div><h3>level 0.5</h3><p>Upgraded from “anak 5 tahun” to 8. Legendary arc.</p></article>
+      <article class="sticker" style="--tilt:1deg"><div class="emo">🐰</div><h3>kelinci orens</h3><p>Your character. My favorite color of rabbit.</p></article>
+      <article class="sticker" style="--tilt:-2deg"><div class="emo">O7</div><h3>salute</h3><p>Our tiny ceremony.</p></article>
+      <article class="sticker" style="--tilt:1.2deg"><div class="emo">🥛</div><h3>susu ultra biru</h3><p>The only acceptable cereal milk. Papa already knew.</p></article>
+    </div>
+  </section>
+
+  <section class="dice-box">
+    <h2 class="section-title">Roll the dice</h2>
+    <p class="lede">Our old trick. Wherever it lands, that’s the memory.</p>
+    <div class="die" id="die">♡</div>
+    <button class="roll-btn" id="roll" type="button">Roll a memory</button>
+    <p class="memory" id="memory">Six sides. All of them you.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Us, in polaroids</h2>
+    <p class="lede">A few of the ones I keep staring at.</p>
+    <div class="film">
+      <figure class="shot" style="--r:-2deg"><img src="photos/us-5.jpg" alt="Pricylia smiling with her eyes closed, leaning on Jonathan"><figcaption>that smile</figcaption></figure>
+      <figure class="shot" style="--r:1.6deg"><img src="photos/us-2.jpg" alt="Evening selfie on a bamboo terrace"><figcaption>dusk, still us</figcaption></figure>
+      <figure class="shot" style="--r:-1deg"><img src="photos/us-3.jpg" alt="The two of them holding the cups they painted together"><figcaption>our cups</figcaption></figure>
+      <figure class="shot" style="--r:2deg"><img src="photos/us-7.jpg" alt="Dinner date, Pricylia in maroon"><figcaption>cie happy bgt</figcaption></figure>
+      <figure class="shot tall" style="--r:-1.4deg"><img src="photos/us-11.jpg" alt="Video call on a night street in Sydney"><figcaption>even from another city</figcaption></figure>
+      <figure class="shot tall" style="--r:1deg"><img src="photos/us-8.jpg" alt="Jonathan holding a milk bottle on a video call"><figcaption>susu ultra is love</figcaption></figure>
+      <figure class="shot tall" style="--r:-2deg"><img src="photos/us-9.jpg" alt="Jonathan with satay as a mustache, Pricylia laughing on video call"><figcaption>chef, supposedly</figcaption></figure>
+      <figure class="shot bottom" style="--r:1.5deg"><img src="photos/us-10.jpg" alt="Video call with Pricylia and her nephew Eden"><figcaption>onti + eden</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="close">
+    <p class="kicker">31 looks very good on you</p>
+    <h2>Still choosing you.</h2>
+    <p>my muse · my lucky charm · my hug buddy</p>
+    <p class="names">Jonathan ♡ Pricylia</p>
+  </section>
+</main>
+
+<div class="lightbox" id="lb" role="dialog" aria-label="Photo"><img alt=""></div>
+
+<script>
+const reasons = [
+  ["15 Nov, 23.34","You wrote it down. I still get quiet about that."],
+  ["udang kepanasan","Bright red. My favorite color on you."],
+  ["Jonachu hug hug","Your tamagotchi. I take the job seriously."],
+  ["level 0.5","The bravest tiny spice tolerance in Jakarta."],
+  ["Sushi Tei","Birthday cake was never the point."],
+  ["Othello champion","Whole school. Then you pretend you never want to think."],
+  ["kelinci orens","I hear it and I see you."],
+  ["keeping the J","Aku tetep J soalnya Jonathan. Unfair and perfect."],
+  ["same braincell","The tenth time I knew I was in trouble."],
+  ["11:11","A tiny holiday we invented."],
+  ["love potion","I still blame the Pristine."],
+  ["midas tickets","Mamamoo free. Blackpink free. Blessed."],
+  ["first crush: Conan","Loyalty. I respect it."],
+  ["BTOB no. 1","You went to the fan meetup alone. That’s courage."],
+  ["denim + flowers","First runway, first newspaper, still the plot."],
+  ["Onti","Eden tries to race you. 29-year handicap."],
+  ["anak rumahan","Homebody who still says yes to the night."],
+  ["you feel like home","One month in. You said it. I kept it."],
+  ["claw machine","Second try. Of course."],
+  ["kasih bunuh itu lampu","Makassar in your mouth. I collect the phrases."],
+  ["oreo in milk","Guilty. Cute. Allowed."],
+  ["rain on a cup","You painted time slowing down."],
+  ["00:00","First to wish me happy birthday. I felt chosen."],
+  ["two-week jar","The most dangerous handmade object I own."],
+  ["gondola","KATA KAMU AKU CNTIK. Yes. I did. I do."],
+  ["you tell me things","The stuff you usually swallow. Safe, with me."],
+  ["coto from the airport","Straight home. No itinerary. Ikut aja."],
+  ["you melt here","Survival mode off. That’s the honor."],
+  ["four red cars","The night we became official. Lucky on purpose."],
+  ["your luck","Winning things should be illegal at your rate."],
+  ["you","That’s the whole list, really."]
+];
+
+const box = document.getElementById('reasons');
+reasons.forEach(([t,d],i)=>{
+  const el = document.createElement('button');
+  el.className = 'reason' + (i === reasons.length-1 ? ' featured' : '');
+  el.type = 'button';
+  el.innerHTML = `<span class="n">${i+1}</span><span class="t">${t}</span><span class="d">${d}</span>`;
+  el.addEventListener('click',()=>el.classList.toggle('open'));
+  box.appendChild(el);
+});
+
+const memories = [
+  "Chadol. First date. You said insightful. I was already gone.",
+  "Painted cups. Yours had a handle. You put rain on it.",
+  "15 November, 23.34. You catet it. I replay it.",
+  "11:11. Two phones, one minute, same little gasp.",
+  "You on the gondola. I told you you were beautiful. I meant it twice.",
+  "Sushi Tei forever. Besties know. I know now too."
+];
+const die = document.getElementById('die');
+const memory = document.getElementById('memory');
+document.getElementById('roll').addEventListener('click',()=>{
+  die.classList.add('roll');
+  const pick = memories[Math.floor(Math.random()*memories.length)];
+  die.textContent = ['⚀','⚁','⚂','⚃','⚄','⚅'][Math.floor(Math.random()*6)];
+  memory.textContent = pick;
+  setTimeout(()=>die.classList.remove('roll'),400);
+});
+
+function openLetter(){
+  document.getElementById('gate').classList.add('open');
+  const petals = document.getElementById('petals');
+  petals.hidden = false;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  for(let i=0;i<28;i++){
+    const p = document.createElement('i');
+    p.className = 'petal';
+    p.style.left = Math.random()*100+'%';
+    p.style.animationDuration = (6+Math.random()*7)+'s';
+    p.style.animationDelay = (Math.random()*2)+'s';
+    p.style.transform = 'scale('+(0.6+Math.random()*0.8)+')';
+    petals.appendChild(p);
+  }
+}
+document.getElementById('openBtn').addEventListener('click', openLetter);
+document.getElementById('envelope').addEventListener('click', openLetter);
+document.getElementById('envelope').addEventListener('keydown', e=>{
+  if(e.key==='Enter' || e.key===' '){ e.preventDefault(); openLetter(); }
+});
+if (new URLSearchParams(location.search).has('open')) openLetter();
+
+const lb = document.getElementById('lb');
+document.querySelectorAll('.shot img, .polaroid img').forEach(img=>{
+  img.addEventListener('click',()=>{
+    lb.querySelector('img').src = img.src;
+    lb.querySelector('img').alt = img.alt;
+    lb.classList.add('show');
+  });
+});
+lb.addEventListener('click',()=>lb.classList.remove('show'));
+</script>
+</body>
+</html>
