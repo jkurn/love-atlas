@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Will you be my Valentine?</title>
+<meta name="description" content="A little Valentine for Pricylia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+<style>
+:root{--rose:#e25d7b;--pink:#ffd6e0;--cream:#fff7f9}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{
+  font-family:'Fredoka',sans-serif;
+  background:linear-gradient(135deg,#ffd6e8 0%,#ffeef3 45%,#ffd0dc 100%);
+  color:#4a2a33;
+  overflow:hidden;
+}
+.screen{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:1.25rem;position:relative;
+}
+.card{
+  background:rgba(255,255,255,.84);
+  backdrop-filter:blur(10px);
+  border-radius:28px;padding:1.6rem 1.4rem 1.8rem;
+  max-width:440px;width:100%;text-align:center;
+  box-shadow:0 24px 60px rgba(180,60,90,.18);
+  position:relative;
+}
+.photo-wrap{position:relative;margin-bottom:1.2rem}
+.glow{
+  position:absolute;inset:-8px;border-radius:22px;
+  background:linear-gradient(90deg,#f9a8c2,#fb7185,#f9a8c2);
+  filter:blur(10px);opacity:.55;
+}
+.photo-wrap img{
+  position:relative;width:100%;height:280px;object-fit:cover;
+  border-radius:18px;display:block;
+}
+h1{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:clamp(1.5rem,4vw,2rem);margin-bottom:1.2rem;
+}
+.btns{position:relative;min-height:88px;display:flex;justify-content:center;align-items:center}
+.yes,.no{
+  font-family:inherit;font-size:1.15rem;border-radius:999px;cursor:pointer;
+  padding:.95rem 1.7rem;border:0;
+}
+.yes{
+  background:#e25d7b;color:#fff;font-weight:700;
+  box-shadow:0 10px 22px rgba(226,93,123,.35);
+  z-index:2;transition:transform .25s ease;
+}
+.yes:hover{background:#d14b6a}
+.no{
+  position:absolute;right:18%;
+  background:#fff;color:#8a6a72;border:2px solid #ddd;
+  transition:transform .2s ease;
+}
+.corner{position:absolute;font-size:1.7rem;animation:bounce 1.4s ease-in-out infinite}
+.tl{top:-14px;left:-10px}
+.tr{top:-14px;right:-10px;animation-delay:.5s}
+.bl{bottom:-14px;left:-10px;animation-delay:.3s}
+.br{bottom:-14px;right:-10px;animation-delay:.7s}
+.yay{text-align:center}
+.yay .big{font-size:5rem;animation:bounce 1s ease-in-out infinite}
+.yay h1{color:#e25d7b;font-size:clamp(2rem,6vw,3.2rem);margin:.4rem 0}
+.yay p{font-size:1.25rem;color:#e25d7b}
+.yay img{
+  width:220px;height:220px;object-fit:cover;border-radius:50%;
+  border:5px solid #f9a8c2;margin:1.4rem auto 0;display:block;
+  box-shadow:0 16px 40px rgba(180,60,90,.25);
+}
+.hearts span{display:inline-block;font-size:2rem;animation:bounce 1s infinite}
+@keyframes bounce{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+.home{
+  display:inline-block;margin-top:1.4rem;color:#e25d7b;font-size:.9rem;text-decoration:none;
+}
+@media (max-width:520px){
+  .photo-wrap img{height:220px}
+  .no{right:8%}
+}
+</style>
+</head>
+<body>
+<div class="screen" id="ask">
+  <div class="card" id="stage">
+    <span class="corner tl">💝</span>
+    <span class="corner tr">💗</span>
+    <span class="corner bl">💓</span>
+    <span class="corner br">💕</span>
+    <div class="photo-wrap">
+      <div class="glow"></div>
+      <img src="/assets/valentines-Aq2B6Hbj.jpg" alt="Jonathan and Pricylia" id="vimg">
+    </div>
+    <h1>Will you be my Valentine? 💖</h1>
+    <div class="btns">
+      <button class="yes" id="yes" type="button">Yes 💕</button>
+      <button class="no" id="no" type="button">No 😢</button>
+    </div>
+  </div>
+</div>
+<div class="screen yay" id="yay" hidden>
+  <div>
+    <div class="big">💖</div>
+    <h1>Yay! I love you!</h1>
+    <p>Happy Valentine's Day, my love.</p>
+    <div class="hearts">
+      <span>💖</span><span style="animation-delay:.1s">💝</span><span style="animation-delay:.2s">💗</span><span style="animation-delay:.3s">💓</span><span style="animation-delay:.4s">💕</span>
+    </div>
+    <img src="/assets/valentines-Aq2B6Hbj.jpg" alt="Us">
+    <a class="home" href="/">← back to the gallery</a>
+  </div>
+</div>
+<script>
+const stage=document.getElementById('stage');
+const no=document.getElementById('no');
+const yes=document.getElementById('yes');
+let scale=1;
+function dodge(){
+  const s=stage.getBoundingClientRect();
+  const n=no.getBoundingClientRect();
+  const maxX=s.width-n.width-40;
+  const maxY=s.height-n.height-40;
+  const x=(Math.random()*maxX)-maxX/2;
+  const y=(Math.random()*maxY)-maxY/2;
+  no.style.transform=`translate(${x}px, ${y}px)`;
+  scale=Math.min(scale+0.12, 2.1);
+  yes.style.transform=`scale(${scale})`;
+}
+no.addEventListener('mouseenter', dodge);
+no.addEventListener('click', dodge);
+yes.addEventListener('click', ()=>{
+  document.getElementById('ask').hidden=true;
+  document.getElementById('yay').hidden=false;
+});
+</script>
+</body>
+</html>
