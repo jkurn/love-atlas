@@ -114,11 +114,24 @@ a{color:var(--maroon)}
   width:min(280px,70vw);margin:0 auto 1.2rem;background:#fff;
   padding:12px 12px 36px;border-radius:4px;
   box-shadow:var(--shadow);transform:rotate(-2.4deg);
+  position:relative;
 }
-.polaroid img{width:100%;height:250px;object-fit:cover;border-radius:2px}
+.polaroid .slides{position:relative;height:250px;overflow:hidden;border-radius:2px}
+.polaroid .slides img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:0;transition:opacity .55s ease;
+}
+.polaroid .slides img.on{opacity:1}
 .polaroid span{
   font-family:'Caveat',cursive;font-size:1.25rem;display:block;margin-top:.55rem;color:var(--maroon);
 }
+.hero-nav{
+  display:flex;justify-content:center;gap:.4rem;margin-top:.35rem;
+}
+.dot{
+  width:8px;height:8px;border-radius:50%;border:0;background:#e4c9ce;padding:0;
+}
+.dot.on{background:var(--maroon)}
 .age{
   display:inline-flex;gap:.6rem;align-items:center;justify-content:center;
   margin-top:.6rem;flex-wrap:wrap;
@@ -207,21 +220,59 @@ section{padding:3.2rem 0 0}
   font-family:'Fraunces',serif;font-style:italic;font-size:1.2rem;color:var(--maroon);
 }
 
-/* Gallery */
-.film{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.1rem;
-  padding:.4rem 0 1rem;
+/* Carousel */
+.carousel{
+  background:#fff;padding:14px 14px 18px;border-radius:6px;
+  box-shadow:var(--shadow);max-width:520px;margin:0 auto;
 }
-.shot{
-  background:#fff;padding:10px 10px 28px;border-radius:3px;
-  box-shadow:var(--shadow);transform:rotate(var(--r, 1deg));
-  cursor:pointer;
+.carousel-stage{
+  position:relative;height:min(58vw,380px);overflow:hidden;border-radius:4px;
 }
-.shot img{width:100%;height:210px;object-fit:cover;object-position:center}
-.shot.tall img{object-position:center 20%}
-.shot.bottom img{object-position:center 80%}
-.shot figcaption{
-  font-family:'Caveat',cursive;text-align:center;margin-top:.45rem;font-size:1.15rem;color:var(--maroon);
+.carousel-stage img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:0;transition:opacity .6s ease;cursor:pointer;
+}
+.carousel-stage img.on{opacity:1}
+.carousel-caption{
+  font-family:'Caveat',cursive;text-align:center;margin:.7rem 0 .4rem;
+  font-size:1.35rem;color:var(--maroon);min-height:1.6em;
+}
+.carousel-bar{display:flex;align-items:center;justify-content:center;gap:.55rem}
+.arrow{
+  width:36px;height:36px;border-radius:50%;border:1px solid rgba(139,58,74,.18);
+  background:#fff;color:var(--maroon);font-size:1.1rem;
+}
+.arrow:hover{background:var(--blush)}
+
+/* Scrabble */
+.board{
+  background:#c4a574;border-radius:16px;padding:1.1rem .8rem 1.2rem;
+  box-shadow:var(--shadow);max-width:520px;margin:0 auto;
+}
+.rack{
+  display:flex;justify-content:center;gap:.35rem;flex-wrap:wrap;
+  background:#8b5a2b;border-radius:10px;padding:.7rem .5rem;
+  min-height:76px;
+}
+.tile{
+  width:46px;height:50px;border-radius:4px;border:0;
+  background:linear-gradient(180deg,#f6ecd4,#e8d5a8);
+  box-shadow:0 2px 0 #c4a06a, 0 4px 8px rgba(0,0,0,.18);
+  font-family:'Fraunces',serif;font-weight:700;font-size:1.35rem;color:#2b1c12;
+  position:relative;cursor:pointer;
+}
+.tile small{
+  position:absolute;right:4px;bottom:3px;font-size:.55rem;font-family:'Nunito',sans-serif;
+}
+.tile.picked{outline:2px solid var(--maroon);transform:translateY(-4px)}
+.tile.good{background:linear-gradient(180deg,#f3e2b0,#d4b56a)}
+.scrabble-note{
+  text-align:center;margin-top:.8rem;color:#fff;font-family:'Caveat',cursive;font-size:1.35rem;
+  min-height:1.6em;
+}
+.shuffle{
+  display:block;margin:.8rem auto 0;background:transparent;border:1px dashed rgba(255,255,255,.6);
+  color:#fff;border-radius:999px;padding:.4rem .9rem;font-size:.82rem;
 }
 
 /* Close */
@@ -256,7 +307,8 @@ section{padding:3.2rem 0 0}
   html{scroll-behavior:auto}
 }
 @media (max-width:640px){
-  .polaroid img,.shot img{height:200px}
+  .polaroid .slides{height:200px}
+  .tile{width:40px;height:44px;font-size:1.15rem}
   .reasons{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 </style>
@@ -286,9 +338,10 @@ section{padding:3.2rem 0 0}
   <header class="hero">
     <p class="kicker">September 17 · 2026</p>
     <div class="polaroid">
-      <img src="photos/night.jpg" alt="Jonathan and Pricylia at night">
-      <span>my muse, obviously</span>
+      <div class="slides" id="heroSlides"></div>
+      <span id="heroCap">my muse, obviously</span>
     </div>
+    <div class="hero-nav" id="heroDots"></div>
     <h1>Happy 31st,<br>Pricylia.</h1>
     <p class="sub">from your clingy Jonachu</p>
     <div class="age">
@@ -338,17 +391,26 @@ section{padding:3.2rem 0 0}
   </section>
 
   <section>
-    <h2 class="section-title">Us, in polaroids</h2>
-    <p class="lede">A few of the ones I keep staring at.</p>
-    <div class="film">
-      <figure class="shot" style="--r:-2deg"><img src="photos/guitar.jpg" alt="Pricylia playing guitar and smiling"><figcaption>that guitar smile</figcaption></figure>
-      <figure class="shot" style="--r:1.6deg"><img src="photos/mall.jpg" alt="Close selfie of Pricylia and Jonathan"><figcaption>lean in</figcaption></figure>
-      <figure class="shot" style="--r:-1deg"><img src="photos/us-3.jpg" alt="The two of them holding the cups they painted together"><figcaption>our cups</figcaption></figure>
-      <figure class="shot" style="--r:2deg"><img src="photos/takoyaki.jpg" alt="Pricylia with takoyaki, wide-eyed"><figcaption>takoyaki face</figcaption></figure>
-      <figure class="shot" style="--r:-1.4deg"><img src="photos/book-of-us.jpg" alt="Book of Us Vol 1 with a PRICYLIA keycap bar"><figcaption>book of us</figcaption></figure>
-      <figure class="shot" style="--r:1deg"><img src="photos/us-7.jpg" alt="Dinner date, Pricylia in maroon"><figcaption>cie happy bgt</figcaption></figure>
-      <figure class="shot" style="--r:-2deg"><img src="photos/indofood.jpg" alt="Pricylia at a colorful Indofood exhibit"><figcaption>rumah indofood</figcaption></figure>
-      <figure class="shot" style="--r:1.5deg"><img src="photos/us-5.jpg" alt="Pricylia smiling with her eyes closed"><figcaption>that smile</figcaption></figure>
+    <h2 class="section-title">A little Scrabble</h2>
+    <p class="lede">Tap two tiles to swap. You already know this word — it’s the one I use when I mean you.</p>
+    <div class="board">
+      <div class="rack" id="rack"></div>
+      <p class="scrabble-note" id="scrabbleNote">Triple word score if you get it.</p>
+      <button class="shuffle" id="shuffle" type="button">shuffle the tiles</button>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Us, cycling</h2>
+    <p class="lede">From the Pricylia album. Tap the photo, or just let it wander.</p>
+    <div class="carousel" id="carousel">
+      <div class="carousel-stage" id="stage"></div>
+      <p class="carousel-caption" id="cap"></p>
+      <div class="carousel-bar">
+        <button class="arrow" id="prev" type="button" aria-label="Previous">‹</button>
+        <div class="hero-nav" id="dots"></div>
+        <button class="arrow" id="next" type="button" aria-label="Next">›</button>
+      </div>
     </div>
   </section>
 
@@ -447,15 +509,139 @@ document.getElementById('envelope').addEventListener('keydown', e=>{
 });
 if (new URLSearchParams(location.search).has('open')) openLetter();
 
-const lb = document.getElementById('lb');
-document.querySelectorAll('.shot img, .polaroid img').forEach(img=>{
-  img.addEventListener('click',()=>{
-    lb.querySelector('img').src = img.src;
-    lb.querySelector('img').alt = img.alt;
-    lb.classList.add('show');
+const photos = [
+  ["photos/night.jpg","night, still us"],
+  ["photos/guitar.jpg","that guitar smile"],
+  ["photos/expo.jpg","expo, glued together"],
+  ["photos/peace.jpg","peace in a t-shirt shop"],
+  ["photos/chicken.jpg","new friend: ayam kremezz"],
+  ["photos/outdoor.jpg","one of those crowded days"],
+  ["photos/mall.jpg","lean in"],
+  ["photos/us-3.jpg","our cups"],
+  ["photos/takoyaki.jpg","takoyaki face"],
+  ["photos/takoyaki-smile.jpg","still takoyaki"],
+  ["photos/book-of-us.jpg","book of us, vol. 1"],
+  ["photos/us-7.jpg","cie happy bgt"],
+  ["photos/indofood.jpg","rumah indofood"],
+  ["photos/us-5.jpg","that smile"],
+  ["photos/dimsum.jpg","the big table"]
+];
+
+function makeCarousel(stage, dots, caption, start, {auto=true}={}){
+  let i = 0;
+  photos.forEach(([src,cap],n)=>{
+    const img = document.createElement('img');
+    img.src = src; img.alt = cap;
+    if(n===start) img.classList.add('on');
+    stage.appendChild(img);
+    if(dots){
+      const d = document.createElement('button');
+      d.className = 'dot' + (n===start?' on':'');
+      d.type = 'button';
+      d.addEventListener('click',()=>go(n));
+      dots.appendChild(d);
+    }
   });
+  const imgs = [...stage.querySelectorAll('img')];
+  const dotEls = dots ? [...dots.querySelectorAll('.dot')] : [];
+  function go(n){
+    i = (n+photos.length)%photos.length;
+    imgs.forEach((im,k)=>im.classList.toggle('on', k===i));
+    dotEls.forEach((d,k)=>d.classList.toggle('on', k===i));
+    if(caption) caption.textContent = photos[i][1];
+  }
+  go(start);
+  let timer;
+  function play(){
+    if(!auto || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    stop();
+    timer = setInterval(()=>go(i+1), 3400);
+  }
+  function stop(){ if(timer) clearInterval(timer); }
+  stage.addEventListener('mouseenter', stop);
+  stage.addEventListener('mouseleave', play);
+  play();
+  return {go, next:()=>go(i+1), prev:()=>go(i-1), get i(){return i}, imgs};
+}
+
+const hero = makeCarousel(
+  document.getElementById('heroSlides'),
+  document.getElementById('heroDots'),
+  document.getElementById('heroCap'),
+  0
+);
+const album = makeCarousel(
+  document.getElementById('stage'),
+  document.getElementById('dots'),
+  document.getElementById('cap'),
+  1
+);
+document.getElementById('next').addEventListener('click', album.next);
+document.getElementById('prev').addEventListener('click', album.prev);
+
+const lb = document.getElementById('lb');
+function openLb(img){
+  lb.querySelector('img').src = img.src;
+  lb.querySelector('img').alt = img.alt;
+  lb.classList.add('show');
+}
+[...document.querySelectorAll('#heroSlides img, #stage img')].forEach(img=>{
+  img.addEventListener('click',()=>openLb(img));
 });
 lb.addEventListener('click',()=>lb.classList.remove('show'));
+
+const WORD = 'SAYANG';
+const POINTS = {S:1,A:1,Y:4,N:1,G:2};
+function scramble(s){
+  const a = s.split('');
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a.join('') === s ? scramble(s) : a.join('');
+}
+const rack = document.getElementById('rack');
+const note = document.getElementById('scrabbleNote');
+let tiles = [];
+let picked = null;
+function renderTiles(str){
+  rack.innerHTML = '';
+  tiles = str.split('').map((ch,idx)=>{
+    const b = document.createElement('button');
+    b.className = 'tile';
+    b.type = 'button';
+    b.dataset.i = idx;
+    b.innerHTML = `${ch}<small>${POINTS[ch]||1}</small>`;
+    b.addEventListener('click',()=>onTile(idx));
+    rack.appendChild(b);
+    return ch;
+  });
+  checkWord();
+}
+function onTile(idx){
+  if(tiles.join('') === WORD) return;
+  if(picked === null){
+    picked = idx;
+    rack.children[idx].classList.add('picked');
+    return;
+  }
+  const a = picked, b = idx;
+  [tiles[a], tiles[b]] = [tiles[b], tiles[a]];
+  picked = null;
+  renderTiles(tiles.join(''));
+}
+function checkWord(){
+  const ok = tiles.join('') === WORD;
+  [...rack.children].forEach(el=>el.classList.toggle('good', ok));
+  note.textContent = ok
+    ? 'SAYANG. Triple word score. That’s you.'
+    : 'Triple word score if you get it.';
+}
+document.getElementById('shuffle').addEventListener('click',()=>{
+  picked = null;
+  renderTiles(scramble(WORD));
+});
+renderTiles(scramble(WORD));
 </script>
 </body>
 </html>
